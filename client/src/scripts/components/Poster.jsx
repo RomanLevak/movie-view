@@ -14,17 +14,6 @@ class Poster extends Component {
         const {poster_path, year, title, type} = this.props
         const img_url = poster_path ? `/tmdbimg/${poster_path}` : '/styles/images/not-found.svg'
 
-        // if(type == 'horizontal')
-        //     return (
-        //         <div className='poster-box movie-poster poster-horizontal'>
-        //             <img src={img_url} alt='' className='movie-img' />
-        //             <div className='poster__text-box'>
-        //                 <span className='movie-poster__title'>{title}</span>
-        //                 <span className='movie-poster__year'>{this.props.year}</span>
-        //             </div>
-        //         </div>
-        //     )
-
         return(
             <div className='poster-box movie-poster'>
                     <img src={img_url} alt='' className='movie-img' />

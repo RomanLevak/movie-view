@@ -27,14 +27,12 @@ class Search extends Component {
         const {searchMovie} = this.props
         //inputing will open the search results
         this.setState({value, isResultsOpen: true})
+        if(value == '')
+            return this.onBlur()
+
         searchMovie(value, true)
     }
 
-    onLinkClick = () => {
-        //navigating to movie by link will hide results
-        this.setState({isResultsOpen: false})
-    }
-    
     onBlur = () => {
         //hide results
         this.setState({isResultsOpen: false})
@@ -56,6 +54,10 @@ class Search extends Component {
         }
     }
 
+    onSearch() {
+
+    }
+
     getResults = () => {
         if(!this.state.isResultsOpen) return null
         const {movies} = this.props
@@ -63,8 +65,9 @@ class Search extends Component {
         return movies.slice(0, 6).map(m => 
             <Link 
                 to = {`/movies/${m.id}`}
-                onClick = {this.onLinkClick}
                 key = {m.id}
+                onMouseDown = {(e) => e.preventDefault()}    //preventfrom onBlur event which would hide Link and redirection wouldn't happen
+                onClick = {() => this.onBlur()}
                 className = 'search__item' 
             >
                 {m.title}
@@ -76,12 +79,13 @@ class Search extends Component {
     render() {
         return (
             <div className='search-box'>
-                <div className='search__input-box'>
+                <div className='search__input-box'
+                    onBlur = {this.onBlur}
+                    onFocus = {this.onFocus}
+                >
                     <input
                         onChange = {this.onChange}
-                        onBlur = {this.onBlur}
                         onKeyPress = {this.onKeyPress}
-                        onFocus = {this.onFocus}
                         className='search__input'
                         value = {this.state.value}
                         placeholder='Find movies'
@@ -89,7 +93,7 @@ class Search extends Component {
                     <Link 
                         to = {`/movies/search/${this.state.value}`}
                         className='search__btn btn-search flex-center'
-                        onClick = {this.onLinkClick}
+                        onClick = {this.onBlur}
                     >
                         <span className='icon-search'></span>
                     </Link>

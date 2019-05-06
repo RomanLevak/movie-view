@@ -17,7 +17,7 @@ class Movies extends Component {
                 <Route path = '/movies/genres/:genre' render = {this.getExplorerWithGenre} exact />
                 <Route path = '/movies/search/:query' render = {this.getResults} exact />
                 <Route path = '/movies/:id' render = {this.getMovie} exact />
-            </div>    
+            </div>
         )
     }
 

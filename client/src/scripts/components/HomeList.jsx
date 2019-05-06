@@ -12,17 +12,17 @@ import 'slick-carousel/slick/slick.css'
 
 //Arrow for slider
 function Arrow(props) {
-  const { style, onClick, next } = props
+    const { style, onClick, next } = props
 
-  return (
-    <div
-        className = {next ? 'home-list__next-arrow' : 'home-list__prev-arrow'}
-        style={{ ...style, display: 'block' }}
-        onClick={onClick}
-    >
-        <img src='/styles/images/arrow.svg'/>
-    </div> 
-  )
+    return (
+        <div
+            className = {next ? 'home-list__next-arrow' : 'home-list__prev-arrow'}
+            style={{ ...style, display: 'block' }}
+            onClick={onClick}
+        >
+            <img src='/styles/images/arrow.svg'/>
+        </div> 
+    )
 }
 
 class HomeList extends Component {
