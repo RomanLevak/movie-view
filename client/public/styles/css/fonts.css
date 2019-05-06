@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'font-icons';
+    src: url('../fonts/icons.eot');
+    src: url('../fonts/icons.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/icons.woff') format('woff'),
+         url('../fonts/icons.ttf') format('truetype'),
+         url('../fonts/icons.svg#icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='icon-']:before{
+  display: inline-block;
+   font-family: 'font-icons';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale
+}
+.icon-delete:before{content:'\0041';}
+.icon-delete-cross:before{content:'\0042';}
+.icon-edit:before{content:'\0043';}
+.icon-reply:before{content:'\0044';}
+.icon-search:before{content:'\0045';}
+.icon-thumb:before{content:'\0046';}

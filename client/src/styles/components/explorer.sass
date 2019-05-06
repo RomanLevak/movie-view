@@ -1,0 +1,39 @@
+.explorer
+	&-box
+		margin-top: 3px
+	display: flex
+	flex-wrap: wrap
+	&__item
+		padding: 0 5px
+		width: 20%
+		&:nth-last-child(-n+5)	//last 5 elements
+			margin-top: 1.3vw		
+	&-list
+		width: calc(100% - 130px)
+		display: flex
+		flex-wrap: wrap
+		padding: 10px 0
+		padding-top: 0
+	&-pagination
+		margin-top: 5px
+		padding-bottom: 12px
+	&__sidebar
+		margin-left: auto
+		width: 130px
+		flex: none
+		padding-left: 5px
+		padding-top: 4px
+
+@media (max-width: 660px)
+	.explorer
+		&__item
+			width: 25%
+
+@media (max-width: 576px)
+	.explorer
+		&__sidebar
+			width: 100px
+			padding-left: 3px
+			padding-top: 2px
+		&-list
+			width: calc(100% - 100px)

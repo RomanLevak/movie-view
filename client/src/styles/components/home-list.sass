@@ -1,0 +1,54 @@
+.home-list
+	&-box
+		position: relative
+		margin-top: 8px
+		padding-bottom: 16px
+	&__title
+		margin-bottom: 8px
+		padding-left: 19px
+		text-align: left
+		color: $yellow1
+		font-size: 20px
+	&__item
+		margin-bottom: 20px
+		padding: 0 2px !important
+		transition: all 200ms
+		&:hover
+			box-shadow: 0px 0px 3px 2px $seagreen2-transparent
+	&__link
+		position: absolute
+		text-decoration: none
+		right: 10px
+		bottom: -0px
+		color: $green3
+		&:hover
+			text-decoration: underline
+	&__next-arrow, &__prev-arrow
+		width: 100px !important
+		height: 15px !important
+		cursor: pointer
+		img
+			max-width: 100%
+	&__prev-arrow
+		transform: scale(-1, 1) !important //mirrored horizontally
+
+ .slick-prev:before, .slick-next:before 
+	content: '' !important
+
+
+@media (max-width: 768px)
+	.home-list
+		&__item
+			width: 32%
+
+@media(max-width: 576px)
+	.home-list
+		&-box
+			margin-top: 6px
+			padding-bottom: 12px
+		&__title
+			margin-bottom: 6px
+			padding-left: 16px
+			font-size: 18px
+		&__items-box
+			padding: 0 12px

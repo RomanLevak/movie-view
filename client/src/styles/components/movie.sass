@@ -1,0 +1,67 @@
+.movie
+	&-box
+		min-height: 250px
+		width: 100%
+		max-width: 710px
+		margin: 0 auto
+		padding: 0 5px
+		display: flex
+		flex-wrap: wrap
+		background: $black-transparent
+	&__img
+		max-height: 374px
+		width: 35%
+		height: 100%
+		overflow: hidden
+		img
+			max-width: 100%
+	&__info
+		border-collapse: collapse
+		width: 100%
+		&-box
+			padding-left: 14px
+			width: 65%
+			height: 100%
+		&-link
+			color: $yellow4
+			&:hover
+				text-decoration: underline
+		&-overview
+			color: $green1
+			padding: 6px
+			padding-top: 12px
+			font-size: 16px
+			display: block
+			min-width: 100%
+			
+		caption
+			font-size: 24px
+			color: $green3
+			padding-bottom: 8px
+		td
+			padding: 3px
+			border-bottom: 1px solid $yellow1
+			font-size: 16px
+			&:nth-child(1)
+				color: $green3
+				width: 100px
+				vertical-align: top
+				text-transform: capitalize
+			&:nth-child(2)
+				padding-left: 4px
+				color: $green2
+				vertical-align: bottom
+
+@media(max-width: 576px)
+	.movie
+		&__img
+			max-width: 210px
+			max-height: 315px
+		&__info
+			&-box
+				padding-left: 10px
+				caption
+					font-size: 19px
+				td
+					padding: 2px
+					font-size: 14px

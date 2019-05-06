@@ -1,0 +1,88 @@
+.poster
+	&-box
+		padding: 2px 2px 0
+		background: $seagreen0-transparent
+		font-size: 17px
+		display: flex
+		flex-direction: column
+		justify-content: space-between
+	&__img-box
+		overflow: hidden
+		max-height: 276px
+	&__text
+		&-box
+			position: relative
+			overflow: hidden
+			height: 60px
+			padding-top: 3px
+
+.movie
+	&-img
+		max-width: 100%
+	&-poster
+		text-align: center
+		min-height: 100%
+		img
+			max-width: 100%
+
+		&__title, &__year
+			font-size: 14px
+			margin-top: auto
+		&__title
+			color: $seagreen5
+			text-align: left
+
+		&__year
+			position: absolute
+			z-index: 2
+			bottom: 3px
+			right: 3px
+			color: $seagreen3
+
+.list
+	&-poster
+		text-align: left
+		a
+			color: $seagreen3
+		&__img-box
+			width: 25%
+			height: 100%
+			overflow: hidden
+			img
+				transform: translate(-50%)
+				margin-left: 50%
+		&__text
+			font-size: 15px
+			position: relative
+			min-height: 70px
+			height: auto
+		&__author
+			position: absolute
+			bottom: 3px
+			right: 3px
+			font-size: 14px
+			color: $yellow3
+			&-name
+				color: $seagreen1 !important
+
+@media (max-width: 768px)
+	.poster
+		&-box
+			padding: 0
+	.movie
+		&-poster
+			&__title, &__year
+				font-size: 12px
+
+@media (max-width: 576px)
+	.poster
+		&-box
+			font-size: 12px
+		&__text
+			&-box
+				height: 40px
+	.list
+		&-poster
+			&__text
+				font-size: 13px
+				height: 40px

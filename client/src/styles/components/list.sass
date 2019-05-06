@@ -1,0 +1,53 @@
+.list
+	&-box
+		position: relative
+		margin: 0 auto
+		padding: 0 15px
+		padding-top: 8px
+		padding-bottom: 12px
+
+	&__title
+		margin: 0
+		text-align: center
+		color: $green4
+		font-size: 28px
+		font-weight: normal
+	&__author
+		margin-left: 15px
+		color: $green5	
+	&__edit-btn
+		position: absolute
+		right: 15px
+	&__items-box
+		display: flex
+		flex-wrap: wrap
+		margin-top: 14px
+	
+	&__data
+		&-box
+			max-width: 115px
+			margin-top: 8px
+			margin-left: auto
+	&__comments
+		h4
+			font-size: 25px
+			color: $green5
+			padding: 13px 0
+			padding-left: 18px
+			font-style: italic
+
+@media(max-width: 768px)
+	.list
+		&-box
+			padding: 0 11px
+			padding-top: 6px
+			padding-bottom: 9px
+		&__title
+			font-size: 22px
+		&__author
+			margin-left: 11px
+		&__items-box
+			margin-top: 11px
+		&__comments
+			h4
+				font-size: 20px

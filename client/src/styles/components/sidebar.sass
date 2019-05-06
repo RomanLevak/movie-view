@@ -1,0 +1,33 @@
+.sidebar
+	&__item
+		color: $seagreen4
+		font-size: 18px
+		margin-bottom: 9px
+	&-list
+		padding-left: 8px
+		list-style: none
+		&__heading
+			margin-top: 12px
+			font-size: 15px
+			font-weight: bold
+			color: $green3
+		&__item
+			padding-top: 5px
+			font-size: 14px
+			color: $green2
+			&-active
+				color: $green3
+			&:hover
+				text-decoration: underline
+
+@media(max-width: 768px)
+	.sidebar
+		&__item
+			font-size: 15px
+			margin-bottom: 6px
+		&-list
+			padding-left: 6px
+			&__heading
+				margin-top: 8px
+			&__item
+				padding-top: 5px

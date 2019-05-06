@@ -1,0 +1,35 @@
+.pagination
+	display: block
+	color: $yellow3
+	margin: 0 auto
+	&-list
+		margin: 0 auto
+		margin-top: auto
+		display: flex
+		width: 100%
+		justify-content: center
+	&__item
+		height: 26px
+		min-width: 26px
+		border: 1px solid $seagreen2
+		background: $seagreen1-transparent
+		padding-left: 4px
+		padding-right: 4px
+		text-align: center
+		font-size: 16px
+		cursor: pointer
+		transition: all 200ms
+		&:hover, &-active
+			border-color: $seagreen4
+			color: $green4
+		a:active, a:focus
+			outline: none
+
+@media (max-width: 576px)
+	.pagination
+		&-list
+			margin-top: 8px
+		&__item
+			padding-left: 2px
+			padding-right: 2px
+			font-size: 13px

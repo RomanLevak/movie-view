@@ -1,0 +1,31 @@
+html
+	height: 100%	//to strech green-bg on full page height
+
+*
+	box-sizing: border-box
+	transition: all 200ms
+	
+body
+	background: url('/styles/images/background-smoke.png') center top
+	font-family: Roboto, Arial, sans-serif
+	min-width: 470px
+	height: 100%	//to strech green-bg on full page height
+
+#container
+	position: relative
+
+.content
+	&-box
+		margin: 0 auto
+		width: 100%
+		max-width: 1140px
+		padding-bottom: 15px
+.green-bg
+	position: fixed
+	top: 0;	bottom: 0;
+	transform: translate(-50%); left: 50%	//horizontal align
+	width: 100%
+	z-index: -1
+	max-width: 1140px
+	background: $seagreen1-transparent
+	height: 100%
