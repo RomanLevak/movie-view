@@ -54,10 +54,6 @@ class Search extends Component {
         }
     }
 
-    onSearch() {
-
-    }
-
     getResults = () => {
         if(!this.state.isResultsOpen) return null
         const {movies} = this.props
