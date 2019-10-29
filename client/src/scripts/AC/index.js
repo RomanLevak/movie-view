@@ -45,7 +45,7 @@ export function loadMovies(filters) {
             .catch(err =>
                 dispatch({
                     type: LOAD_MOVIES + FAIL,
-                    payload: err
+                    payload: err.message
                 })
             )
     }
@@ -71,11 +71,11 @@ export function loadMovieInfo(id) {
                     payload: response
                 })
             )
-            .catch(err =>
+            .catch(err => {console.log(err)
                 dispatch({
                     type: LOAD_MOVIE_INFO + FAIL,
-                    payload: err
-                })
+                    payload: err.message
+                })}
             )
     }
 }

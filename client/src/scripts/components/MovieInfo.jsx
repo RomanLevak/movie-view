@@ -18,20 +18,17 @@ class MovieInfo extends Component {
     }
 
     getBody() {
-        const {loading, loaded, error} = this.props
+        const {movie, loading, loaded, error} = this.props
 
-        if(loading)
+        if(error)
+            return <span className = 'error-msg'>{error}</span>
+
+        if(loading || !loaded)
             return (
                 <div className='movie-box'>
                     <Loader />
                 </div>
             )
-
-        if(error)
-            return <span className = 'error-msg'>Failed to load resources</span>
-
-        if(!loaded)
-            return null
 
         const {
             title, vote_average,
@@ -39,7 +36,7 @@ class MovieInfo extends Component {
             original_language, poster_path,
             genres, production_countries,
             tagline, runtime, budget, overview
-        } = this.props.movie
+        } = movie
 
         return (
             <div className='movie-box'>
@@ -108,7 +105,7 @@ class MovieInfo extends Component {
     componentDidMount() {
         const {id, loadMovieInfo, loading, loaded} = this.props
 
-        if(!loading || !loaded)
+        if(!loaded || !loading)
             loadMovieInfo(id)
     }
 
@@ -121,7 +118,8 @@ export default connect(
     state => ({
         movie: state.movieInfo.entity,
         loading: state.movieInfo.loading,
-        loaded: state.movieInfo.loaded
+        loaded: state.movieInfo.loaded,
+        error: state.movieInfo.error
     }),
     {loadMovieInfo}
 )(MovieInfo)

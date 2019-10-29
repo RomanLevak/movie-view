@@ -27,7 +27,7 @@ class Explorer extends Component {
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         loadMovies: PropTypes.func.isRequired,
-        error: PropTypes.object
+        error: PropTypes.string
     }
 
     getGenresList = () =>
@@ -38,13 +38,13 @@ class Explorer extends Component {
         )
 
     getBody = () => {
-        const {movies, loading, error} = this.props
-
-        if(loading)
-            return <Loader />
+        const {movies, loading, loaded, error} = this.props
 
         if(error)
-            return <span className = 'error-msg'>Failed to load resources</span>
+            return <span className = 'error-msg'>{error}</span>
+
+        if(loading || !loaded)
+            return <Loader />
 
         return movies.slice(0, 10).map(movie =>
             <li className = 'explorer__item' key = {movie.id}>

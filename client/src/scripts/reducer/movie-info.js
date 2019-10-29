@@ -2,8 +2,8 @@ import {LOAD_MOVIE_INFO, START, SUCCESS, FAIL} from '../constants'
 
 const defaultState = {
     loading: false,
-    loaded: false,
-    entity: {},
+    error: '',
+    entity: {}
 }
 
 export default (movieInfo = defaultState, action) => {
@@ -15,7 +15,9 @@ export default (movieInfo = defaultState, action) => {
             return {
                 ...movieInfo,
                 loaded: false,
-                loading: true
+                loading: true,
+                error: '',
+                entity: {}
             }
 
         case LOAD_MOVIE_INFO + SUCCESS:
@@ -23,7 +25,17 @@ export default (movieInfo = defaultState, action) => {
                 ...movieInfo,
                 loaded: true,
                 loading: false,
+                error: '',
                 entity: payload
+            }
+
+        case LOAD_MOVIE_INFO + FAIL:
+            return {
+                ...movieInfo,
+                loaded: false,
+                loading: false,
+                entity: {},
+                error: payload
             }
     }
 

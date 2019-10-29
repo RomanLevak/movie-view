@@ -3,6 +3,7 @@ import {LOAD_MOVIES, START, SUCCESS, FAIL} from '../constants'
 const defaultState = {
     loading: false,
     loaded: false,
+    error: '',
     entities: {},
     filters: {popular: true}
 }
@@ -17,7 +18,7 @@ export default (moviesState = defaultState, action) => {
                 ...moviesState,
                 loaded: false,
                 loading: true,
-                error: null
+                error: ''
             }
 
         case LOAD_MOVIES + SUCCESS:
@@ -27,7 +28,7 @@ export default (moviesState = defaultState, action) => {
                 loading: false,
                 entities: payload.movies,
                 total_pages: payload.total_pages,
-                error: null
+                error: ''
             }
 
         case LOAD_MOVIES + FAIL:
