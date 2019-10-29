@@ -10,7 +10,11 @@ class MovieInfo extends Component {
     static propTypes = {
         id: PropTypes.string,
         // from connect
-        movie: PropTypes.object
+        movie: PropTypes.object,
+        loading: PropTypes.bool,
+        loaded: PropTypes.bool,
+        loadMovieInfo: PropTypes.func,
+        error: PropTypes.string
     }
 
     getBody() {

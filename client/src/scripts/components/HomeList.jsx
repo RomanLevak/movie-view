@@ -24,6 +24,12 @@ function Arrow(props) {
     )
 }
 
+Arrow.propTypes = {
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+    next: PropTypes.bool
+}
+
 class HomeList extends Component {
 
     static propTypes = {
