@@ -8,11 +8,11 @@ import PropTypes from 'prop-types'
 class Search extends Component {
 
     static contextTypes = {
-		router: PropTypes.object
-	}
+        router: PropTypes.object
+    }
 
     static propTypes = {
-        //from connect
+        // from connect
         movies: PropTypes.array,
         searchMovie: PropTypes.func.isRequired
     }
@@ -22,28 +22,28 @@ class Search extends Component {
         isResultsOpen: false
     }
 
-    onChange = (event) => {
+    onChange = event => {
         const {value} = event.target
         const {searchMovie} = this.props
-        //inputing will open the search results
+        // inputing will open the search results
         this.setState({value, isResultsOpen: true})
-        if(value == '')
+        if(value === '')
             return this.onBlur()
 
         searchMovie(value, true)
     }
 
     onBlur = () => {
-        //hide results
+        // hide results
         this.setState({isResultsOpen: false})
     }
 
     onFocus = () => {
-        //show results
+        // show results
         this.setState({isResultsOpen: true})
     }
 
-    //handles click on 'Enter' key
+    // handles click on 'Enter' key
     onKeyPress = e => {
         const {history} = this.context.router
         const {value} = this.state
@@ -58,13 +58,13 @@ class Search extends Component {
         if(!this.state.isResultsOpen) return null
         const {movies} = this.props
 
-        return movies.slice(0, 6).map(m => 
-            <Link 
+        return movies.slice(0, 6).map(m =>
+            <Link
                 to = {`/movies/${m.id}`}
                 key = {m.id}
-                onMouseDown = {(e) => e.preventDefault()}    //preventfrom onBlur event which would hide Link and redirection wouldn't happen
+                onMouseDown = {e => e.preventDefault()} // preventfrom onBlur event which would hide Link and redirection wouldn't happen
                 onClick = {() => this.onBlur()}
-                className = 'search__item' 
+                className = 'search__item'
             >
                 {m.title}
                 <span>{m.year}</span>
@@ -86,7 +86,7 @@ class Search extends Component {
                         value = {this.state.value}
                         placeholder='Find movies'
                     />
-                    <Link 
+                    <Link
                         to = {`/movies/search/${this.state.value}`}
                         className='search__btn btn-search flex-center'
                         onClick = {this.onBlur}

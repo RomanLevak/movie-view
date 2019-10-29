@@ -6,10 +6,10 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 class MovieInfo extends Component {
- 
+
     static propTypes = {
         id: PropTypes.string,
-        //from connect
+        // from connect
         movie: PropTypes.object
     }
 
@@ -17,14 +17,15 @@ class MovieInfo extends Component {
         const {loading, loaded, error} = this.props
 
         if(loading)
-            return(
+            return (
                 <div className='movie-box'>
                     <Loader />
                 </div>
             )
+
         if(error)
             return <span className = 'error-msg'>Failed to load resources</span>
-        
+
         if(!loaded)
             return null
 
@@ -36,7 +37,7 @@ class MovieInfo extends Component {
             tagline, runtime, budget, overview
         } = this.props.movie
 
-        return(
+        return (
             <div className='movie-box'>
                 <div className='movie__img flex-center'>
                     <img src = {`/tmdbimg/${poster_path}`} />
@@ -68,8 +69,8 @@ class MovieInfo extends Component {
                             <tr>
                                 <td>Genres</td>
                                 <td> {
-                                    genres.map(g => 
-                                        <Link className='movie__info-link' 
+                                    genres.map(g =>
+                                        <Link className='movie__info-link'
                                             to = {`/movies/genres/${g.name}`}
                                             key = {g.id}
                                         >
@@ -96,7 +97,7 @@ class MovieInfo extends Component {
                 <p className='movie__info-overview'>
                     {overview}
                 </p>
-             </div>
+            </div>
         )
     }
 

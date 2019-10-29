@@ -3,7 +3,7 @@ import {SEARCH_MOVIE, START, SUCCESS, FAIL} from '../constants'
 const defaultState = {
     loaded: false,
     loading: false,
-    tempResults: {}, //used to show results under search input while typing
+    tempResults: {}, // used to show results under search input while typing
     entities: {},
     error: null
 }
@@ -15,14 +15,13 @@ export default (searchState = defaultState, action) => {
 
     const {temp, movies} = payload
 
-    if(temp)    //concerns only tempResults
+    if(temp)    // concerns only tempResults
         switch(type) {
             case SEARCH_MOVIE + START:
-            
-            return {
-                ...searchState,
-                tempResults: {}
-            }
+                return {
+                    ...searchState,
+                    tempResults: {}
+                }
 
             case SEARCH_MOVIE + SUCCESS:
                 return {
@@ -33,7 +32,6 @@ export default (searchState = defaultState, action) => {
 
     switch(type) {
         case SEARCH_MOVIE + START:
-            
             return {
                 ...searchState,
                 loaded: false,
@@ -41,7 +39,7 @@ export default (searchState = defaultState, action) => {
                 entities: [],
                 error: null
             }
-        
+
         case SEARCH_MOVIE + SUCCESS:
             return {
                 ...searchState,
@@ -60,6 +58,6 @@ export default (searchState = defaultState, action) => {
                 error: payload.err
             }
     }
-    
+
     return searchState
 }

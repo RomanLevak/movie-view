@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import Header from './Header'
 import Search from './Search'
 import HomeList from './HomeList'
@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div>
+                <Fragment>
                     <Header />
                     <main className='content-box full-height'>
                         <Search />
@@ -20,7 +20,7 @@ class App extends Component {
                         </Switch>
                     </main>
                     <div className="green-bg"></div>
-                </div>
+                </Fragment>
             </Router>
         )
     }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import Poster from './Poster'
@@ -7,21 +7,20 @@ import Loader from './Loader'
 import {loadMovies} from '../AC/index'
 import {mapToArr} from '../helpers'
 import {Link} from 'react-router-dom'
-import 'slick-carousel/slick/slick.css' 
+import 'slick-carousel/slick/slick.css'
 
-
-//Arrow for slider
+// Arrow for slider
 function Arrow(props) {
-    const { style, onClick, next } = props
+    const {style, onClick, next} = props
 
     return (
         <div
             className = {next ? 'home-list__next-arrow' : 'home-list__prev-arrow'}
-            style={{ ...style, display: 'block' }}
+            style={{...style, display: 'block'}}
             onClick={onClick}
         >
             <img src='/styles/images/arrow.svg'/>
-        </div> 
+        </div>
     )
 }
 
@@ -29,7 +28,7 @@ class HomeList extends Component {
 
     static propTypes = {
         name: PropTypes.oneOf(['Popular now', 'Selections']),
-        //from connect
+        // from connect
         movies: PropTypes.array,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
@@ -44,25 +43,25 @@ class HomeList extends Component {
 
     getBody = () => {
         const {movies, loading} = this.props
-        
+
         if(loading) return <Loader />
-        
+
         const items = []
-        //creating movie posters array
-        movies.slice(0, 18).map(m => 
+        // creating movie posters array
+        movies.slice(0, 18).map(m =>
             items.push(
                 <li  className='home-list__item' key={m.id} >
                     <Link to = {`/movies/${m.id}`}>
                         <Poster
                             title = {m.title}
-                            year = {m.year} 
+                            year = {m.year}
                             poster_path = {m.poster_path}
                         />
                     </Link>
                 </li>
             )
         )
-        //settings for slider
+        // settings for slider
         const settings = {
             dots: false,
             infinite: true,

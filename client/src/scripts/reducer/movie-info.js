@@ -2,13 +2,13 @@ import {LOAD_MOVIE_INFO, START, SUCCESS, FAIL} from '../constants'
 
 const defaultState = {
     loading: false,
-	loaded: false,
-	entity: {},
+    loaded: false,
+    entity: {},
 }
 
 export default (movieInfo = defaultState, action) => {
     const {type, payload} = action
-    
+
     switch(type) {
 
         case LOAD_MOVIE_INFO + START:

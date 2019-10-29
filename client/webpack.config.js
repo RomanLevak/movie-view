@@ -13,46 +13,46 @@ module.exports = {
 
     module: {
         rules: [
-            { //scripts
+            { // scripts
                 test: /\.(jsx?)$/,
                 exclude: /node_modules/,
-                resolve: { extensions: [".js", ".jsx"] },
+                resolve: {extensions: ['.js', '.jsx']},
                 use: {
                     loader: 'babel-loader'
                 }
             },
-            { //styles
+            { // styles
                 test: /\.sass$/,
                 use: [
                     'style-loader', // creates style nodes from JS strings
                     'css-loader',   // translates CSS into CommonJS
-                    'sass-loader'   // compiles Sass to CSS
+                    'sass-loader'   // compiles Sass to CSS`
                 ]
-              },
-              {
+            },
+            {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
-              }
+            }
         ]
     },
 
     devServer: {
         port: 6060,
-        publicPath: '/scripts/',    //because index html importing script: src='scripts/bundle.js'
+        publicPath: '/scripts/',    // because index html importing script: src='scripts/bundle.js'
         contentBase: path.resolve(__dirname, 'public'),
-        historyApiFallback: true, //for using BrowserRouter
+        historyApiFallback: true, // for using BrowserRouter
         proxy: {
-            '/tmdbapi' :{
+            '/tmdbapi': {
                 target: 'https://api.themoviedb.org/3',
                 changeOrigin: true,
                 secure: false,
-                pathRewrite: {'^/tmdbapi' : ''}
+                pathRewrite: {'^/tmdbapi': ''}
             },
-            '/tmdbimg' :{
+            '/tmdbimg': {
                 target: 'http://image.tmdb.org/t/p/w300',
                 changeOrigin: true,
                 secure: false,
-                pathRewrite: {'^/tmdbimg' : ''}
+                pathRewrite: {'^/tmdbimg': ''}
             }
         }
     },

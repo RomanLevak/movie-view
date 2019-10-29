@@ -11,38 +11,37 @@ class Results extends Component {
 
     static propTypes = {
         query: PropTypes.string,
-        searchMovie: PropTypes.func.isRequired,
-        //form connect
+        // form connect
         movies: PropTypes.array,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
-        searchMovie: PropTypes.func
+        searchMovie: PropTypes.func.isRequired
     }
-    
+
     componentDidMount() {
         const {loaded, loading, query, searchMovie} = this.props
-        
-		if(!loading || !loaded)
+
+        if(!loading || !loaded)
             searchMovie(query)
     }
 
     getBody = () => {
         const {movies, loading, error} = this.props
 
-		if(loading)
-			return <Loader />
+        if(loading)
+            return <Loader />
 
         if(error)
             return <span className = 'error-msg'>Failed to load resources</span>
-        //renders only first 18 elements
-        return movies.slice(0, 18).map(movie => 
+        // renders only first 18 elements
+        return movies.slice(0, 18).map(movie =>
             <li className = 'results-list__item' key = {movie.id}>
-				<Link to = {`/movies/${movie.id}`} key = {movie.id}>
+                <Link to = {`/movies/${movie.id}`} key = {movie.id}>
                     <Poster
                         type = 'horizontal'
                         title = {movie.title}
-                        year = {movie.year} 
-                        poster_path = {movie.poster_path} 
+                        year = {movie.year}
+                        poster_path = {movie.poster_path}
                     />
                 </Link>
             </li>
@@ -54,8 +53,8 @@ class Results extends Component {
             <div className = 'results-box'>
                 <div className='results'>
                     <h2 className = 'results__title'>
-                        Searh results for
-                        <span className = 'results__query'> ' {this.props.query} '</span>
+                        Searh results for:
+                        <span className = 'results__query'> {this.props.query}</span>
                     </h2>
                     <ul className='results-list'>
                         {this.getBody()}

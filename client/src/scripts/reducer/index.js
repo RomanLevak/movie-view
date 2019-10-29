@@ -4,7 +4,7 @@ import movieInfo from './movie-info'
 import search from './search'
 
 export default combineReducers({
-	movies,
-	movieInfo,
-	search
+    movies,
+    movieInfo,
+    search
 })

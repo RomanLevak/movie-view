@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 class Poster extends Component {
-    
+
     static propTypes = {
         title: PropTypes.string.isRequired,
         poster_path: PropTypes.string,
@@ -11,15 +11,15 @@ class Poster extends Component {
     }
 
     getBody = () => {
-        const {poster_path, year, title, type} = this.props
+        const {poster_path, year, title} = this.props
         const img_url = poster_path ? `/tmdbimg/${poster_path}` : '/styles/images/not-found.svg'
 
-        return(
+        return (
             <div className='poster-box movie-poster'>
-                    <img src={img_url} alt='' className='movie-img' />
+                <img src={img_url} alt='' className='movie-img' />
                 <div className='poster__text-box'>
                     <span className='movie-poster__title'>{title}</span>
-                    <span className='movie-poster__year'>{this.props.year}</span>
+                    <span className='movie-poster__year'>{year}</span>
                 </div>
             </div>
         )

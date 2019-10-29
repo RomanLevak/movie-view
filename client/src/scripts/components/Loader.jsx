@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Loader() {
-	return (
+    return (
         <div className='loader-box'>
             <ul className='loader'>
                 <li className='loader__square'></li>

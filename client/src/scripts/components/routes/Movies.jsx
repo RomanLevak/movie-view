@@ -23,25 +23,25 @@ class Movies extends Component {
 
     getResults = ({match}) => {
         const {query} = match.params
-        
+
         return <Results query = {query} key = {query} />
     }
 
     getDefaultExplorer = ({match}) => {
         const {page} = match.params
         if(!page)
-            return <Redirect to = {`/movies/popular/1`} />
-        
+            return <Redirect to = {'/movies/popular/1'}/>
+
         return  <Explorer filters = {{type: 'popular', page: parseInt(page)}} key = {'popular' + page}/>
     }
-    
+
     getExplorerWithGenre = ({match}) => {
         const {genre, page} = match.params
 
         if(!page)
             return <Redirect to = {`/movies/genres/${genre}/1`} />
 
-        const genreID = genres.find(g => g.name == genre).id    //finding an id by genre name
+        const genreID = genres.find(g => g.name == genre).id    // finding an id by genre name
 
         return <Explorer filters = {{
             genreID,
@@ -52,7 +52,7 @@ class Movies extends Component {
 
     getMovie = ({match}) => {
         const {id} = match.params
-        
+
         return <MovieInfo id = {match.params.id} key = {id}/>
     }
 }
