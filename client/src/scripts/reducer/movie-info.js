@@ -2,6 +2,7 @@ import {LOAD_MOVIE_INFO, START, SUCCESS, FAIL} from '../constants'
 
 const defaultState = {
     loading: false,
+    loaded: false,
     error: '',
     entity: {}
 }
