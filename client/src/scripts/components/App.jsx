@@ -16,10 +16,10 @@ class App extends Component {
                     <main className='content-box full-height'>
                         <Search />
                         <Switch>
-                            <Route path='/login' component = {() => <Form />}/>
-                            <Route path='/sing-up' component = {() => <Form />}/>
-                            <Route path = '/movies' component = {() => <Movies />} />
-                            <Route path='/' component={() => <HomeList/>} />
+                            <Route path='/login' render = {() => <Form />} />
+                            <Route path='/sing-up' render = {() => <Form />} />
+                            <Route path = '/movies' render = {() => <Movies />} />
+                            <Route path='/' render = {() => <HomeList/>} />
                         </Switch>
                     </main>
                     <div className="green-bg"></div>
