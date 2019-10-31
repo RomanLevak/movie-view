@@ -20,7 +20,7 @@ class App extends Component {
                             <Route path='/login' render = {() => <Form />} />
                             <Route path='/sing-up' render = {() => <Form />} />
                             <Route path = '/movies' render = {() => <Movies />} />
-                            <Route path='/' render = {() => <HomeList/>} />
+                            <Route path='/' exact render = {() => <HomeList/>} />
                             <Route component={NotFound} />
                         </Switch>
                     </main>
