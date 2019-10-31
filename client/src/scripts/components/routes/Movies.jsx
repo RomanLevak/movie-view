@@ -38,10 +38,13 @@ class Movies extends Component {
     getExplorerWithGenre = ({match}) => {
         const {genre, page} = match.params
 
+        if(!genres.map(g => g.name).includes(genre))
+            return <Redirect to={'/not-found'} />
+
         if(!page)
             return <Redirect to = {`/movies/genres/${genre}/1`} />
 
-        const genreID = genres.find(g => g.name == genre).id    // finding an id by genre name
+        const genreID = genres.find(g => g.name === genre).id    // finding an id by genre name
 
         return <Explorer filters = {{
             genreID,

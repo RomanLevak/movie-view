@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {loadMovieInfo} from '../AC/index'
 import Loader from './Loader'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 class MovieInfo extends Component {
@@ -21,7 +21,9 @@ class MovieInfo extends Component {
         const {movie, loading, loaded, error} = this.props
 
         if(error)
-            return <span className = 'error-msg'>{error}</span>
+            return error === 'Not Found' ?
+                <Redirect to='/not-found' /> :
+                <span className = 'error-msg'>{error}</span>
 
         if(loading || !loaded)
             return (
