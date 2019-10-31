@@ -5,6 +5,7 @@ import HomeList from './HomeList'
 import Movies from './routes/Movies'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Form from './Form'
+import NotFound from './NotFound'
 import '../../styles/index.sass'
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
                             <Route path='/sing-up' render = {() => <Form />} />
                             <Route path = '/movies' render = {() => <Movies />} />
                             <Route path='/' render = {() => <HomeList/>} />
+                            <Route component={NotFound} />
                         </Switch>
                     </main>
                     <div className="green-bg"></div>
