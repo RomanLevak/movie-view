@@ -1,22 +1,35 @@
 import React, {Component} from 'react'
+import {Prompt} from 'react-router-dom'
 
 class Form extends Component {
     state = {
+        isBLocking: false,
         email: '',
         password: ''
     }
 
     handleEmailChange = e =>
-        this.setState({email: e.target.value})
+        this.setState({
+            email: e.target.value
+        })
 
     handlePasswordChange = e =>
-        this.setState({password: e.target.value})
+        this.setState({
+            password: e.target.value
+        })
+
+    checkIfBlocking = () =>
+        Boolean(this.state.email.length || this.state.password.length)
 
     render() {
         return (
             <form className='form form-box'
                 onSubmit={this.handleSubmit}
             >
+                <Prompt
+                    when={this.checkIfBlocking()}
+                    message={'Are you sure? Changes you made may not be saved'}
+                />
                 <fieldset className='form__field-box'>
                     <fieldset className='form__field'>
                         <label htmlFor="user_email">Email</label>
