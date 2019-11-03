@@ -30,6 +30,7 @@
     ],
     "rules": {
         "no-prototype-builtins": "off",
+        "no-console": "warn",
         "accessor-pairs": "warn",
         "no-cond-assign": ["warn", "always"],
         "no-import-assign": "warn",
