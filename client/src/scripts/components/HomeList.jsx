@@ -88,7 +88,7 @@ class HomeList extends Component {
 
     render() {
         return (
-            <div className='home-list-box'>
+            <div className='home-list home-list-box'>
                 <h2 className='home-list__title'>Popular now</h2>
                 {this.getBody()}
                 <Link to = '/movies' className='home-list__link'>view more...</Link>
