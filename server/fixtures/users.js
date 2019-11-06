@@ -3,5 +3,5 @@ module.exports = [{
     password: '1234'
 }, {
     email: 'u2@gmail.com',
-    password: '12345'
+    password: '1234'
 }]

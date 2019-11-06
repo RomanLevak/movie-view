@@ -4,6 +4,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('./handlers/session')
+const passport = require('passport')
+const rootRoute = require('./routes/root')
+const registerRoute = require('./routes/register')
+const loginRoute = require('./routes/login')
+const logoutRoute = require('./routes/logout')
 
 const app = express()
 
@@ -11,14 +16,11 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(cookieParser(config.get('secret')))
 app.use(session)
-
-app.use((req, res) => {
-    if(req.session.counter)
-        req.session.counter = req.session.counter + 1
-    else
-        req.session.counter = 1
-
-    res.send({counter: req.session.counter})
-})
+app.use(passport.initialize())
+app.use(passport.session())
+app.post('/login', loginRoute)
+app.post('/register', registerRoute)
+app.post('/logout', logoutRoute)
+app.use('/', rootRoute)
 
 module.exports = app
