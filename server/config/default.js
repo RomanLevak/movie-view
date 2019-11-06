@@ -7,4 +7,10 @@ module.exports = {
     mongodb: {
         uri: 'mongodb://localhost/movieview'
     },
+    crypto: {
+        hash: {
+            length: 128,
+            iterations: 10
+        }
+    }
 }
