@@ -8,7 +8,6 @@ async function fillDB() {
         for(let user of users) {
             const u = new User(user)
             await u.setPassword(user.password)
-            console.log(u)
             await u.save()
         }
 
