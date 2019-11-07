@@ -102,7 +102,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: true,
                 isSingedIn: false,
-                error: 0
+                error: ''
             }
         case CHECKAUTH + SUCCESS:
             return {

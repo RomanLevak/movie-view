@@ -224,11 +224,18 @@ export function checkIfSingedIn() {
         })
             .then(res => res.json())
             .then(res => {
-                if(res.user)
-                    dispatch({
-                        type: CHECKAUTH + SUCCESS,
-                        payload: res.user
-                    })
+                if(!res.user)
+                    throw new Error(res.message)
+                dispatch({
+                    type: CHECKAUTH + SUCCESS,
+                    payload: res.user
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: CHECKAUTH + FAIL,
+                    payload: err.message
+                })
             })
     }
 }
