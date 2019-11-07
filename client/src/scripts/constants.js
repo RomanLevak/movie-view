@@ -5,6 +5,11 @@ export const LOAD_MOVIE_INFO = 'LOAD_MOVIE_INFO'
 export const SEARCH_MOVIE = 'SEARCH_MOVIE'
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 
+export const SINGIN = 'SINGIN'
+export const SINGOUT = 'SINGOUT'
+export const SINGUP = 'SINGUP'
+export const CHECKAUTH = 'CHECKAUTH'
+
 export const START = '_START'
 export const SUCCESS = '_SUCCESS'
 export const FAIL = '_FAIL'

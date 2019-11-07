@@ -13,12 +13,12 @@ class App extends Component {
         return (
             <Router>
                 <Fragment>
-                    <Header />
+                    <Route render = {props => <Header {...props} />} />
                     <main className='content-box full-height'>
                         <Search />
                         <Switch>
-                            <Route path='/login' render = {() => <Form />} />
-                            <Route path='/sing-up' render = {() => <Form />} />
+                            <Route path='/sing-in' render = {props => <Form {...props} />} />
+                            <Route path='/sing-up' render = {props => <Form {...props} />} />
                             <Route path = '/movies' render = {() => <Movies />} />
                             <Route path='/' exact render = {() => <HomeList/>} />
                             <Route component={NotFound} />

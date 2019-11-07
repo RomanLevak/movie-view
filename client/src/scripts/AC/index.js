@@ -2,6 +2,10 @@ import {
     API_KEY, LOAD_MOVIES,
     LOAD_MOVIE_INFO,
     SEARCH_MOVIE,
+    SINGIN,
+    SINGOUT,
+    SINGUP,
+    CHECKAUTH,
     START,
     SUCCESS,
     FAIL
@@ -71,7 +75,7 @@ export function loadMovieInfo(id) {
                     payload: response
                 })
             )
-            .catch(err => {console.log(err)
+            .catch(err => {
                 dispatch({
                     type: LOAD_MOVIE_INFO + FAIL,
                     payload: err.message
@@ -110,5 +114,121 @@ export function searchMovie(query, temp = false) {
                     payload: {err, temp}
                 })
             )
+    }
+}
+
+export function singIn(email, password) {
+    return dispatch => {
+        dispatch({
+            type: SINGIN + START,
+        })
+
+        fetch('/server/login', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({email, password})
+        })
+            .then(res => res.json())
+            .then(res => {
+                if(!res.user)
+                    throw new Error(res.message)
+
+                dispatch({
+                    type: SINGIN + SUCCESS,
+                    payload: res.user
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: SINGIN + FAIL,
+                    payload: err.message
+                })
+            })
+    }
+}
+
+export function singUp(email, password) {
+    return dispatch => {
+        dispatch({
+            type: SINGUP + START,
+        })
+
+        fetch('/server/register', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({email, password})
+        })
+            .then(res => res.json())
+            .then(res => {
+                if(!res.user)
+                    throw new Error(res.message)
+
+                dispatch({
+                    type: SINGUP + SUCCESS,
+                    payload: res.user
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: SINGUP + FAIL,
+                    payload: err.message
+                })
+            })
+    }
+}
+export function singOut() {
+    return dispatch => {
+        dispatch({
+            type: SINGOUT + START
+        })
+
+        fetch('/server/logout', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST'
+        })
+            .then(res => res.json())
+            .then(res => {
+                if(res.user !== false)
+                    throw new Error(res.message)
+
+                dispatch({
+                    type: SINGOUT + SUCCESS,
+                    payload: res.message
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: SINGOUT + FAIL,
+                    payload: err.message
+                })
+            })
+    }
+}
+
+export function checkIfSingedIn() {
+    return dispatch => {
+        dispatch({
+            type: CHECKAUTH + START
+        })
+
+        fetch('/server', {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                if(res.user)
+                    dispatch({
+                        type: CHECKAUTH + SUCCESS,
+                        payload: res.user
+                    })
+            })
     }
 }

@@ -1,7 +1,26 @@
 import React, {Component} from 'react'
-import {Prompt} from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
+import {singIn, singUp} from '../AC/index'
 
 class Form extends Component {
+
+    static contextTypes = {
+        router: PropTypes.object,
+    }
+
+    static propTypes = {
+        location: PropTypes.object,
+        // from connect
+        singIn: PropTypes.func.isRequired,
+        singUp: PropTypes.func.isRequired,
+        isSingedIn: PropTypes.bool.isRequired,
+        loading: PropTypes.bool,
+        user: PropTypes.object,
+        error: PropTypes.string
+    }
+
     state = {
         isBLocking: false,
         email: '',
@@ -18,18 +37,47 @@ class Form extends Component {
             password: e.target.value
         })
 
-    checkIfBlocking = () =>
-        Boolean(this.state.email.length || this.state.password.length)
+    handleSingInClick = e => {
+        e.preventDefault()
+
+        const {singIn} = this.props
+        const {email, password} = this.state
+        singIn(email, password)
+    }
+
+    handleSingUpClick = e => {
+        e.preventDefault()
+
+        const {singUp} = this.props
+        const {email, password} = this.state
+        singUp(email, password)
+    }
+
+    getStatusArea = () => {
+        if(this.props.error)
+            return <span className="error-msg">{this.props.error}</span>
+        if(this.props.isSingedIn)
+            return `you are singed in as ${this.props.user.email}`
+        if(this.props.loading)
+            return 'loading...'
+
+        return null
+    }
 
     render() {
+        if(this.props.isSingedIn) {
+            try {
+                const {from} = this.props.location.state
+                return <Redirect to={from} />
+            } catch (err) {
+                return <Redirect to='/' />
+            }
+        }
+
         return (
             <form className='form form-box'
                 onSubmit={this.handleSubmit}
             >
-                <Prompt
-                    when={this.checkIfBlocking()}
-                    message={'Are you sure? Changes you made may not be saved'}
-                />
                 <fieldset className='form__field-box'>
                     <fieldset className='form__field'>
                         <label htmlFor="user_email">Email</label>
@@ -49,9 +97,18 @@ class Form extends Component {
                             onChange={this.handlePasswordChange}
                         />
                     </fieldset>
+                    <div className="form__status form__status-box">
+                        {this.getStatusArea()}
+                    </div>
                     <div className="form__buttons-wrap">
-                        <input className='form__button' type='submit' value='Login' />
-                        <input className='form__button' type='submit' value='sing up' />
+                        <input className='form__button' type='submit'
+                            value='singIn'
+                            onClick = {this.handleSingInClick}
+                        />
+                        <input className='form__button' type='submit'
+                            value='singup'
+                            onClick = {this.handleSingUpClick}
+                        />
                     </div>
                 </fieldset>
             </form>
@@ -59,4 +116,12 @@ class Form extends Component {
     }
 }
 
-export default Form
+export default connect(
+    state => ({
+        isSingedIn: state.user.isSingedIn,
+        loading: state.user.loading,
+        error: state.user.error,
+        user: state.user.entity
+    }),
+    {singIn, singUp}
+)(Form)

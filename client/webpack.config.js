@@ -51,6 +51,12 @@ module.exports = {
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: {'^/tmdbimg': ''}
+            },
+            '/server': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: {'^/server': ''}
             }
         }
     },

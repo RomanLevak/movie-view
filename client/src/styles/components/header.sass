@@ -3,10 +3,12 @@
 	justify-content: space-between
 	align-items: center
 	padding: 0 15px
+	max-height: 55px
 	background: $black
 	&__buttons
 		display: flex
 		justify-content: space-between
+		align-items: center
 		width: 215px
 		text-transform: uppercase
 	&__title
@@ -25,6 +27,14 @@
 		padding-top: 6px
 		font-size: 15px
 		text-transform: uppercase
+	&__user
+		color: $yellow2
+		cursor: pointer
+		text-transform: lowercase
+	&__singout
+		height: 40px
+		&-img
+			max-height: 100%
 
 @media (max-width: 576px)
 	.header
