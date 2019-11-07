@@ -1,8 +1,9 @@
 const mongoose = require('../libs/mongoose')
+const {Schema} = mongoose
 const crypto = require('crypto')
 const config = require('config')
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: 'Email cannot be blank',
@@ -23,7 +24,8 @@ const userSchema = new mongoose.Schema({
     salt: {
         required: true,
         type: String
-    }
+    },
+    lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 }, {timestamps: true})
 
 function generatePassword(salt, password) {

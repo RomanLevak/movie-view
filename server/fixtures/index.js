@@ -1,9 +1,12 @@
 const User = require('../models/user')
+const List = require('../models/list')
 const users = require('./users')
+const lists = require('./lists')
 
 async function fillDB() {
     try {
         await User.deleteMany()
+        await List.deleteMany()
 
         for(let user of users) {
             const u = new User(user)
@@ -11,7 +14,13 @@ async function fillDB() {
             await u.save()
         }
 
-        console.log(`${users.length} users have been saved in DB`)
+        for(let list of lists) {
+            const l = new List(list)
+            await l.setUserByEmail(list.userEmail)
+            await l.save()
+        }
+
+        console.log(`${users.length} users and ${lists.length} have been saved in DB`)
     } catch (err) {
         console.error(err)
     }
