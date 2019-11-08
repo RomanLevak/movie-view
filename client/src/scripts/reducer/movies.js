@@ -1,4 +1,5 @@
 import {LOAD_MOVIES, START, SUCCESS, FAIL} from '../constants'
+import {filterMovies} from '../helpers'
 
 const defaultState = {
     loading: false,
@@ -12,7 +13,6 @@ export default (moviesState = defaultState, action) => {
     const {type, payload} = action
 
     switch(type) {
-
         case LOAD_MOVIES + START:
             return {
                 ...moviesState,
@@ -21,15 +21,21 @@ export default (moviesState = defaultState, action) => {
                 error: ''
             }
 
-        case LOAD_MOVIES + SUCCESS:
+        case LOAD_MOVIES + SUCCESS: {
+            let {results, total_pages} = payload
+            let movies = filterMovies(results)
+            // api maxiimal requested page allowed is 1000
+            total_pages = total_pages > 1000 ? 1000 : total_pages
+
             return {
                 ...moviesState,
                 loaded: true,
                 loading: false,
-                entities: payload.movies,
-                total_pages: payload.total_pages,
+                entities: movies,
+                total_pages,
                 error: ''
             }
+        }
 
         case LOAD_MOVIES + FAIL:
             return {

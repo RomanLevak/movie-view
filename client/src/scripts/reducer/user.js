@@ -26,14 +26,16 @@ export default (userState = defaultState, action) => {
                 entity: {},
                 error: ''
             }
+
         case SINGIN + SUCCESS:
             return {
                 ...userState,
                 loading: false,
                 isSingedIn: true,
-                entity: payload,
+                entity: payload.user,
                 error: ''
             }
+
         case SINGIN + FAIL:
             return {
                 ...userState,
@@ -42,6 +44,7 @@ export default (userState = defaultState, action) => {
                 entity: {},
                 error: payload
             }
+
         case SINGUP + START:
             if(userState.isSingedIn)
                 return {
@@ -55,12 +58,13 @@ export default (userState = defaultState, action) => {
                 entity: {},
                 error: ''
             }
+
         case SINGUP + SUCCESS:
             return {
                 ...userState,
                 loading: false,
                 isSingedIn: true,
-                entity: payload,
+                entity: payload.user,
                 error: ''
             }
         case SINGUP + FAIL:
@@ -109,7 +113,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: false,
                 isSingedIn: true,
-                entity: payload,
+                entity: payload.user,
                 error: ''
             }
         case CHECKAUTH + FAIL:
