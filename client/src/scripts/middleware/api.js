@@ -18,15 +18,12 @@ export default () => next => action => {
         body: method == 'POST' ? callAPI.body : null
     })
         .then(response => {
-            if(response.status >= 400 && !/^\/?server/.test(callAPI.url))
+            if(response.status >= 400)
                 throw new Error(response.statusText)
 
             return response.json()
         })
         .then(response => {
-            if(response.status >= 400)
-                throw new Error(response.message)
-
             next({
                 ...rest,
                 type: type + SUCCESS,

@@ -42,7 +42,6 @@ class MovieInfo extends Component {
 
         return (
             <div className='movie-box'>
-                <div className="movie-dark-bg"></div>
                 <div className='movie__img flex-center'>
                     <img src = {`/tmdbimg/${poster_path}`} />
                 </div>

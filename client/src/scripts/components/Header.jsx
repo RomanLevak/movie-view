@@ -10,7 +10,7 @@ class Header extends Component {
         location: PropTypes.object,
         // from connect
         isSingedIn: PropTypes.bool.isRequired,
-        user: PropTypes.object,
+        user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
         singOut: PropTypes.func,
         checkIfSingedIn: PropTypes.func,
     }

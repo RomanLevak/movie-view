@@ -14,11 +14,11 @@ class App extends Component {
             <Router>
                 <Fragment>
                     <Route render = {props => <Header {...props} />} />
-                    <main className='content-box full-height'>
+                    <main className='content-box'>
                         <Search />
                         <Switch>
                             <Route
-                                path={['/sing-in', '/sing-up']}
+                                path={/(sing-in|sing-up)/}
                                 render = {props => <Form {...props} />}
                             />
                             <Route path = '/movies' render = {() => <Movies />} />
