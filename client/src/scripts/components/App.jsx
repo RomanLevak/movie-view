@@ -18,7 +18,7 @@ class App extends Component {
                         <Search />
                         <Switch>
                             <Route
-                                path={/(sing-in|sing-up)/}
+                                path='/(sing-in|sing-up)/'
                                 render = {props => <Form {...props} />}
                             />
                             <Route path = '/movies' render = {() => <Movies />} />
