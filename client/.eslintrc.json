@@ -71,6 +71,10 @@
             "no-multiple-empty-lines": ["warn", {"max": 1}],
             "no-trailing-spaces": "warn",
             "object-curly-spacing": ["warn", "never"],
+            "padding-line-between-statements": [
+                "warn",
+                {"blankLine": "always", "prev": "*", "next": "case"}
+            ],
             "semi": ["warn", "never"],
             "space-before-blocks": "warn",
             "space-before-function-paren": ["warn", "never"],
