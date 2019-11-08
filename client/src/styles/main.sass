@@ -6,20 +6,27 @@ html
 	transition: all 200ms
 	
 body
+	padding: 0
+	margin: 0
 	background: url('/styles/images/background-smoke.png') center top
 	font-family: Roboto, Arial, sans-serif
 	min-width: 470px
 	height: 100%	//to strech green-bg on full page height
+	text-align: center
 
 #container
-	position: relative
+	height: 100%
+	display: flex
+	flex-direction: column
 
 .content
 	&-box
 		margin: 0 auto
 		width: 100%
 		max-width: 1140px
-		padding-bottom: 15px
+		height: 100%
+		display: flex
+		flex-direction: column
 .green-bg
 	position: fixed
 	top: 0;	bottom: 0;

@@ -1,38 +1,40 @@
 .movie
 	&-box
+		position: relative
+		height: 100%
 		min-height: 250px
 		width: 100%
 		max-width: 710px
 		margin: 0 auto
-		padding: 0 5px
-		display: flex
-		flex-wrap: wrap
+		padding: 5px
 		background: $black-transparent
 	&__img
+		display: inline-block
 		max-height: 374px
 		width: 35%
-		height: 100%
 		overflow: hidden
 		img
 			max-width: 100%
 	&__info
 		border-collapse: collapse
 		width: 100%
+		text-align: left
 		&-box
+			display: inline-block
+			vertical-align: top
 			padding-left: 14px
 			width: 65%
-			height: 100%
 		&-link
 			color: $yellow4
 			&:hover
 				text-decoration: underline
 		&-overview
-			color: $green1
-			padding: 6px
-			padding-top: 12px
-			font-size: 16px
-			display: block
 			min-width: 100%
+			padding: 6px
+			display: block
+			font-size: 16px
+			color: $green1
+			text-align: left
 			
 		caption
 			font-size: 24px
@@ -41,10 +43,10 @@
 		td
 			padding: 3px
 			border-bottom: 1px solid $yellow1
-			font-size: 16px
+			font-size: 15px
 			&:nth-child(1)
 				color: $green3
-				width: 100px
+				width: 128px
 				vertical-align: top
 				text-transform: capitalize
 			&:nth-child(2)
