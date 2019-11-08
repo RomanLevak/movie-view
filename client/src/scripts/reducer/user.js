@@ -11,9 +11,9 @@ const defaultState = {
 }
 
 export default (userState = defaultState, action) => {
-    const {payload} = action
+    const {type, payload} = action
 
-    switch(action.type) {
+    switch(type) {
         case SINGIN + START:
             if(userState.isSingedIn)
                 return {
@@ -67,6 +67,7 @@ export default (userState = defaultState, action) => {
                 entity: payload.user,
                 error: ''
             }
+
         case SINGUP + FAIL:
             return {
                 ...userState,
@@ -75,6 +76,7 @@ export default (userState = defaultState, action) => {
                 entity: {},
                 error: payload
             }
+
         case SINGOUT + START:
             if(!userState.isSingedIn)
                 return {
@@ -86,6 +88,7 @@ export default (userState = defaultState, action) => {
                 loading: true,
                 error: ''
             }
+
         case SINGOUT + SUCCESS:
             return {
                 ...userState,
@@ -94,6 +97,7 @@ export default (userState = defaultState, action) => {
                 entity: {},
                 error: ''
             }
+
         case SINGOUT + FAIL:
             return {
                 ...userState,
@@ -101,6 +105,7 @@ export default (userState = defaultState, action) => {
                 isSingedIn: true,
                 error: ''
             }
+
         case CHECKAUTH + START:
             return {
                 ...userState,
@@ -108,6 +113,7 @@ export default (userState = defaultState, action) => {
                 isSingedIn: false,
                 error: ''
             }
+
         case CHECKAUTH + SUCCESS:
             return {
                 ...userState,
@@ -116,6 +122,7 @@ export default (userState = defaultState, action) => {
                 entity: payload.user,
                 error: ''
             }
+
         case CHECKAUTH + FAIL:
             return {
                 ...userState,

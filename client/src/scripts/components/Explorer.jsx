@@ -33,7 +33,11 @@ class Explorer extends Component {
     getGenresList = () =>
         genres.map(genre =>
             <li className = 'sidebar-list__item' key = {genre.id}>
-                <NavLink activeClassName = 'sidebar-list__item-active' to = {`/movies/genres/${genre.name}`}>{genre.name}</NavLink>
+                <NavLink
+                    activeClassName = 'sidebar-list__item-active'
+                    to = {`/movies/genres/${genre.name}`}>
+                    {genre.name}
+                </NavLink>
             </li>
         )
 
@@ -78,7 +82,11 @@ class Explorer extends Component {
                     {this.getBody()}
                 </ul>
                 <div className='explorer__sidebar sidebar'>
-                    <h6 className='sidebar__item' ><Link to = '/movies' className='sidebar__item'>Popular now</Link></h6>
+                    <h6 className='sidebar__item'>
+                        <Link to = '/movies' className='sidebar__item'>
+                            Popular now
+                        </Link>
+                    </h6>
                     <h6 className='sidebar-list__heading'>Genres</h6>
                     <ul className='sidebar-list'>
                         {this.getGenresList()}

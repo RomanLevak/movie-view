@@ -91,7 +91,9 @@ class HomeList extends Component {
             <div className='home-list home-list-box'>
                 <h2 className='home-list__title'>Popular now</h2>
                 {this.getBody()}
-                <Link to = '/movies' className='home-list__link'>view more...</Link>
+                <Link to = '/movies' className='home-list__link'>
+                    view more...
+                </Link>
             </div>
         )
     }

@@ -15,6 +15,7 @@ class Results extends Component {
         movies: PropTypes.array,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
+        error: PropTypes.string,
         searchMovie: PropTypes.func.isRequired
     }
 
@@ -32,7 +33,7 @@ class Results extends Component {
             return <Loader />
 
         if(error)
-            return <span className = 'error-msg'>Failed to load resources</span>
+            return <span className = 'error-msg'>{error}</span>
         // renders only first 18 elements
         return movies.slice(0, 18).map(movie =>
             <li className = 'results-list__item' key = {movie.id}>

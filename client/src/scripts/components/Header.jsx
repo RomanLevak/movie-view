@@ -16,34 +16,34 @@ class Header extends Component {
     }
 
     getUserArea() {
-        if(!this.props.isSingedIn)
+        if(this.props.isSingedIn)
             return (
                 <div className='header__buttons'>
-                    <Link
-                        to={{
-                            pathname: '/sing-in',
-                            state: {from: this.props.location}
-                        }}
-                        className='btn-border header__btn btn-login'>
-                        sing in
-                    </Link>
-                    <Link
-                        to={{
-                            pathname: '/sing-in',
-                            state: {from: this.props.location}
-                        }}
-                        className='btn-border header__btn btn-singup'>
-                            sing up
-                    </Link>
+                    <div className="header__user">{this.props.user.email}</div>
+                    <button onClick={this.handleSingOutClick} className="header__singout">
+                        <img className='header__singout-img' src="/styles/images/logout.svg" alt=""/>
+                    </button>
                 </div>
             )
 
         return (
             <div className='header__buttons'>
-                <div className="header__user">{this.props.user.email}</div>
-                <button onClick={this.handleSingOutClick} className="header__singout">
-                    <img className='header__singout-img' src="/styles/images/logout.svg" alt=""/>
-                </button>
+                <Link
+                    to={{
+                        pathname: '/sing-in',
+                        state: {from: this.props.location}
+                    }}
+                    className='btn-border header__btn btn-login'>
+                    sing in
+                </Link>
+                <Link
+                    to={{
+                        pathname: '/sing-up',
+                        state: {from: this.props.location}
+                    }}
+                    className='btn-border header__btn btn-singup'>
+                        sing up
+                </Link>
             </div>
         )
     }

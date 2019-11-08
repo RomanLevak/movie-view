@@ -1,5 +1,5 @@
 import {SEARCH_MOVIE, START, SUCCESS, FAIL} from '../constants'
-import { filterMovies } from '../helpers'
+import {filterMovies} from '../helpers'
 
 const defaultState = {
     loaded: false,

@@ -56,8 +56,10 @@ class Form extends Component {
     getStatusArea = () => {
         if(this.props.error)
             return <span className="error-msg">{this.props.error}</span>
+
         if(this.props.isSingedIn)
             return `you are singed in as ${this.props.user.email}`
+
         if(this.props.loading)
             return 'loading...'
 
@@ -101,11 +103,13 @@ class Form extends Component {
                         {this.getStatusArea()}
                     </div>
                     <div className="form__buttons-wrap">
-                        <input className='form__button' type='submit'
+                        <input className='form__button'
+                            type='submit'
                             value='singIn'
                             onClick = {this.handleSingInClick}
                         />
-                        <input className='form__button' type='submit'
+                        <input className='form__button'
+                            type='submit'
                             value='singup'
                             onClick = {this.handleSingUpClick}
                         />

@@ -17,8 +17,10 @@ class App extends Component {
                     <main className='content-box full-height'>
                         <Search />
                         <Switch>
-                            <Route path='/sing-in' render = {props => <Form {...props} />} />
-                            <Route path='/sing-up' render = {props => <Form {...props} />} />
+                            <Route
+                                path={['/sing-in', '/sing-up']}
+                                render = {props => <Form {...props} />}
+                            />
                             <Route path = '/movies' render = {() => <Movies />} />
                             <Route path='/' exact render = {() => <HomeList/>} />
                             <Route component={NotFound} />
