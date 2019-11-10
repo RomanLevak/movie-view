@@ -53,7 +53,10 @@ function generatePassword(salt, password) {
 }
 
 userSchema.methods.setPassword = async function(password) {
-    this.salt = crypto.randomBytes(config.get('crypto.hash.length')).toString('hex')
+    this.salt = crypto.randomBytes(
+        config.get('crypto.hash.length')
+    ).toString('hex')
+
     this.passwordHash = await generatePassword(this.salt, password)
 }
 
@@ -61,6 +64,7 @@ userSchema.methods.checkPassword = async function(password) {
     if(!password) return false
 
     const hash = await generatePassword(this.salt, password)
+
     return hash === this.passwordHash
 }
 

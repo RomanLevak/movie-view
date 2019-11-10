@@ -1,6 +1,6 @@
 const User = require('../models/user')
 
-module.exports = async(req, res, next) => {
+module.exports = async (req, res, next) => {
     if(req.isAuthenticated()) {
         const user = await User
             .findById(req.session.passport.user)

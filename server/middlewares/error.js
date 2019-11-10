@@ -1,4 +1,4 @@
-const HTTPError = require('../libs/httperror')
+const HTTPError = require('../libs/http-error')
 
 module.exports = (err, req, res, next) => {
     if(typeof err == 'number')  // next(401)

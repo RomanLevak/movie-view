@@ -26,7 +26,9 @@ listSchema.methods.setUserByEmail = async function(email) {
 listSchema.statics.getAllLists = async function() {
     let lists = await this.find()
 
-    lists = Promise.all(lists.map(async list => await list.selectToSend()))
+    lists = Promise.all(
+        lists.map(async list => await list.selectToSend())
+    )
 
     return lists
 }

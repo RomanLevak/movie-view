@@ -1,7 +1,8 @@
 const User = require('../models/user')
-const HTTPError = require('../libs/httperror')
+const HTTPError = require('../libs/http-error')
+const ah = require('../libs/async-handler')
 
-module.exports = async function(req, res, next) {
+module.exports = ah(async (req, res, next) => {
     const {email, password} = req.body
 
     if(!email)
@@ -15,14 +16,10 @@ module.exports = async function(req, res, next) {
     if(existEmail)
         return next(new HTTPError(400, 'such email already registred'))
 
-    try {
-        const user = new User({email})
+    const user = new User({email})
 
-        await user.setPassword(password)
-        await user.save()
+    await user.setPassword(password)
+    await user.save()
 
-        res.status(201).json({user: {email: user.email}})
-    } catch (err) {
-        return next(err)
-    }
-}
+    res.status(201).json({user: {email: user.email}})
+})

@@ -1,8 +1,8 @@
 const List = require('../../models/list')
-const HTTPError = require('../../libs/httperror')
+const HTTPError = require('../../libs/http-error')
 const ah = require('../../libs/async-handler')
 
-module.exports.get = ah(async(req, res, next) => {
+module.exports.get = ah(async (req, res, next) => {
     const {id} = req.params
 
     if(id) {
@@ -16,7 +16,7 @@ module.exports.get = ah(async(req, res, next) => {
     return res.json(lists)
 })
 
-module.exports.post = ah(async(req, res, next) => {
+module.exports.post = ah(async (req, res, next) => {
     const {title} = req.body
     const {user} = req.session.passport
 
@@ -26,13 +26,12 @@ module.exports.post = ah(async(req, res, next) => {
     res.status(201).json(await list.selectToSend())
 })
 
-module.exports.put = ah(async(req, res, next) => {
+module.exports.put = ah(async (req, res, next) => {
     const {id} = req.params
     const updateValues = {}
 
-    for(const pair of req.body) {
+    for(const pair of req.body)
         updateValues[pair.propName] = pair.value
-    }
 
     const newList = await List
         .findOneAndUpdate({_id: id}, {$set: updateValues}, {new: true})
@@ -43,7 +42,7 @@ module.exports.put = ah(async(req, res, next) => {
     res.json(await newList.selectToSend())
 })
 
-module.exports.delete = ah(async(req, res, next) => {
+module.exports.delete = ah(async (req, res, next) => {
     const {id} = req.params
 
     const deletedList = await List.findOneAndDelete({_id: id})

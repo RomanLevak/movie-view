@@ -60,7 +60,11 @@
             "object-curly-spacing": ["warn", "never"],
             "semi": ["warn", "never"],
             "space-before-blocks": "warn",
-            "space-before-function-paren": ["warn", "never"],
+            "space-before-function-paren": ["warn", {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }],
             "space-in-parens": "warn",
             "spaced-comment": ["warn", "always"],
             "switch-colon-spacing": ["warn", {"after": true, "before": false}],

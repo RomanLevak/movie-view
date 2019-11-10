@@ -1,5 +1,5 @@
-const listController = require('../handlers/controllers/lists')
-const checkIfValidId = require('../handlers/check-if-valid-id')
+const listController = require('../middlewares/controllers/lists')
+const checkIfValidId = require('../middlewares/check-if-valid-id')
 const router = require('express').Router()
 
 router.get('/', listController.get)

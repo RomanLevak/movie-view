@@ -1,5 +1,5 @@
 const isValidId = require('mongoose').Types.ObjectId.isValid
-const HTTPError = require('../libs/httperror')
+const HTTPError = require('../libs/http-error')
 
 module.exports = (req, res, next) => {
     const {id} = req.params
