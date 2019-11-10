@@ -1,17 +1,19 @@
 const User = require('../models/user')
+const HTTPError = require('../libs/httperror')
 
 module.exports = async function(req, res, next) {
     const {email, password} = req.body
 
     if(!email)
-        return res.status(400).json({message: 'please provide an email', user: false})
+        return next(new HTTPError(400, 'please provide an email'))
+
     if(!password)
-        return res.status(400).json({message: 'please provide a password', user: false})
+        return next(new HTTPError(400, 'please provide a password'))
 
     const existEmail = await User.findOne({email})
 
     if(existEmail)
-        return res.json({message: 'such email already registred', user: false})
+        return next(new HTTPError(400, 'such email already registred'))
 
     try {
         const user = new User({email})
@@ -19,7 +21,7 @@ module.exports = async function(req, res, next) {
         await user.setPassword(password)
         await user.save()
 
-        res.json({user: {email: user.email}})
+        res.status(201).json({user: {email: user.email}})
     } catch (err) {
         return next(err)
     }

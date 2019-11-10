@@ -20,7 +20,7 @@ async function fillDB() {
             await l.save()
         }
 
-        console.log(`${users.length} users and ${lists.length} have been saved in DB`)
+        console.log(`${users.length} users and ${lists.length} lists have been saved in DB`)
     } catch (err) {
         console.error(err)
     }

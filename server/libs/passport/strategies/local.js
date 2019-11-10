@@ -10,15 +10,13 @@ module.exports = new LocalStrategy(
         try {
             const user = await User.findOne({email})
 
-            if(!user) {
+            if(!user)
                 return done(null, false,  'such user does not exist')
-            }
 
             const isValidPassword = await user.checkPassword(password)
 
-            if(!isValidPassword) {
+            if(!isValidPassword)
                 return done(null, false,  'incorrect password')
-            }
 
             return done(null, user,  'Welcome !')
         } catch (err) {
