@@ -19,7 +19,27 @@ const listSchema = new Schema({
 
 listSchema.methods.setUserByEmail = async function(email) {
     const user = await User.findOne({email})
+
     this.user = user._id
+}
+
+listSchema.statics.getAllLists = async function() {
+    let lists = await this.find()
+
+    lists = Promise.all(lists.map(async list => await list.selectToSend()))
+
+    return lists
+}
+
+listSchema.methods.selectToSend = async function() {
+    await this.populate('user', 'displayName').execPopulate()
+
+    return {
+        id: this._id,
+        movies: this.movies,
+        title: this.title,
+        user: this.user
+    }
 }
 
 module.exports = mongoose.model('List', listSchema)
