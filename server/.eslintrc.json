@@ -21,7 +21,7 @@
         "no-cond-assign": ["warn", "always"],
         "no-import-assign": "warn",
         "no-template-curly-in-string": "warn",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
         "array-callback-return": "warn",
         //>>> commonJS
             "callback-return": "warn",

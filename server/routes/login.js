@@ -1,4 +1,5 @@
 const passport = require('../libs/passport')
+const HTTPError = require('../libs/httperror')
 
 module.exports = async(req, res, next) => {
     await passport.authenticate('local', async function(err, user, message) {
@@ -10,7 +11,7 @@ module.exports = async(req, res, next) => {
                 res.json({message, user: {email: user.email}})
             })
         } else {
-            res.status(401).json({message})
+            return next(new HTTPError(401, message))
         }
     })(req, res, next)
 }
