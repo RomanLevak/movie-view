@@ -5,11 +5,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('./handlers/session')
 const passport = require('passport')
-const rootRoute = require('./routes/root')
-const registerRoute = require('./routes/register')
-const loginRoute = require('./routes/login')
-const logoutRoute = require('./routes/logout')
 const errorHandler = require('./handlers/error')
+const router = require('./routes/index.js')
 
 const app = express()
 
@@ -19,10 +16,8 @@ app.use(cookieParser(config.get('secret')))
 app.use(session)
 app.use(passport.initialize())
 app.use(passport.session())
-app.post('/login', loginRoute)
-app.post('/register', registerRoute)
-app.post('/logout', logoutRoute)
-app.use('/', rootRoute)
+
+app.use(router)
 app.use(errorHandler)
 
 module.exports = app
