@@ -9,6 +9,7 @@ const rootRoute = require('./routes/root')
 const registerRoute = require('./routes/register')
 const loginRoute = require('./routes/login')
 const logoutRoute = require('./routes/logout')
+const errorHandler = require('./handlers/error')
 
 const app = express()
 
@@ -22,5 +23,6 @@ app.post('/login', loginRoute)
 app.post('/register', registerRoute)
 app.post('/logout', logoutRoute)
 app.use('/', rootRoute)
+app.use(errorHandler)
 
 module.exports = app
