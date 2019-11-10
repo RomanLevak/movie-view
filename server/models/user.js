@@ -17,14 +17,23 @@ const userSchema = new Schema({
         ],
         unique: 'This email already exists'
     },
+
+    displayName: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
     passwordHash: {
         type: String,
         required: true
     },
+
     salt: {
         required: true,
         type: String
     },
+
     lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 }, {timestamps: true})
 
