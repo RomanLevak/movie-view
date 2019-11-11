@@ -62,17 +62,43 @@ const checkOwner = ah(async (req, res, next) => {
         return next(new HTTPError(401))
 
     const listId = req.params.id
-    const authorId = req.user.id
+    const ownerId = req.user.id
 
     const list = await List.findById(listId)
 
     if(!list)
         return next(new HTTPError(404, 'Such list does not exist'))
 
-    if(list.user.toString() == authorId)
+    if(list.user.toString() == ownerId)
         return next()
 
     next(new HTTPError(401, 'You do not have such list'))
+})
+
+const addMovie = ah(async (req, res, next) => {
+    const listId = req.params.id
+    const {movieId} = req.params
+
+    const newList = await List.findOneAndUpdate(
+        {_id: listId},
+        {$addToSet: {movies: movieId}},
+        {new: true} // return updated doc
+    )
+
+    res.json(await newList.selectToSend())
+})
+
+const removeMovie = ah(async (req, res, next) => {
+    const listId = req.params.id
+    const {movieId} = req.params
+
+    const newList = await List.findOneAndUpdate(
+        {_id: listId},
+        {$pull: {movies: movieId}},
+        {new: true} // return updated doc
+    )
+
+    res.json(await newList.selectToSend())
 })
 
 module.exports = {
@@ -80,5 +106,7 @@ module.exports = {
     create,
     update,
     remove,
+    addMovie,
+    removeMovie,
     checkOwner
 }

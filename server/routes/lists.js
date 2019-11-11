@@ -3,6 +3,8 @@ const {
     create,
     update,
     remove,
+    addMovie,
+    removeMovie,
     checkOwner
 } = require('../middlewares/controllers/lists')
 const {checkAuth} = require('../middlewares/controllers/user')
@@ -18,5 +20,9 @@ router.route('/:id')
     .get(checkId, get)
     .put(checkId, checkOwner, update)
     .delete(checkId, checkOwner, remove)
+
+router.route('/:id/:movieId')
+    .put(checkId, checkOwner, addMovie)
+    .delete(checkId, checkOwner, removeMovie)
 
 module.exports = router
