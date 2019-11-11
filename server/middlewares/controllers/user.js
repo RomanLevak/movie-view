@@ -1,4 +1,5 @@
 const User = require('../../models/user')
+const validatePassword = require('../../libs/validate-password')
 const passport = require('../../libs/passport')
 const HTTPError = require('../../libs/http-error')
 const ah = require('../../libs/async-handler')
@@ -34,10 +35,19 @@ const register = ah(async (req, res, next) => {
     if(!password)
         return next(new HTTPError(400, 'please provide a password'))
 
-    const existEmail = await User.findOne({email})
+    if(!validatePassword(password))
+        return next(new HTTPError(422, 'incorrect password'))
+
+    const [existEmail, existDisplayName] = await Promise.all([
+        User.findOne({email}),
+        User.findOne({displayName})
+    ])
 
     if(existEmail)
-        return next(new HTTPError(400, 'such email already registred'))
+        return next(new HTTPError(409, 'such email already registred'))
+
+    if(existDisplayName)
+        return next(new HTTPError(409, 'such displayName already registred'))
 
     const user = new User({email, password, displayName})
 

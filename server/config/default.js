@@ -12,5 +12,6 @@ module.exports = {
             length: 128,
             iterations: 10
         }
-    }
+    },
+    passwordRegExp: /^.{4,200}$/
 }
