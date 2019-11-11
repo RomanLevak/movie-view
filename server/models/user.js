@@ -68,4 +68,12 @@ userSchema.methods.checkPassword = async function(password) {
     return hash === this.passwordHash
 }
 
+userSchema.methods.selectToSend = function(addEmail = false) {
+    return {
+        id: this._id,
+        displayName: this.displayName,
+        email: addEmail ? this.email : undefined
+    }
+}
+
 module.exports = mongoose.model('User', userSchema)
