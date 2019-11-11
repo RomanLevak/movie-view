@@ -1,6 +1,6 @@
-const List = require('../../models/list')
-const HTTPError = require('../../libs/http-error')
-const ah = require('../../libs/async-handler')
+const List = require('../models/list')
+const HTTPError = require('../libs/http-error')
+const ah = require('../libs/async-handler')
 
 const get = ah(async (req, res, next) => {
     const {id} = req.params

@@ -6,8 +6,8 @@ const {
     addMovie,
     removeMovie,
     checkOwner
-} = require('../middlewares/controllers/lists')
-const {checkAuth} = require('../middlewares/controllers/user')
+} = require('../controllers/lists')
+const {checkAuth} = require('../controllers/user')
 const checkId = require('../middlewares/check-id')
 
 const router = require('express').Router()

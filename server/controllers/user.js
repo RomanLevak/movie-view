@@ -1,8 +1,8 @@
-const User = require('../../models/user')
-const validatePassword = require('../../libs/validate-password')
-const passport = require('../../libs/passport')
-const HTTPError = require('../../libs/http-error')
-const ah = require('../../libs/async-handler')
+const User = require('../models/user')
+const validatePassword = require('../libs/validate-password')
+const passport = require('../libs/passport')
+const HTTPError = require('../libs/http-error')
+const ah = require('../libs/async-handler')
 
 const login = (req, res, next) =>
     passport.authenticate(
