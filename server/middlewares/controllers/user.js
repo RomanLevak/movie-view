@@ -49,6 +49,13 @@ const register = ah(async (req, res, next) => {
 
 const checkAuth =  (req, res, next) => {
     if(req.isAuthenticated())
+        return next()
+
+    next(new HTTPError(401))
+}
+
+const getSelf = (req, res, next) => {
+    if(req.isAuthenticated())
         return res.json(req.user.selectToSend(true))
 
     res.json({user: false})
@@ -58,5 +65,6 @@ module.exports = {
     login,
     logout,
     register,
-    checkAuth
+    checkAuth,
+    getSelf
 }

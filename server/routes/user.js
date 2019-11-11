@@ -2,7 +2,7 @@ const {
     login,
     logout,
     register,
-    checkAuth
+    getSelf
 } = require('../middlewares/controllers/user')
 
 const router = require('express').Router()
@@ -10,6 +10,6 @@ const router = require('express').Router()
 router.post('/login', login)
 router.post('/logout', logout)
 router.post('/register', register)
-router.get('/check-auth', checkAuth)
+router.get('/me', getSelf)
 
 module.exports = router
