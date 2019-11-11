@@ -1,16 +1,22 @@
-const listController = require('../middlewares/controllers/lists')
+const {
+    get,
+    create,
+    update,
+    remove,
+    checkOwner
+} = require('../middlewares/controllers/lists')
 const {checkAuth} = require('../middlewares/controllers/user')
-const checkIfValidId = require('../middlewares/check-if-valid-id')
+const checkId = require('../middlewares/check-id')
+
 const router = require('express').Router()
 
 router.route('/')
-    .get(listController.get)
-    .post(checkAuth, listController.post)
+    .get(get)
+    .post(checkAuth, create)
 
 router.route('/:id')
-    .get(checkIfValidId, listController.get)
-    .post(checkIfValidId, checkAuth, listController.post)
-    .put(checkIfValidId, listController.checkOwner, listController.put)
-    .delete(checkIfValidId, listController.checkOwner, listController.delete)
+    .get(checkId, get)
+    .put(checkId, checkOwner, update)
+    .delete(checkId, checkOwner, remove)
 
 module.exports = router

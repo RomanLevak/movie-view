@@ -2,7 +2,7 @@ const List = require('../../models/list')
 const HTTPError = require('../../libs/http-error')
 const ah = require('../../libs/async-handler')
 
-module.exports.get = ah(async (req, res, next) => {
+const get = ah(async (req, res, next) => {
     const {id} = req.params
 
     if(id) {
@@ -11,14 +11,14 @@ module.exports.get = ah(async (req, res, next) => {
         return res.json(await list.selectToSend())
     }
 
-    const lists = await List.getAllLists()
+    const lists = await List.getAllListsToSend()
 
-    return res.json(lists)
+    res.json(lists)
 })
 
-module.exports.post = ah(async (req, res, next) => {
+const create = ah(async (req, res, next) => {
     const {title} = req.body
-    const {user} = req.session.passport
+    const {user} = req
 
     const list = new List({title, user})
     await list.save()
@@ -26,7 +26,7 @@ module.exports.post = ah(async (req, res, next) => {
     res.status(201).json(await list.selectToSend())
 })
 
-module.exports.put = ah(async (req, res, next) => {
+const update = ah(async (req, res, next) => {
     const {id} = req.params
     const updateValues = {}
 
@@ -34,34 +34,51 @@ module.exports.put = ah(async (req, res, next) => {
         updateValues[pair.propName] = pair.value
 
     const newList = await List
-        .findOneAndUpdate({_id: id}, {$set: updateValues}, {new: true})
+        .findOneAndUpdate(
+            {_id: id},
+            {$set: updateValues},
+            {new: true} // return updated doc
+        )
 
     if(!newList)
-        return next(new HTTPError(404, 'such list doesnt exist'))
+        return next(HTTPError(404, 'Such list does not exist'))
 
     res.json(await newList.selectToSend())
 })
 
-module.exports.delete = ah(async (req, res, next) => {
+const remove = ah(async (req, res, next) => {
     const {id} = req.params
 
     const deletedList = await List.findOneAndDelete({_id: id})
 
     if(!deletedList)
-        return next(new HTTPError(404, 'such list doesnt exist'))
+        return next(new HTTPError(404, 'Such list does not exist'))
 
     res.json(await deletedList.selectToSend())
 })
 
-module.exports.checkOwner = ah(async (req, res, next) => {
+const checkOwner = ah(async (req, res, next) => {
     if(!req.isAuthenticated())
         return next(new HTTPError(401))
 
     const listId = req.params.id
     const authorId = req.user.id
 
-    if(await List.checkAuthorById(listId, authorId))
+    const list = await List.findById(listId)
+
+    if(!list)
+        return next(new HTTPError(404, 'Such list does not exist'))
+
+    if(list.user.toString() == authorId)
         return next()
 
-    next(new HTTPError(401, 'you dont have such list'))
+    next(new HTTPError(401, 'You do not have such list'))
 })
+
+module.exports = {
+    get,
+    create,
+    update,
+    remove,
+    checkOwner
+}

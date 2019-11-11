@@ -40,8 +40,10 @@ const userSchema = new Schema({
 function generatePassword(salt, password) {
     return new Promise((resolve, reject) => {
         crypto.pbkdf2(
-            password, salt,
-            config.get('crypto.hash.iterations'), config.get('crypto.hash.length'),
+            password,
+            salt,
+            config.get('crypto.hash.iterations'),
+            config.get('crypto.hash.length'),
             'sha512',
             (err, key) => {
                 if(err) return reject(err)

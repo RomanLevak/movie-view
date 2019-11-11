@@ -22,7 +22,7 @@ const login = (req, res, next) =>
 
 const logout = (req, res, next) => {
     req.logout()
-    res.json({user: false})
+    res.json({user: null})
 }
 
 const register = ah(async (req, res, next) => {
@@ -44,7 +44,7 @@ const register = ah(async (req, res, next) => {
     await user.setPassword(password)
     await user.save()
 
-    return res.status(201).json(user.selectToSend(true))
+    res.status(201).json(user.selectToSend(true))
 })
 
 const checkAuth =  (req, res, next) => {
@@ -58,7 +58,7 @@ const getSelf = (req, res, next) => {
     if(req.isAuthenticated())
         return res.json(req.user.selectToSend(true))
 
-    res.json({user: false})
+    res.json({user: null})
 }
 
 module.exports = {

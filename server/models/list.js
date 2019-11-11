@@ -23,16 +23,7 @@ listSchema.methods.setUserByEmail = async function(email) {
     this.user = user._id
 }
 
-listSchema.statics.checkAuthorById= async function(listId, authorId) {
-    const list = await this.findById(listId)
-
-    if(!list)
-        throw new Error('such list does not exist')
-
-    return list.user.toString() == authorId
-}
-
-listSchema.statics.getAllLists = async function() {
+listSchema.statics.getAllListsToSend = async function() {
     let lists = await this.find()
 
     lists = Promise.all(

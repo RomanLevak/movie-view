@@ -7,7 +7,8 @@ mongoose.connect(
     uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true
+        useCreateIndex: true,
+        useFindAndModify: false
     })
     .then(() => console.log(`connected to DataBase ${uri}`))
     .catch(err => console.log(err))
