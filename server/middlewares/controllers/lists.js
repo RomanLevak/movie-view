@@ -52,3 +52,16 @@ module.exports.delete = ah(async (req, res, next) => {
 
     res.json(await deletedList.selectToSend())
 })
+
+module.exports.checkOwner = ah(async (req, res, next) => {
+    if(!req.isAuthenticated())
+        return next(new HTTPError(401))
+
+    const listId = req.params.id
+    const authorId = req.user.id
+
+    if(await List.checkAuthorById(listId, authorId))
+        return next()
+
+    next(new HTTPError(401, 'you dont have such list'))
+})
