@@ -36,9 +36,6 @@ const register = ah(async (req, res, next) => {
     if(errorMsg)
         return next(new HTTPError(400, errorMsg))
 
-    if(!validatePassword(password))
-        return next(new HTTPError(422, 'incorrect password'))
-
     const [existEmail, existDisplayName] = await Promise.all([
         User.findOne({email}),
         User.findOne({displayName})
@@ -67,6 +64,9 @@ const checkCredentials = (email, password, displayName) => {
 
     if(!displayName)
         return 'please provide a displayName'
+
+    if(!validatePassword(password))
+        return 'incorrect password'
 
     return ''
 }

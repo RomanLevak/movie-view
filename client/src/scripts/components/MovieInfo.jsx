@@ -17,28 +17,14 @@ class MovieInfo extends Component {
         error: PropTypes.string
     }
 
-    getBody() {
-        const {movie, loading, loaded, error} = this.props
-
-        if(error)
-            return error === 'Not Found' ?
-                <Redirect to='/not-found' /> :
-                <span className = 'error-msg'>{error}</span>
-
-        if(loading || !loaded)
-            return (
-                <div className='movie-box'>
-                    <Loader />
-                </div>
-            )
-
+    getInfoTable = () => {
         const {
             title, vote_average,
             release_date, adult,
             original_language, poster_path,
             genres, production_countries,
             tagline, runtime, budget, overview
-        } = movie
+        } = this.props.movie
 
         return (
             <div className='movie-box'>
@@ -112,7 +98,21 @@ class MovieInfo extends Component {
     }
 
     render() {
-        return this.getBody()
+        const {loading, loaded, error} = this.props
+
+        if(error)
+            return error === 'Not Found' ?
+                <Redirect to='/not-found' /> :
+                <span className = 'error-msg'>{error}</span>
+
+        if(loading || !loaded)
+            return (
+                <div className='movie-box'>
+                    <Loader />
+                </div>
+            )
+
+        return this.getInfoTable()
     }
 }
 

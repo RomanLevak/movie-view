@@ -15,7 +15,7 @@ export default () => next => action => {
             'Content-Type': 'application/json',
         },
         method: method || 'GET',
-        body: method == 'POST' ? callAPI.body : null
+        body: method == 'POST' ? JSON.stringify(callAPI.body) : null
     })
         .then(response => {
             if(response.status >= 400)

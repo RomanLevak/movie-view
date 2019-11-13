@@ -21,7 +21,7 @@ class App extends Component {
                                 path='/(sing-in|sing-up)/'
                                 render = {props => <Form {...props} />}
                             />
-                            <Route path = '/movies' render = {() => <Movies />} />
+                            <Route path = '/movies' render = {props => <Movies {...props} />} />
                             <Route path='/' exact render = {() => <HomeList/>} />
                             <Route component={NotFound} />
                         </Switch>

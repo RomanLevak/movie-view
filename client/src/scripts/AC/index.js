@@ -14,6 +14,7 @@ export function loadMovies(filters) {
 
     if(filters.type == 'popular')
         APIurl = `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${page}`
+
     else if(filters.genreID)
         APIurl = `/tmdbapi/discover/movie?api_key=${API_KEY}&page=${page}&with_genres=${filters.genreID}`
 
@@ -44,7 +45,7 @@ export function singIn(email, password) {
         callAPI: {
             url: '/server/user/login',
             method: 'POST',
-            body: JSON.stringify({email, password})
+            body: {email, password}
         }
     }
 }
@@ -55,11 +56,11 @@ export function singUp(email, username, password) {
         callAPI: {
             url: '/server/user/register',
             method: 'POST',
-            body: JSON.stringify({
+            body: {
                 email,
                 displayName: username,
                 password
-            })
+            }
         }
     }
 }

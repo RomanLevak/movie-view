@@ -6,10 +6,6 @@ import {singIn, singUp} from '../AC/index'
 
 class Form extends Component {
 
-    static contextTypes = {
-        router: PropTypes.object,
-    }
-
     static propTypes = {
         location: PropTypes.object,
         match: PropTypes.object,
@@ -18,12 +14,10 @@ class Form extends Component {
         singUp: PropTypes.func.isRequired,
         isSingedIn: PropTypes.bool.isRequired,
         loading: PropTypes.bool,
-        user: PropTypes.object,
         error: PropTypes.string
     }
 
     state = {
-        isBLocking: false,
         email: '',
         username: '',
         password: ''
@@ -56,9 +50,6 @@ class Form extends Component {
     getStatusArea = () => {
         if(this.props.error)
             return <span className="error-msg">{this.props.error}</span>
-
-        if(this.props.isSingedIn)
-            return `you are singed in as ${this.props.user.email}`
 
         if(this.props.loading)
             return 'loading...'
@@ -125,12 +116,8 @@ class Form extends Component {
 
     render() {
         if(this.props.isSingedIn) {
-            try {
-                const {from} = this.props.location.state
-                return <Redirect to={from} />
-            } catch (err) {
-                return <Redirect to='/' />
-            }
+            const {from} = this.props.location.state
+            return <Redirect to={from} />
         }
 
         return (
@@ -165,8 +152,7 @@ export default connect(
     state => ({
         isSingedIn: state.user.isSingedIn,
         loading: state.user.loading,
-        error: state.user.error,
-        user: state.user.entity
+        error: state.user.error
     }),
     {singIn, singUp}
 )(Form)
