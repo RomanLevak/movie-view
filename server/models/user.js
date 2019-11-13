@@ -7,14 +7,12 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: 'Email cannot be blank',
-        validate: [
-            {
-                validator(value) {
-                    return /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value)
-                },
-                message: 'Incorrect email'
-            }
-        ],
+        validate: [{
+            validator(value) {
+                return /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value)
+            },
+            message: 'Incorrect email'
+        }],
         unique: 'This email already exists'
     },
 

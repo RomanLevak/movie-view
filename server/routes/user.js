@@ -3,7 +3,7 @@ const {
     logout,
     register,
     getSelf
-} = require('../middlewares/controllers/user')
+} = require('../controllers/user')
 
 const router = require('express').Router()
 
