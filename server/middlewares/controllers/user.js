@@ -34,6 +34,9 @@ const register = ah(async (req, res, next) => {
     if(!password)
         return next(new HTTPError(400, 'please provide a password'))
 
+    if(!displayName)
+        return next(new HTTPError(400, 'please provide a displayName'))
+
     const existEmail = await User.findOne({email})
 
     if(existEmail)
