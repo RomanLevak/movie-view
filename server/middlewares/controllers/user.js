@@ -7,11 +7,13 @@ const login = (req, res, next) =>
     passport.authenticate(
         'local',
         (err, user, message) => {
-            if(err) return next(err)
+            if(err)
+                return next(err)
 
             if(user)
                 req.login(user, err => {
-                    if(err) return next(err)
+                    if(err)
+                        return next(err)
 
                     res.json(user.selectToSend(true))
                 })
@@ -22,20 +24,16 @@ const login = (req, res, next) =>
 
 const logout = (req, res, next) => {
     req.logout()
-    res.json({user: null})
+    res.json(null)
 }
 
 const register = ah(async (req, res, next) => {
     const {email, password, displayName} = req.body
 
-    if(!email)
-        return next(new HTTPError(400, 'please provide an email'))
+    let errorMsg = checkCredentials(email, password, displayName)
 
-    if(!password)
-        return next(new HTTPError(400, 'please provide a password'))
-
-    if(!displayName)
-        return next(new HTTPError(400, 'please provide a displayName'))
+    if(errorMsg)
+        return next(new HTTPError(400, errorMsg))
 
     const existEmail = await User.findOne({email})
 
@@ -50,6 +48,19 @@ const register = ah(async (req, res, next) => {
     res.status(201).json(user.selectToSend(true))
 })
 
+const checkCredentials = (email, password, displayName) => {
+    if(!email)
+        return 'please provide an email'
+
+    if(!password)
+        return 'please provide a password'
+
+    if(!displayName)
+        return 'please provide a displayName'
+
+    return ''
+}
+
 const checkAuth =  (req, res, next) => {
     if(req.isAuthenticated())
         return next()
@@ -61,7 +72,7 @@ const getSelf = (req, res, next) => {
     if(req.isAuthenticated())
         return res.json(req.user.selectToSend(true))
 
-    res.json({user: null})
+    res.json(null)
 }
 
 module.exports = {
