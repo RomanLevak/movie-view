@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {Redirect, NavLink} from 'react-router-dom'
 import {singIn, singUp} from '../AC/index'
 
 class Form extends Component {
@@ -12,6 +12,7 @@ class Form extends Component {
 
     static propTypes = {
         location: PropTypes.object,
+        match: PropTypes.object,
         // from connect
         singIn: PropTypes.func.isRequired,
         singUp: PropTypes.func.isRequired,
@@ -24,33 +25,32 @@ class Form extends Component {
     state = {
         isBLocking: false,
         email: '',
+        username: '',
         password: ''
     }
 
-    handleEmailChange = e =>
+    handleInputChange = e => {
+        const {name, value} = e.target
+
         this.setState({
-            email: e.target.value
+            [name]: value
         })
-
-    handlePasswordChange = e =>
-        this.setState({
-            password: e.target.value
-        })
-
-    handleSingInClick = e => {
-        e.preventDefault()
-
-        const {singIn} = this.props
-        const {email, password} = this.state
-        singIn(email, password)
     }
 
-    handleSingUpClick = e => {
+    handleSubmit = e => {
         e.preventDefault()
 
-        const {singUp} = this.props
-        const {email, password} = this.state
-        singUp(email, password)
+        const {name} = e.target
+
+        if(name == 'sing in') {
+            const {singIn} = this.props
+            const {email, password} = this.state
+            singIn(email, password)
+        } else {
+            const {singUp} = this.props
+            const {email, username, password} = this.state
+            singUp(email, username, password)
+        }
     }
 
     getStatusArea = () => {
@@ -64,6 +64,63 @@ class Form extends Component {
             return 'loading...'
 
         return null
+    }
+
+    getFieldset = () => {
+        const {url} = this.props.match
+        const type = url.includes('sing-in') ? 'sing in' : 'sing up'
+
+        return (
+            <fieldset className='form__field-box'>
+                <div className='form__field'>
+                    <label htmlFor="user_email">email</label>
+                    <input className='form__field form__text-input'
+                        id='user_email'
+                        type="email"
+                        name='email'
+                        value={this.state.email}
+                        onChange={this.handleInputChange}
+                    />
+                </div>
+                {
+                    type == 'sing up'
+                        ?
+                        <div className='form__field'>
+                            <label htmlFor="userName">username</label>
+                            <input className='form__text-input'
+                                id='username'
+                                type="text"
+                                name='username'
+                                value={this.state.username}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
+                        :
+                        null
+                }
+                <div className='form__field'>
+                    <label htmlFor="userPassword">password</label>
+                    <input className='form__text-input'
+                        id='user_password'
+                        type="password"
+                        name='password'
+                        value={this.state.password}
+                        onChange={this.handleInputChange}
+                    />
+                </div>
+                <div className="form__status form__status-box">
+                    {this.getStatusArea()}
+                </div>
+                <div className="form__buttons-wrap">
+                    <input className='form__button'
+                        type='submit'
+                        value={type}
+                        name={type}
+                        onClick = {this.handleSubmit}
+                    />
+                </div>
+            </fieldset>
+        )
     }
 
     render() {
@@ -80,41 +137,25 @@ class Form extends Component {
             <form className='form form-box'
                 onSubmit={this.handleSubmit}
             >
-                <fieldset className='form__field-box'>
-                    <fieldset className='form__field'>
-                        <label htmlFor="user_email">Email</label>
-                        <input className='form__field form__text-input'
-                            id='user_email'
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleEmailChange}
-                        />
-                    </fieldset>
-                    <fieldset className='form__field'>
-                        <label htmlFor="userPassword">Password</label>
-                        <input className='form__text-input'
-                            id='user_password'
-                            type="password"
-                            value={this.state.password}
-                            onChange={this.handlePasswordChange}
-                        />
-                    </fieldset>
-                    <div className="form__status form__status-box">
-                        {this.getStatusArea()}
-                    </div>
-                    <div className="form__buttons-wrap">
-                        <input className='form__button'
-                            type='submit'
-                            value='singIn'
-                            onClick = {this.handleSingInClick}
-                        />
-                        <input className='form__button'
-                            type='submit'
-                            value='singup'
-                            onClick = {this.handleSingUpClick}
-                        />
-                    </div>
-                </fieldset>
+                <div className="form__tabs form__tabs-box">
+                    <NavLink
+                        to = '/sing-in'
+                        type="button"
+                        className='form__tabs-btn'
+                        activeClassName='form__tabs-btn-active'
+                    >
+                        sing in
+                    </NavLink>
+                    <NavLink
+                        to = '/sing-up'
+                        type="button"
+                        className='form__tabs-btn'
+                        activeClassName='form__tabs-btn-active'
+                    >
+                        sing up
+                    </NavLink>
+                </div>
+                {this.getFieldset()}
             </form>
         )
     }

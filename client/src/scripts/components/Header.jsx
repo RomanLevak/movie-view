@@ -10,7 +10,7 @@ class Header extends Component {
         location: PropTypes.object,
         // from connect
         isSingedIn: PropTypes.bool.isRequired,
-        user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+        user: PropTypes.object,
         singOut: PropTypes.func,
         checkIfSingedIn: PropTypes.func,
     }
@@ -19,7 +19,7 @@ class Header extends Component {
         if(this.props.isSingedIn)
             return (
                 <div className='header__buttons'>
-                    <div className="header__user">{this.props.user.email}</div>
+                    <div className="header__user">{this.props.user.displayName}</div>
                     <button onClick={this.handleSingOutClick} className="header__singout">
                         <img className='header__singout-img' src="/styles/images/logout.svg" alt=""/>
                     </button>

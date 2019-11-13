@@ -32,7 +32,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: false,
                 isSingedIn: true,
-                entity: payload.user,
+                entity: payload,
                 error: ''
             }
 
@@ -64,7 +64,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: false,
                 isSingedIn: true,
-                entity: payload.user,
+                entity: payload,
                 error: ''
             }
 
@@ -114,14 +114,17 @@ export default (userState = defaultState, action) => {
                 error: ''
             }
 
-        case CHECKAUTH + SUCCESS:
+        case CHECKAUTH + SUCCESS: {
+            const user = payload
+
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: true,
-                entity: payload.user,
+                isSingedIn: Boolean(user),
+                entity: user,
                 error: ''
             }
+        }
 
         case CHECKAUTH + FAIL:
             return {

@@ -7,16 +7,33 @@
 	position: relative
 	margin: 0 auto
 	background: $seagreen0
+	&__tabs
+		&-box
+			width: 100%
+		&-btn
+			display: inline-block
+			line-height: 33px
+			width: 50%
+			height: 33px
+			padding: 0
+			text-transform: uppercase
+			font-weight: bold
+			font-size: 18px
+			color: $seagreen1
+			&-active
+				border-bottom: 2px solid $green4
 	&__field
-		margin-top: 25px
+		margin-top: 11px
 		&-box
 			max-width: 81%
 			margin: 0 auto
+			margin-top: 8px
 			text-align: left
 	label
-		color: $seagreen4 
+		color: $seagreen4
+		text-transform: capitalize
 	&__text-input
-		margin-top: 10px
+		margin-top: 4px
 		height: 29px
 		padding: 4px
 		width: 100%

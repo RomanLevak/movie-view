@@ -42,20 +42,24 @@ export function singIn(email, password) {
     return {
         type: SINGIN,
         callAPI: {
-            url: '/server/login',
+            url: '/server/user/login',
             method: 'POST',
             body: JSON.stringify({email, password})
         }
     }
 }
 
-export function singUp(email, password) {
+export function singUp(email, username, password) {
     return {
         type: SINGUP,
         callAPI: {
-            url: '/server/register',
+            url: '/server/user/register',
             method: 'POST',
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({
+                email,
+                displayName: username,
+                password
+            })
         }
     }
 }
@@ -64,7 +68,7 @@ export function singOut() {
     return {
         type: SINGOUT,
         callAPI: {
-            url: '/server/logout',
+            url: '/server/user/logout',
             method: 'POST'
         }
     }
@@ -73,6 +77,6 @@ export function singOut() {
 export function checkIfSingedIn() {
     return {
         type: CHECKAUTH,
-        callAPI: {url: '/server'}
+        callAPI: {url: '/server/user/me'}
     }
 }
