@@ -13,14 +13,16 @@ Application allows you to explore movies from TMDb API, and create your own movi
 ##### start client server
 ```
   $ cd movie-view/client
-  $ npm run dev
-  go to http://localhost:6060
+  $ npm start
+  webpack-dev-server will start at http://localhost:6060
 ```
 #### start node server
-###### you should have a running mongodb at port 270017
+###### server will try to connect mongodb at port 27017
 ```
   $ cd ../server
   $ npm start
+    # or to run with nodemon
+    $ npm run dev
   node server will start at http://localhost:3000/
 ```
 
