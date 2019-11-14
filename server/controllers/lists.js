@@ -16,6 +16,17 @@ const get = ah(async (req, res, next) => {
     res.json(lists)
 })
 
+const getAllListsFromUser = ah(async (req, res, next) => {
+    const userId = req.params.userId
+    const lists = await List.find({user: userId})
+
+    const listsToSend = await Promise.all(lists.map(
+        async el => await el.selectToSend()
+    ))
+
+    res.json(listsToSend)
+})
+
 const create = ah(async (req, res, next) => {
     const {title} = req.body
     const {user} = req
@@ -103,6 +114,7 @@ const removeMovie = ah(async (req, res, next) => {
 
 module.exports = {
     get,
+    getAllListsFromUser,
     create,
     update,
     remove,

@@ -1,5 +1,6 @@
 const {
     get,
+    getAllListsFromUser,
     create,
     update,
     remove,
@@ -24,5 +25,7 @@ router.route('/:id')
 router.route('/:id/:movieId')
     .put(checkId, checkOwner, addMovie)
     .delete(checkId, checkOwner, removeMovie)
+
+router.get('/user/:userId', getAllListsFromUser)
 
 module.exports = router
