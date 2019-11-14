@@ -16,7 +16,7 @@ const login = (req, res, next) =>
                     if(err)
                         return next(err)
 
-                    res.json(user.selectToSend(true))
+                    res.json(user.selectToSend({withEmail: true}))
                 })
             else
                 return next(new HTTPError(401, message))
@@ -52,7 +52,7 @@ const register = ah(async (req, res, next) => {
     await user.setPassword(password)
     await user.save()
 
-    res.status(201).json(user.selectToSend(true))
+    res.status(201).json(user.selectToSend({withEmail: true}))
 })
 
 const checkCredentials = (email, password, displayName) => {
@@ -79,8 +79,10 @@ const checkAuth =  (req, res, next) => {
 }
 
 const getSelf = (req, res, next) => {
+    const {user} = req
+
     if(req.isAuthenticated())
-        return res.json(req.user.selectToSend(true))
+        return res.json(user.selectToSend({withEmail: true}))
 
     res.json(null)
 }

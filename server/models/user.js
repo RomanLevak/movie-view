@@ -35,7 +35,7 @@ const userSchema = new Schema({
     lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 }, {timestamps: true})
 
-function generatePassword(salt, password) {
+userSchema.methods.generatePassword = function(salt, password) {
     return new Promise((resolve, reject) => {
         crypto.pbkdf2(
             password,
@@ -57,22 +57,24 @@ userSchema.methods.setPassword = async function(password) {
         config.get('crypto.hash.length')
     ).toString('hex')
 
-    this.passwordHash = await generatePassword(this.salt, password)
+    this.passwordHash = await this.generatePassword(this.salt, password)
 }
 
 userSchema.methods.checkPassword = async function(password) {
     if(!password) return false
 
-    const hash = await generatePassword(this.salt, password)
+    const hash = await this.generatePassword(this.salt, password)
 
     return hash === this.passwordHash
 }
 
-userSchema.methods.selectToSend = function(addEmail = false) {
+userSchema.methods.selectToSend = function(options = {}) {
+    const {withEmail} = options
+
     return {
         id: this._id,
         displayName: this.displayName,
-        email: addEmail ? this.email : undefined
+        email: withEmail ? this.email : undefined
     }
 }
 

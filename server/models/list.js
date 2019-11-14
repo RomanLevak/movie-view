@@ -23,16 +23,6 @@ listSchema.methods.setUserByEmail = async function(email) {
     this.user = user._id
 }
 
-listSchema.statics.getAllListsToSend = async function() {
-    let lists = await this.find()
-
-    lists = Promise.all(
-        lists.map(async list => await list.selectToSend())
-    )
-
-    return lists
-}
-
 listSchema.methods.selectToSend = async function() {
     await this.populate('user', 'displayName').execPopulate()
 
@@ -42,6 +32,16 @@ listSchema.methods.selectToSend = async function() {
         title: this.title,
         user: this.user
     }
+}
+
+listSchema.statics.getAllListsToSend = async function() {
+    let lists = await this.find()
+
+    lists = await Promise.all(
+        lists.map(async list => await list.selectToSend())
+    )
+
+    return lists
 }
 
 module.exports = mongoose.model('List', listSchema)

@@ -11,9 +11,9 @@ const get = ah(async (req, res, next) => {
         return res.json(await list.selectToSend())
     }
 
-    const lists = await List.getAllListsToSend()
+    const listsToSend = await List.getAllListsToSend()
 
-    res.json(lists)
+    res.json(listsToSend)
 })
 
 const getAllListsFromUser = ah(async (req, res, next) => {
