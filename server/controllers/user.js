@@ -52,7 +52,7 @@ const register = ah(async (req, res, next) => {
     await user.setPassword(password)
     await user.save()
 
-    res.status(201).json(user.selectToSend({withEmail: true}))
+    next()
 })
 
 const checkCredentials = (email, password, displayName) => {

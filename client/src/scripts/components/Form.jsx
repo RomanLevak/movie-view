@@ -118,7 +118,7 @@ class Form extends Component {
                 const {from} = this.props.location.state
                 return <Redirect to={from} />
             } catch (error) {
-                null
+                return <Redirect to='/' />
             }
         }
 

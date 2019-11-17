@@ -30,7 +30,7 @@ class Search extends Component {
             value, isResultsOpen: true
         })
 
-        if(value === '')
+        if(!value)
             return this.onBlur()
 
         searchMovie(value, true)
