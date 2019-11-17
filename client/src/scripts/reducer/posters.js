@@ -4,6 +4,7 @@ import {
     SUCCESS,
     FAIL
 } from '../constants'
+import {filterMovie} from '../helpers'
 
 const defaultState = {
     /*
@@ -11,8 +12,8 @@ const defaultState = {
      *     loading: false,
      *     loaded: true,
      *     error: '',
-     *     path: '/vqzNJRH4YyquRiWxCCOH0aXggHI.jpg'
-     * }
+     *     entity: {}
+     *
      */
 }
 
@@ -27,7 +28,7 @@ export default (postersState = defaultState, action) => {
                     loading: true,
                     loaded: false,
                     error: '',
-                    path: ''
+                    entity: {}
                 }
 
             return {
@@ -36,14 +37,14 @@ export default (postersState = defaultState, action) => {
                     loading: true,
                     loaded: false,
                     error: '',
-                    path: ''
+                    entity: {}
                 }
             }
         }
 
         case LOAD_MOVIE_POSTER + SUCCESS: {
             const {payload} = action
-            const path = payload.poster_path
+            const movie = filterMovie(payload)
 
             return {
                 ...postersState,
@@ -51,7 +52,7 @@ export default (postersState = defaultState, action) => {
                     loading: false,
                     loaded: true,
                     error: '',
-                    path
+                    entity: movie
                 }
             }
         }
@@ -63,7 +64,7 @@ export default (postersState = defaultState, action) => {
                     loading: false,
                     loaded: false,
                     error: '',
-                    path: ''
+                    entity: {}
                 }
             }
         }

@@ -60,8 +60,11 @@ export default connect(
                 path: ''
             }
 
+        const poster = state.posters[id]
+
         return {
-            ...state.posters[id]
+            ...poster,
+            path: poster.entity.poster_path
         }
     },
     {loadMoviePoster}

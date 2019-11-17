@@ -36,12 +36,7 @@ class Results extends Component {
         // renders only first 18 elements
         return movies.slice(0, 18).map(movie =>
             <li className = 'results-list__item' key = {movie.id}>
-                <MoviePoster
-                    title = {movie.title}
-                    year = {movie.year}
-                    path = {movie.poster_path || ''}
-                    url={`/movies/${movie.id}`}
-                />
+                <MoviePoster id = {movie.id} />
             </li>
         )
     }

@@ -52,12 +52,7 @@ class Explorer extends Component {
 
         return movies.slice(0, 10).map(movie =>
             <li className = 'explorer__item' key = {movie.id}>
-                <MoviePoster
-                    title = {movie.title}
-                    year = {movie.year}
-                    path = {movie.poster_path || ''}
-                    url={`/movies/${movie.id}`}
-                />
+                <MoviePoster id = {movie.id} />
             </li>
         )
     }
