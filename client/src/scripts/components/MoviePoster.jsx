@@ -22,9 +22,9 @@ class Poster extends Component {
 
     componentDidMount() {
         const {id} = this.props
-        const {loading, loaded, loadMoviePoster} = this.props
+        const {loaded, loadMoviePoster, movie} = this.props
 
-        if(!loaded || !loading)
+        if(!loaded || !movie)
             loadMoviePoster(id)
     }
 

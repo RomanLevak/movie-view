@@ -12,7 +12,7 @@ const defaultState = {
      *     loading: false,
      *     loaded: true,
      *     error: '',
-     *     entity: {}
+     *     entity: null
      *
      */
 }
@@ -24,22 +24,17 @@ export default (postersState = defaultState, action) => {
         case LOAD_MOVIE_POSTER + START: {
 
             if(!postersState[id])
-                postersState[id] = {
-                    loading: true,
-                    loaded: false,
-                    error: '',
-                    entity: {}
+                return {
+                    ...postersState,
+                    [id]: {
+                        loading: true,
+                        loaded: false,
+                        error: '',
+                        entity: null
+                    }
                 }
-
-            return {
-                ...postersState,
-                [id]: {
-                    loading: true,
-                    loaded: false,
-                    error: '',
-                    entity: {}
-                }
-            }
+            else
+                return postersState
         }
 
         case LOAD_MOVIE_POSTER + SUCCESS: {
@@ -64,7 +59,7 @@ export default (postersState = defaultState, action) => {
                     loading: false,
                     loaded: false,
                     error: '',
-                    entity: {}
+                    entity: null
                 }
             }
         }
