@@ -28,10 +28,18 @@ class App extends Component {
                             />
                             <Route path = '/movies' render = {props => <Movies {...props} />} />
                             <Route path='/' exact render = {
-                                () => <HomeList
-                                    type='movies'
-                                    title = 'Popular now'
-                                />}
+                                () =>
+                                    <Fragment>
+                                        <HomeList
+                                            type='movies'
+                                            title = 'Popular now'
+                                        />
+                                        <HomeList
+                                            type='lists'
+                                            title = 'Latest lists'
+                                        />
+                                    </Fragment>
+                            }
                             />
                             <Route component={NotFound} />
                         </Switch>

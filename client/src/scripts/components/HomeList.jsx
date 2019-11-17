@@ -2,9 +2,10 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import MoviePoster from './MoviePoster'
+import ListPoster from './ListPoster'
 import Slider from 'react-slick'
 import Loader from './Loader'
-import {loadMovies} from '../AC/index'
+import {loadMovies, loadLists} from '../AC/index'
 import {mapToArr} from '../helpers'
 import {Link} from 'react-router-dom'
 import 'slick-carousel/slick/slick.css'
@@ -39,6 +40,7 @@ class HomeList extends Component {
         entities: PropTypes.arrayOf(PropTypes.object).isRequired,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
+        error: PropTypes.string.isRequired,
         loadEntities: PropTypes.func
     }
 
@@ -49,14 +51,41 @@ class HomeList extends Component {
             loadEntities()
     }
 
-    getMoviesBody = () => {
+    getListsArr = () => {
+        const lists = this.props.entities
+
+        const items = []
+
+        lists.slice(0, 6).map(l =>
+            items.push(
+                <li className='home-list__item' key={l.id}>
+                    <ListPoster
+                        key = {l.id}
+                        list = {{
+                            id: l.id,
+                            title: l.title,
+                            moviesIds: l.movies
+                        }}
+                        author = {{
+                            id: l.user._id,
+                            name: l.user.displayName
+                        }}
+                    />
+                </li>
+            )
+        )
+
+        return items
+    }
+
+    getMoviesArr = () => {
         const movies = this.props.entities
 
         const items = []
-        // creating movie posters array
+
         movies.slice(0, 18).map(m =>
             items.push(
-                <li  className='home-list__item' key={m.id}>
+                <li className='home-list__item' key={m.id}>
                     <MoviePoster
                         title = {m.title}
                         year = {m.year}
@@ -66,6 +95,21 @@ class HomeList extends Component {
                 </li>
             )
         )
+
+        return items
+    }
+
+    getBody = () => {
+        const {type, title} = this.props
+
+        let items = []
+
+        if(type == 'movies')
+            items = this.getMoviesArr()
+
+        else if(type == 'lists')
+            items = this.getListsArr()
+
         // settings for slider
         const settings = {
             dots: false,
@@ -79,12 +123,13 @@ class HomeList extends Component {
 
         return (
             <Fragment>
+                <h2 className='home-list__title'>{title}</h2>
                 <Slider className='flex-center'
                     {...settings}
                 >
                     {items}
                 </Slider>
-                <Link to = '/movies' className='home-list__link'>
+                <Link to = {`/${type}`} className='home-list__link'>
                     view more...
                 </Link>
             </Fragment>
@@ -92,14 +137,17 @@ class HomeList extends Component {
     }
 
     render() {
-        const {type, title, loading} = this.props
+        const {loading, loaded, error} = this.props
 
-        if(loading)
+        if(error)
+            return <span>error</span>
+
+        if(loading || !loaded)
             return <Loader />
+
         return (
             <div className='home-list home-list-box'>
-                <h2 className='home-list__title'>{title}</h2>
-                {type == 'movies' ? this.getMoviesBody() : null}
+                {this.getBody()}
             </div>
         )
     }
@@ -112,8 +160,18 @@ function mapStateToProps(state, ownProps) {
         return {
             entities: mapToArr(state.movies.entities),
             loading: state.movies.loading,
-            loaded: state.movies.loaded
+            loaded: state.movies.loaded,
+            error: state.movies.error
         }
+
+    if(type == 'lists') {
+        return {
+            entities: mapToArr(state.lists.entities),
+            loading: state.lists.loading,
+            loaded: state.lists.loaded,
+            error: state.lists.error
+        }
+    }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
@@ -125,6 +183,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             type: 'popular', page: 1
         }))
 
+    if(type == 'lists')
+        loadEntities = () => dispatch(loadLists())
     return {loadEntities}
 }
 

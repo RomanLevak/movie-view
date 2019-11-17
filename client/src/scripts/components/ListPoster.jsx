@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {loadMoviePoster} from '../AC/index'
+import MiniMoviePoster from './MiniMoviePoster'
+import {mapToArr} from '../helpers'
 
 class ListPoster extends Component {
 
@@ -8,22 +12,26 @@ class ListPoster extends Component {
         list: PropTypes.shape({
             id: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
-            posters: PropTypes.arrayOf(PropTypes.string).isRequired,
+            moviesIds: PropTypes.arrayOf(PropTypes.string).isRequired,
         }).isRequired,
         author: PropTypes.shape({
             id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired
         }).isRequired,
+        // from connect
+        posters: PropTypes.array
     }
 
     getImgs = () => {
         let imgs = []
 
-        this.props.list.posters.slice(0, 4).map(posterPath =>
+        this.props.list.moviesIds.slice(0, 4).map(mId =>
             imgs.push(
-                <div className='list-poster__img-box' key={posterPath}>
-                    <img src={posterPath} />
-                </div>
+                <MiniMoviePoster
+                    key = {mId}
+                    id = {mId}
+                    {...this.props.posters[mId]}
+                />
             )
         )
 
@@ -60,4 +68,9 @@ class ListPoster extends Component {
     }
 }
 
-export default ListPoster
+export default connect(
+    state => ({
+        posters: mapToArr(state.posters)
+    }),
+    {loadMoviePoster}
+)(ListPoster)
