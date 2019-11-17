@@ -12,12 +12,8 @@ class Movies extends Component {
         match: PropTypes.object
     }
 
-    state = {
-        url: this.props.match.url
-    }
-
     render() {
-        const {url} = this.state
+        const {url} = this.props.match
 
         return (
             <div className="explorer-box">
@@ -40,31 +36,42 @@ class Movies extends Component {
 
     getDefaultExplorer = ({match}) => {
         const {page} = match.params
-        const {url} = match.state
+        const {url} = match
 
         if(!page)
-            return <Redirect to = {`${url}}lar/1`}/>
+            return <Redirect to = {`${url}/popular/1`}/>
 
-        return  <Explorer filters = {{type: 'popular', page: parseInt(page)}} key = {'popular' + page}/>
+        return (
+            <Explorer
+                filters = {{type: 'popular', page: parseInt(page)}}
+                key = {'popular' + page}
+            />
+        )
     }
 
     getExplorerWithGenre = ({match}) => {
         const {genre, page} = match.params
-        const {url} = this.state
+        const {url} = match
 
         if(!genres.map(genre => genre.name).includes(genre))
             return <Redirect to={'/not-found'} />
 
         if(!page)
-            return <Redirect to = {`${url}/genres/${genre}/1`} />
+            return <Redirect to = {`${url}/1`} />
 
-        const genreID = genres.find(g => g.name === genre).id    // finding an id by genre name
+        // finding genre id by genre name
+        const genreID = genres.find(g => g.name === genre).id
 
-        return <Explorer filters = {{
-            genreID,
-            type: genre,
-            page: parseInt(page)
-        }} key = {genreID + page} />
+        return (
+            <Explorer
+                filters = {{
+                    genreID,
+                    type: genre,
+                    page: parseInt(page)
+                }}
+                key = {genreID + page}
+            />
+        )
     }
 
     getMovie = ({match}) => {
