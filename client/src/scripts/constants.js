@@ -2,6 +2,7 @@ export const API_KEY = 'c25b68c976d82f71410d80d2993cffc1'
 
 export const LOAD_MOVIES = 'LOAD_MOVIES'
 export const LOAD_MOVIE_INFO = 'LOAD_MOVIE_INFO'
+export const LOAD_MOVIE_POSTER = 'LOAD_POSTER'
 export const SEARCH_MOVIE = 'SEARCH_MOVIE'
 
 export const CHANGE_PAGE = 'CHANGE_PAGE'

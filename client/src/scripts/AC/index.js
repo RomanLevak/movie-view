@@ -2,6 +2,7 @@ import {
     API_KEY,
     LOAD_MOVIES,
     LOAD_MOVIE_INFO,
+    LOAD_MOVIE_POSTER,
     SEARCH_MOVIE,
     LOAD_LISTS,
     SINGIN,
@@ -30,6 +31,14 @@ export function loadMovieInfo(id) {
     return {
         type: LOAD_MOVIE_INFO,
         callAPI: {url: `/tmdbapi/movie/${id}?api_key=${API_KEY}`}
+    }
+}
+
+export function loadMoviePoster(id) {
+    return {
+        type: LOAD_MOVIE_POSTER,
+        id,
+        callAPI: {url: `/tmdbapi/movie/${id}?api_key=${API_KEY}`},
     }
 }
 

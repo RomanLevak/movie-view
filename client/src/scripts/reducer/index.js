@@ -3,6 +3,7 @@ import movies from './movies'
 import movieInfo from './movie-info'
 import search from './search'
 import lists from './lists'
+import posters from './posters'
 import user from './user'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
     movieInfo,
     search,
     lists,
+    posters,
     user
 })
