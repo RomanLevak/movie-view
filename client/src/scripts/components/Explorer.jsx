@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {loadMovies} from '../AC/index'
 import {genres} from '../constants'
-import Poster from './Poster'
+import MoviePoster from './MoviePoster'
 import PropTypes from 'prop-types'
 import Loader from './Loader'
 import {Link, NavLink} from 'react-router-dom'
@@ -52,13 +52,12 @@ class Explorer extends Component {
 
         return movies.slice(0, 10).map(movie =>
             <li className = 'explorer__item' key = {movie.id}>
-                <Link to = {`/movies/${movie.id}`}>
-                    <Poster
-                        title = {movie.title}
-                        year = {movie.year}
-                        poster_path = {movie.poster_path}
-                    />
-                </Link>
+                <MoviePoster
+                    title = {movie.title}
+                    year = {movie.year}
+                    poster_path = {movie.poster_path}
+                    url={`/movies/${movie.id}`}
+                />
             </li>
         )
     }

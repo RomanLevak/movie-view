@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import Poster from './Poster'
+import MoviePoster from './MoviePoster'
 import Slider from 'react-slick'
 import Loader from './Loader'
 import {loadMovies} from '../AC/index'
@@ -33,37 +33,36 @@ Arrow.propTypes = {
 class HomeList extends Component {
 
     static propTypes = {
-        name: PropTypes.oneOf(['Popular now', 'Selections']),
+        type: PropTypes.oneOf(['movies', 'lists']),
+        title: PropTypes.string.isRequired,
         // from connect
-        movies: PropTypes.array,
+        entities: PropTypes.arrayOf(PropTypes.object).isRequired,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
-        loadMovies: PropTypes.func
+        loadEntities: PropTypes.func
     }
 
     componentDidMount() {
-        const {loading, loaded, loadMovies} = this.props
+        const {loading, loaded, loadEntities} = this.props
+
         if(!loading || !loaded)
-            loadMovies({type: 'popular', page: 1})
+            loadEntities()
     }
 
-    getBody = () => {
-        const {movies, loading} = this.props
-
-        if(loading) return <Loader />
+    getMoviesBody = () => {
+        const movies = this.props.entities
 
         const items = []
         // creating movie posters array
         movies.slice(0, 18).map(m =>
             items.push(
-                <li  className='home-list__item' key={m.id} >
-                    <Link to = {`/movies/${m.id}`}>
-                        <Poster
-                            title = {m.title}
-                            year = {m.year}
-                            poster_path = {m.poster_path}
-                        />
-                    </Link>
+                <li  className='home-list__item' key={m.id}>
+                    <MoviePoster
+                        title = {m.title}
+                        year = {m.year}
+                        poster_path = {m.poster_path}
+                        url = {`/movies/${m.id}`}
+                    />
                 </li>
             )
         )
@@ -79,31 +78,57 @@ class HomeList extends Component {
         }
 
         return (
-            <Slider className='flex-center'
-                {...settings}
-            >
-                {items}
-            </Slider>)
-    }
-
-    render() {
-        return (
-            <div className='home-list home-list-box'>
-                <h2 className='home-list__title'>Popular now</h2>
-                {this.getBody()}
+            <Fragment>
+                <Slider className='flex-center'
+                    {...settings}
+                >
+                    {items}
+                </Slider>
                 <Link to = '/movies' className='home-list__link'>
                     view more...
                 </Link>
+            </Fragment>
+        )
+    }
+
+    render() {
+        const {type, title, loading} = this.props
+
+        if(loading)
+            return <Loader />
+        return (
+            <div className='home-list home-list-box'>
+                <h2 className='home-list__title'>{title}</h2>
+                {type == 'movies' ? this.getMoviesBody() : null}
             </div>
         )
     }
 }
 
+function mapStateToProps(state, ownProps) {
+    const {type} = ownProps
+
+    if(type == 'movies')
+        return {
+            entities: mapToArr(state.movies.entities),
+            loading: state.movies.loading,
+            loaded: state.movies.loaded
+        }
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+    const {type} = ownProps
+    let loadEntities
+
+    if(type == 'movies')
+        loadEntities = () => dispatch(loadMovies({
+            type: 'popular', page: 1
+        }))
+
+    return {loadEntities}
+}
+
 export default connect(
-    state => ({
-        movies: mapToArr(state.movies.entities),
-        loading: state.movies.loading,
-        loaded: state.movies.loaded
-    }),
-    {loadMovies}
+    mapStateToProps,
+    mapDispatchToProps
 )(HomeList)

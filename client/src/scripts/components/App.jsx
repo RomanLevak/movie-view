@@ -16,13 +16,23 @@ class App extends Component {
                     <Route render = {props => <Header {...props} />} />
                     <main className='content-box'>
                         <Search />
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between'
+                        }}>
+                        </div>
                         <Switch>
                             <Route
                                 path='/(sing-in|sing-up)/'
                                 render = {props => <Form {...props} />}
                             />
                             <Route path = '/movies' render = {props => <Movies {...props} />} />
-                            <Route path='/' exact render = {() => <HomeList/>} />
+                            <Route path='/' exact render = {
+                                () => <HomeList
+                                    type='movies'
+                                    title = 'Popular now'
+                                />}
+                            />
                             <Route component={NotFound} />
                         </Switch>
                     </main>

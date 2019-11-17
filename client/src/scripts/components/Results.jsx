@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Poster from './Poster'
+import MoviePoster from './MoviePoster'
 import Loader from './Loader'
 import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {searchMovie} from '../AC'
-import {Link} from 'react-router-dom'
 
 class Results extends Component {
 
@@ -37,14 +36,13 @@ class Results extends Component {
         // renders only first 18 elements
         return movies.slice(0, 18).map(movie =>
             <li className = 'results-list__item' key = {movie.id}>
-                <Link to = {`/movies/${movie.id}`} key = {movie.id}>
-                    <Poster
-                        type = 'horizontal'
-                        title = {movie.title}
-                        year = {movie.year}
-                        poster_path = {movie.poster_path}
-                    />
-                </Link>
+                <MoviePoster
+                    type = 'horizontal'
+                    title = {movie.title}
+                    year = {movie.year}
+                    poster_path = {movie.poster_path}
+                    url={`/movies/${movie.id}`}
+                />
             </li>
         )
     }
