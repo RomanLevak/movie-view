@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {loadMoviePoster} from '../AC/index'
-import MiniMoviePoster from './MiniMoviePoster'
+import MoviePoster from './MoviePoster'
 import {mapToArr} from '../helpers'
 
 class ListPoster extends Component {
@@ -27,7 +27,8 @@ class ListPoster extends Component {
 
         this.props.list.moviesIds.slice(0, 4).map(movieId =>
             imgs.push(
-                <MiniMoviePoster
+                <MoviePoster
+                    isMini
                     key = {movieId}
                     id = {movieId}
                     {...this.props.posters[movieId]}

@@ -7,6 +7,7 @@ import {loadMoviePoster} from '../AC/index'
 class Poster extends Component {
 
     static propTypes = {
+        isMini: PropTypes.bool,
         id: PropTypes.oneOfType([
             PropTypes.number,
             PropTypes.string,
@@ -27,7 +28,7 @@ class Poster extends Component {
             loadMoviePoster(id)
     }
 
-    getBody = () => {
+    render() {
         const {loading, loaded, error, movie, id} = this.props
 
         let posterPath = ''
@@ -44,10 +45,18 @@ class Poster extends Component {
         else
             posterPath = `/tmdbimg/${movie.poster_path}`
 
+        if(this.props.isMini)
+            return (
+                <div className='list-poster__img-box'>
+                    <img src={posterPath} />
+                </div>
+            )
+
         const {title, year} = movie
 
         return (
-            <>
+            <div className='poster-box movie-poster'>
+
                 <Link to={`/movies/${id}`}>
                     <img src={posterPath} className='movie-img' />
                 </Link>
@@ -57,14 +66,6 @@ class Poster extends Component {
                     </Link>
                     <span className='movie-poster__year'>{year}</span>
                 </div>
-            </>
-        )
-    }
-
-    render() {
-        return (
-            <div className='poster-box movie-poster'>
-                {this.getBody()}
             </div>
         )
     }
