@@ -1,7 +1,9 @@
 import {
-    API_KEY, LOAD_MOVIES,
+    API_KEY,
+    LOAD_MOVIES,
     LOAD_MOVIE_INFO,
     SEARCH_MOVIE,
+    LOAD_LISTS,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -11,7 +13,7 @@ import {
 export function loadMovies(filters) {
     const {page} = filters
     let APIurl = ''
-
+    window.loadLists = loadLists
     if(filters.type == 'popular')
         APIurl = `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${page}`
 
@@ -36,6 +38,17 @@ export function searchMovie(query, temp = false) {
         type: SEARCH_MOVIE,
         temp,
         callAPI: {url: `/tmdbapi/search/movie?api_key=${API_KEY}&query=${query}`}
+    }
+}
+
+export function loadLists(filters = {}) {
+    const {userId} = filters
+
+    return {
+        type: LOAD_LISTS,
+        callAPI: {
+            url: '/server/lists' + (userId || '')
+        }
     }
 }
 
