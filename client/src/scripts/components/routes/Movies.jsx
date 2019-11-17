@@ -52,7 +52,7 @@ class Movies extends Component {
         const {genre, page} = match.params
         const {url} = this.state
 
-        if(!genres.map(g => g.name).includes(genre))
+        if(!genres.map(genre => genre.name).includes(genre))
             return <Redirect to={'/not-found'} />
 
         if(!page)

@@ -55,7 +55,7 @@ class Explorer extends Component {
                 <MoviePoster
                     title = {movie.title}
                     year = {movie.year}
-                    poster_path = {movie.poster_path}
+                    path = {movie.poster_path || ''}
                     url={`/movies/${movie.id}`}
                 />
             </li>

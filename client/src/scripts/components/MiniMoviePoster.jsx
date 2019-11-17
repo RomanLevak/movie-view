@@ -30,6 +30,7 @@ class MiniMoviePoster extends Component {
     render() {
         const {loading, loaded, path, error} = this.props
         let posterPath = ''
+
         if(error)
             posterPath = '/styles/images/not-found.png'
 

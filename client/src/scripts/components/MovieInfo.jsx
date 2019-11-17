@@ -53,17 +53,17 @@ class MovieInfo extends Component {
                             </tr>
                             <tr>
                                 <td>Counries</td>
-                                <td>{production_countries.map(c => c.name)}</td>
+                                <td>{production_countries.map(country => country.name)}</td>
                             </tr>
                             <tr>
                                 <td>Genres</td>
                                 <td> {
-                                    genres.map(g =>
+                                    genres.map(genre =>
                                         <Link className='movie__info-link'
-                                            to = {`/movies/genres/${g.name}`}
-                                            key = {g.id}
+                                            to = {`/movies/genres/${genre.name}`}
+                                            key = {genre.id}
                                         >
-                                            {`${g.name}   `}
+                                            {genre.name}
                                         </Link>)
                                 }
                                 </td>

@@ -37,10 +37,9 @@ class Results extends Component {
         return movies.slice(0, 18).map(movie =>
             <li className = 'results-list__item' key = {movie.id}>
                 <MoviePoster
-                    type = 'horizontal'
                     title = {movie.title}
                     year = {movie.year}
-                    poster_path = {movie.poster_path}
+                    path = {movie.poster_path || ''}
                     url={`/movies/${movie.id}`}
                 />
             </li>
@@ -53,7 +52,9 @@ class Results extends Component {
                 <div className='results'>
                     <h2 className = 'results__title'>
                         Searh results for:
-                        <span className = 'results__query'> {this.props.query}</span>
+                        <span className = 'results__query'>
+                            {this.props.query}
+                        </span>
                     </h2>
                     <ul className='results-list'>
                         {this.getBody()}

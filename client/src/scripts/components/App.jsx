@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import Header from './Header'
 import Search from './Search'
 import HomeList from './HomeList'
@@ -12,15 +12,10 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <Fragment>
+                <>
                     <Route render = {props => <Header {...props} />} />
                     <main className='content-box'>
                         <Search />
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'space-between'
-                        }}>
-                        </div>
                         <Switch>
                             <Route
                                 path='/(sing-in|sing-up)/'
@@ -29,7 +24,7 @@ class App extends Component {
                             <Route path = '/movies' render = {props => <Movies {...props} />} />
                             <Route path='/' exact render = {
                                 () =>
-                                    <Fragment>
+                                    <>
                                         <HomeList
                                             type='movies'
                                             title = 'Popular now'
@@ -38,14 +33,14 @@ class App extends Component {
                                             type='lists'
                                             title = 'Latest lists'
                                         />
-                                    </Fragment>
+                                    </>
                             }
                             />
                             <Route component={NotFound} />
                         </Switch>
                     </main>
                     <div className="green-bg"></div>
-                </Fragment>
+                </>
             </Router>
         )
     }

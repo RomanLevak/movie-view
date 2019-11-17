@@ -3,7 +3,9 @@ import {START, SUCCESS, FAIL} from '../constants'
 export default () => next => action => {
     const {callAPI, type, ...rest} = action
 
-    if(!callAPI) return next(action)
+    if(!callAPI)
+        return next(action)
+
     const {method} = callAPI
 
     next({

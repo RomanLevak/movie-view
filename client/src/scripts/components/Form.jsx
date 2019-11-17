@@ -34,9 +34,9 @@ class Form extends Component {
     handleSubmit = e => {
         e.preventDefault()
 
-        const {name} = e.target
+        const {value} = e.target
 
-        if(name == 'sing in') {
+        if(value == 'sing in') {
             const {singIn} = this.props
             const {email, password} = this.state
             singIn(email, password)
@@ -92,7 +92,6 @@ class Form extends Component {
                 <div className='form__field'>
                     <label htmlFor="userPassword">password</label>
                     <input className='form__text-input'
-                        id='user_password'
                         type="password"
                         name='password'
                         value={this.state.password}
@@ -106,7 +105,6 @@ class Form extends Component {
                     <input className='form__button'
                         type='submit'
                         value={type}
-                        name={type}
                         onClick = {this.handleSubmit}
                     />
                 </div>
@@ -116,8 +114,12 @@ class Form extends Component {
 
     render() {
         if(this.props.isSingedIn) {
-            const {from} = this.props.location.state
-            return <Redirect to={from} />
+            try {
+                const {from} = this.props.location.state
+                return <Redirect to={from} />
+            } catch (error) {
+                null
+            }
         }
 
         return (

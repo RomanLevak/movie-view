@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import MoviePoster from './MoviePoster'
@@ -56,19 +56,19 @@ class HomeList extends Component {
 
         const items = []
 
-        lists.slice(0, 6).map(l =>
+        lists.slice(0, 6).map(list =>
             items.push(
-                <li className='home-list__item' key={l.id}>
+                <li className='home-list__item' key={list.id}>
                     <ListPoster
-                        key = {l.id}
+                        key = {list.id}
                         list = {{
-                            id: l.id,
-                            title: l.title,
-                            moviesIds: l.movies
+                            id: list.id,
+                            title: list.title,
+                            moviesIds: list.movies
                         }}
                         author = {{
-                            id: l.user._id,
-                            name: l.user.displayName
+                            id: list.user._id,
+                            name: list.user.displayName
                         }}
                     />
                 </li>
@@ -83,14 +83,14 @@ class HomeList extends Component {
 
         const items = []
 
-        movies.slice(0, 18).map(m =>
+        movies.slice(0, 18).map(movie =>
             items.push(
-                <li className='home-list__item' key={m.id}>
+                <li className='home-list__item' key={movie.id}>
                     <MoviePoster
-                        title = {m.title}
-                        year = {m.year}
-                        poster_path = {m.poster_path}
-                        url = {`/movies/${m.id}`}
+                        title = {movie.title}
+                        year = {movie.year}
+                        path = {movie.poster_path}
+                        url = {`/movies/${movie.id}`}
                     />
                 </li>
             )
@@ -122,7 +122,7 @@ class HomeList extends Component {
         }
 
         return (
-            <Fragment>
+            <>
                 <h2 className='home-list__title'>{title}</h2>
                 <Slider className='flex-center'
                     {...settings}
@@ -132,7 +132,7 @@ class HomeList extends Component {
                 <Link to = {`/${type}`} className='home-list__link'>
                     view more...
                 </Link>
-            </Fragment>
+            </>
         )
     }
 

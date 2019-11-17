@@ -25,12 +25,12 @@ class ListPoster extends Component {
     getImgs = () => {
         let imgs = []
 
-        this.props.list.moviesIds.slice(0, 4).map(mId =>
+        this.props.list.moviesIds.slice(0, 4).map(movieId =>
             imgs.push(
                 <MiniMoviePoster
-                    key = {mId}
-                    id = {mId}
-                    {...this.props.posters[mId]}
+                    key = {movieId}
+                    id = {movieId}
+                    {...this.props.posters[movieId]}
                 />
             )
         )

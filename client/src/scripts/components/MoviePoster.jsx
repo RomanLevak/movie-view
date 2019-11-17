@@ -6,14 +6,14 @@ class Poster extends Component {
 
     static propTypes = {
         title: PropTypes.string.isRequired,
-        poster_path: PropTypes.string.isRequired,
+        path: PropTypes.string.isRequired,
         year: PropTypes.string.isRequired,
         url: PropTypes.string,
     }
 
     render() {
-        const {poster_path, year, title, url} = this.props
-        const img_url = poster_path ? `/tmdbimg/${poster_path}` : '/styles/images/not-found.svg'
+        const {path, year, title, url} = this.props
+        const img_url = path ? `/tmdbimg/${path}` : '/styles/images/not-found.svg'
 
         return (
             <div className='poster-box movie-poster'>

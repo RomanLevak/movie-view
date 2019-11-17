@@ -22,11 +22,14 @@ class Search extends Component {
         isResultsOpen: false
     }
 
-    onChange = event => {
-        const {value} = event.target
+    onChange = e => {
+        const {value} = e.target
         const {searchMovie} = this.props
         // inputing will open the search results
-        this.setState({value, isResultsOpen: true})
+        this.setState({
+            value, isResultsOpen: true
+        })
+
         if(value === '')
             return this.onBlur()
 
@@ -58,16 +61,16 @@ class Search extends Component {
         if(!this.state.isResultsOpen) return null
         const {movies} = this.props
 
-        return movies.slice(0, 6).map(m =>
+        return movies.slice(0, 6).map(movie =>
             <Link
-                to = {`/movies/${m.id}`}
-                key = {m.id}
-                onMouseDown = {e => e.preventDefault()} // preventfrom onBlur event which would hide Link and redirection wouldn't happen
+                to = {`/movies/${movie.id}`}
+                key = {movie.id}
+                onMouseDown = {e => e.preventDefault()} // prevent from onBlur event which would hide Link and redirection wouldn't happen
                 onClick = {() => this.onBlur()}
                 className = 'search__item'
             >
-                {m.title}
-                <span>{m.year}</span>
+                {movie.title}
+                <span>{movie.year}</span>
             </Link>
         )
     }
