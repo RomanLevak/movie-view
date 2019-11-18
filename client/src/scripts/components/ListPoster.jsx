@@ -46,13 +46,23 @@ class ListPoster extends Component {
 
         return (
             <div className='poster-box'>
-                <Link to={`/lists/${id}`}>
+                <Link
+                    to={{
+                        pathname: `/lists/${id}`,
+                        fromList: {...this.props}
+                    }}
+                >
                     <div className='list-poster__imgs-box'>
                         {this.getImgs()}
                     </div>
                 </Link>
                 <div className='list-poster__info'>
-                    <Link to={`/lists/${id}`}>
+                    <Link
+                        to={{
+                            pathname: `/lists/${id}`,
+                            ...this.props
+                        }}
+                    >
                         <span className='list-poster__title'>{title}</span>
                     </Link>
                     <span className='list-poster__author-box'>

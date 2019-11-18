@@ -5,6 +5,7 @@ import {
     LOAD_MOVIE_POSTER,
     SEARCH_MOVIE,
     LOAD_LISTS,
+    LOAD_LIST_INFO,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -57,6 +58,15 @@ export function loadLists(filters = {}) {
         type: LOAD_LISTS,
         callAPI: {
             url: '/server/lists' + (userId || '')
+        }
+    }
+}
+
+export function loadListInfo(id) {
+    return {
+        type: LOAD_LIST_INFO,
+        callAPI: {
+            url: `/server/lists/${id}`
         }
     }
 }

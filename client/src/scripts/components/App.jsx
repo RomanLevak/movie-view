@@ -5,6 +5,7 @@ import HomeList from './HomeList'
 import Movies from './routes/Movies'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Form from './Form'
+import ListInfo from './ListInfo'
 import NotFound from './NotFound'
 import '../../styles/index.sass'
 
@@ -22,6 +23,7 @@ class App extends Component {
                                 render = {props => <Form {...props} />}
                             />
                             <Route path = '/movies' render = {props => <Movies {...props} />} />
+                            <Route path = '/lists/:id' render = {props => <ListInfo {...props} />}/>
                             <Route path='/' exact render = {
                                 () =>
                                     <>
