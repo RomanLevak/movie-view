@@ -1,5 +1,6 @@
 const {
     get,
+    getById,
     getAllListsFromUser,
     create,
     update,
@@ -13,12 +14,14 @@ const checkId = require('../middlewares/check-id')
 
 const router = require('express').Router()
 
+router.get('/latest', get)
+router.get('/latest/:page', get)
+
 router.route('/')
-    .get(get)
     .post(checkAuth, create)
 
 router.route('/:id')
-    .get(checkId, get)
+    .get(checkId, getById)
     .put(checkId, checkOwner, update)
     .delete(checkId, checkOwner, remove)
 

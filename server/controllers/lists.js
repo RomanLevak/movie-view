@@ -19,6 +19,19 @@ const get = ah(async (req, res, next) => {
     res.json(listsToSend)
 })
 
+const getById = ah(async (req, res, next) => {
+    const {id} = req.params
+
+    if(id) {
+        const list = await List.findById(id)
+
+        if(!list)
+            return next(new HTTPError(404, 'Such list does not exist'))
+
+        return res.json(await list.selectToSend())
+    }
+})
+
 const getAllListsFromUser = ah(async (req, res, next) => {
     const userId = req.params.userId
     const lists = await List.find({user: userId})
@@ -117,6 +130,7 @@ const removeMovie = ah(async (req, res, next) => {
 
 module.exports = {
     get,
+    getById,
     getAllListsFromUser,
     create,
     update,
