@@ -8,6 +8,9 @@ const get = ah(async (req, res, next) => {
     if(id) {
         const list = await List.findById(id)
 
+        if(!list)
+            return next(new HTTPError(404, 'Such list does not exist'))
+
         return res.json(await list.selectToSend())
     }
 

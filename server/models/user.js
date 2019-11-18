@@ -35,10 +35,10 @@ const userSchema = new Schema({
     lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 }, {timestamps: true})
 
-userSchema.methods.generatePassword = function(salt, password) {
+userSchema.methods.generatePassword = function(salt, plainPassword) {
     return new Promise((resolve, reject) => {
         crypto.pbkdf2(
-            password,
+            plainPassword,
             salt,
             config.get('crypto.hash.iterations'),
             config.get('crypto.hash.length'),
@@ -52,20 +52,21 @@ userSchema.methods.generatePassword = function(salt, password) {
     })
 }
 
-userSchema.methods.setPassword = async function(password) {
+userSchema.methods.setPassword = async function(plainPassword) {
+
     this.salt = crypto.randomBytes(
         config.get('crypto.hash.length')
     ).toString('hex')
 
-    this.passwordHash = await this.generatePassword(this.salt, password)
+    this.passwordHash = await this.generatePassword(this.salt, plainPassword)
 }
 
-userSchema.methods.checkPassword = async function(password) {
-    if(!password) return false
+userSchema.methods.checkPassword = async function(plainPassword) {
+    if(!plainPassword) return false
 
-    const hash = await this.generatePassword(this.salt, password)
+    const passwordHash = await this.generatePassword(this.salt, plainPassword)
 
-    return hash === this.passwordHash
+    return passwordHash === this.passwordHash
 }
 
 userSchema.methods.selectToSend = function(options = {}) {

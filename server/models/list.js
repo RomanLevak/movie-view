@@ -24,13 +24,14 @@ listSchema.methods.setUserByEmail = async function(email) {
 }
 
 listSchema.methods.selectToSend = async function() {
-    await this.populate('user', 'displayName').execPopulate()
+    await this.populate('user').execPopulate()
 
     return {
         id: this._id,
         movies: this.movies,
         title: this.title,
-        user: this.user
+        createrAt: this.createdAt,
+        user: this.user.selectToSend()
     }
 }
 
