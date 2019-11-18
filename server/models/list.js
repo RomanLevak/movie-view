@@ -35,14 +35,21 @@ listSchema.methods.selectToSend = async function() {
     }
 }
 
-listSchema.statics.getAllListsToSend = async function() {
-    let lists = await this.find()
-
-    lists = await Promise.all(
-        lists.map(async list => await list.selectToSend())
-    )
+listSchema.statics.getLatestLists = async function(page = 1) {
+    const lists = await this
+        .find()
+        .sort([['createdAt', -1]])
+        .skip((page - 1) * 10)
+        .limit(10)
 
     return lists
+}
+
+listSchema.statics.getTotalPages = async function() {
+    const totalDocs = await this.countDocuments()
+    const totalPages = ~~(totalDocs/10) + 1
+
+    return totalPages
 }
 
 module.exports = mongoose.model('List', listSchema)

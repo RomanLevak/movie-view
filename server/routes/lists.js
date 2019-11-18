@@ -1,5 +1,5 @@
 const {
-    get,
+    getLatest,
     getById,
     getAllListsFromUser,
     create,
@@ -14,8 +14,8 @@ const checkId = require('../middlewares/check-id')
 
 const router = require('express').Router()
 
-router.get('/latest', get)
-router.get('/latest/:page', get)
+router.get('/latest', getLatest)
+router.get('/latest/:page', getLatest)
 
 router.route('/')
     .post(checkAuth, create)

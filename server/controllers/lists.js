@@ -2,21 +2,18 @@ const List = require('../models/list')
 const HTTPError = require('../libs/http-error')
 const ah = require('../libs/async-handler')
 
-const get = ah(async (req, res, next) => {
-    const {id} = req.params
+const getLatest = ah(async (req, res, next) => {
+    const {page} = req.params
 
-    if(id) {
-        const list = await List.findById(id)
+    const lists = await List.getLatestLists(page || 1)
 
-        if(!list)
-            return next(new HTTPError(404, 'Such list does not exist'))
+    const listsToSend = await Promise.all(
+        lists.map(async list => await list.selectToSend())
+    )
 
-        return res.json(await list.selectToSend())
-    }
+    const totalPages = await List.getTotalPages()
 
-    const listsToSend = await List.getAllListsToSend()
-
-    res.json(listsToSend)
+    res.json({lists: listsToSend, totalPages})
 })
 
 const getById = ah(async (req, res, next) => {
@@ -129,7 +126,7 @@ const removeMovie = ah(async (req, res, next) => {
 })
 
 module.exports = {
-    get,
+    getLatest,
     getById,
     getAllListsFromUser,
     create,
