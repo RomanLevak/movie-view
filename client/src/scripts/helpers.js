@@ -25,3 +25,8 @@ export function filterMovies(movies) {
 
     return arrToMap(filtredMovies)
 }
+
+export function parseDate(rawDateString) {
+    let result = new Date(Date.parse(rawDateString)).toLocaleString()
+    return result.substring(0, 10)
+}

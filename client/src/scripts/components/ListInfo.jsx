@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import MoviePoster from './MoviePoster'
 import Loader from './Loader'
 import {loadListInfo} from '../AC/index'
+import {parseDate} from '../helpers'
 
 class ListInfo extends Component {
 
@@ -20,8 +21,7 @@ class ListInfo extends Component {
     }
 
     componentDidMount() {
-        const {loadListInfo, loading, loaded, match} = this.props
-        const {id} = match.params
+        const {loadListInfo, loading, loaded, id} = this.props
 
         if(!loaded || !loading)
             loadListInfo(id)
@@ -79,7 +79,7 @@ class ListInfo extends Component {
                     <span className="list__created">
                         created at:
                         <span className="list__created-time">
-                            {'17.11.2019'}
+                            {parseDate(list.createdAt)}
                         </span>
                     </span>
                 </div>

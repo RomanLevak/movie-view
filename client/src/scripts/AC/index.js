@@ -52,13 +52,17 @@ export function searchMovie(query, temp = false) {
 }
 
 export function loadLists(filters = {}) {
-    const {userId} = filters
+    const {userId, page} = filters
+    let url = ''
+
+    if(userId)
+        url = `/server/lists/${userId}`
+    else
+        url = `/server/lists/latest${page ? page : ''}`
 
     return {
         type: LOAD_LISTS,
-        callAPI: {
-            url: '/server/lists' + (userId || '')
-        }
+        callAPI: {url}
     }
 }
 

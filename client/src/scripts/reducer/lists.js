@@ -4,6 +4,7 @@ import {
     SUCCESS,
     FAIL,
 } from '../constants'
+
 import {arrToMap} from '../helpers'
 
 const defaultState = {
@@ -27,7 +28,7 @@ export default (listsState = defaultState, action) => {
             }
 
         case LOAD_LISTS + SUCCESS: {
-            const lists = payload
+            const {lists} = payload
 
             return {
                 ...listsState,

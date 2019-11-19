@@ -67,7 +67,7 @@ class HomeList extends Component {
                             moviesIds: list.movies
                         }}
                         author = {{
-                            id: list.user._id,
+                            id: list.user.id,
                             name: list.user.displayName
                         }}
                     />
