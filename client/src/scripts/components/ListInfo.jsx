@@ -1,23 +1,23 @@
 import React, {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import MoviePoster from './MoviePoster'
-import Loader from './Loader'
-import {loadListInfo} from '../AC/index'
 import {parseDate} from '../helpers'
+import {loadListInfo} from '../AC/index'
+import Loader from './Loader'
+import MoviePoster from './MoviePoster'
 
 class ListInfo extends Component {
 
     static propTypes = {
         match: PropTypes.object,
-        id: PropTypes.string,
+        id: PropTypes.string.isRequired,
         // from connect
         list: PropTypes.object,
-        loading: PropTypes.bool,
-        loaded: PropTypes.bool,
-        loadListInfo: PropTypes.func,
-        error: PropTypes.string
+        loading: PropTypes.bool.isRequired,
+        loaded: PropTypes.bool.isRequired,
+        error: PropTypes.string,
+        loadListInfo: PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -27,7 +27,7 @@ class ListInfo extends Component {
             loadListInfo(id)
     }
 
-    getMovePosters = () => {
+    getMoviePosters = () => {
         const movieIds = this.props.list.movies
         const movies = []
 
@@ -84,7 +84,7 @@ class ListInfo extends Component {
                     </span>
                 </div>
                 <div className='list__movies-box'>
-                    {this.getMovePosters()}
+                    {this.getMoviePosters()}
                 </div>
             </div>
         )

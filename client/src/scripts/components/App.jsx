@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch
+} from 'react-router-dom'
+
 import Header from './Header'
 import Search from './Search'
 import HomeList from './HomeList'
 import Movies from './routes/Movies'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Form from './Form'
 import Lists from './routes/Lists'
 import NotFound from './NotFound'

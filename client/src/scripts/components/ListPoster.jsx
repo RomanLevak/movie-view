@@ -2,9 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {loadMoviePoster} from '../AC/index'
-import MoviePoster from './MoviePoster'
 import {mapToArr} from '../helpers'
+import MoviePoster from './MoviePoster'
 
 class ListPoster extends Component {
 
@@ -22,7 +21,7 @@ class ListPoster extends Component {
         posters: PropTypes.array
     }
 
-    getImgs = () => {
+    getMiniPosters = () => {
         let imgs = []
 
         this.props.list.moviesIds.slice(0, 4).map(movieId =>
@@ -53,7 +52,7 @@ class ListPoster extends Component {
                     }}
                 >
                     <div className='list-poster__imgs-box'>
-                        {this.getImgs()}
+                        {this.getMiniPosters()}
                     </div>
                 </Link>
                 <div className='list-poster__info'>
@@ -82,6 +81,5 @@ class ListPoster extends Component {
 export default connect(
     state => ({
         posters: mapToArr(state.posters)
-    }),
-    {loadMoviePoster}
+    })
 )(ListPoster)

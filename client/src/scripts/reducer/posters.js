@@ -4,6 +4,7 @@ import {
     SUCCESS,
     FAIL
 } from '../constants'
+
 import {filterMovie} from '../helpers'
 
 const defaultState = {

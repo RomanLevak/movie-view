@@ -1,4 +1,10 @@
-import {SEARCH_MOVIE, START, SUCCESS, FAIL} from '../constants'
+import {
+    SEARCH_MOVIE,
+    START,
+    SUCCESS,
+    FAIL
+} from '../constants'
+
 import {filterMovies} from '../helpers'
 
 const defaultState = {

@@ -1,7 +1,7 @@
 import React from 'react'
-import App from './App'
-import store from '../store/index'
 import {Provider} from 'react-redux'
+import store from '../store/index'
+import App from './App'
 
 function Root() {
     return (

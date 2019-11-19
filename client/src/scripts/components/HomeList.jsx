@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import MoviePoster from './MoviePoster'
-import ListPoster from './ListPoster'
-import Slider from 'react-slick'
-import Loader from './Loader'
-import {loadMovies, loadLists} from '../AC/index'
-import {mapToArr} from '../helpers'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {mapToArr} from '../helpers'
+import {loadMovies, loadLists} from '../AC/index'
+import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
+import Loader from './Loader'
+import ListPoster from './ListPoster'
+import MoviePoster from './MoviePoster'
 
 // Arrow for slider
 function Arrow(props) {

@@ -1,20 +1,27 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {loadMovieInfo} from '../AC/index'
-import Loader from './Loader'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {loadMovieInfo} from '../AC/index'
+import Loader from './Loader'
 
 class MovieInfo extends Component {
 
     static propTypes = {
-        id: PropTypes.string,
+        id: PropTypes.string.isRequired,
         // from connect
-        movie: PropTypes.object,
-        loading: PropTypes.bool,
-        loaded: PropTypes.bool,
-        loadMovieInfo: PropTypes.func,
-        error: PropTypes.string
+        movie: PropTypes.object.isRequired,
+        loading: PropTypes.bool.isRequired,
+        loaded: PropTypes.bool.isRequired,
+        error: PropTypes.string,
+        loadMovieInfo: PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        const {id, loadMovieInfo, loading, loaded} = this.props
+
+        if(!loaded || !loading)
+            loadMovieInfo(id)
     }
 
     getInfoTable = () => {
@@ -23,11 +30,11 @@ class MovieInfo extends Component {
             release_date, adult,
             original_language, poster_path,
             genres, production_countries,
-            tagline, runtime, budget, overview
+            tagline, runtime, budget
         } = this.props.movie
 
         return (
-            <div className='movie-box'>
+            <>
                 <div className='movie__img flex-center'>
                     <img src = {`/tmdbimg/${poster_path}`} />
                 </div>
@@ -64,7 +71,8 @@ class MovieInfo extends Component {
                                             key = {genre.id}
                                         >
                                             {genre.name}
-                                        </Link>)
+                                        </Link>
+                                    )
                                 }
                                 </td>
                             </tr>
@@ -83,18 +91,8 @@ class MovieInfo extends Component {
                         </tbody>
                     </table>
                 </div>
-                <p className='movie__info-overview'>
-                    {overview}
-                </p>
-            </div>
+            </>
         )
-    }
-
-    componentDidMount() {
-        const {id, loadMovieInfo, loading, loaded} = this.props
-
-        if(!loaded || !loading)
-            loadMovieInfo(id)
     }
 
     render() {
@@ -111,8 +109,16 @@ class MovieInfo extends Component {
                     <Loader />
                 </div>
             )
+        const {overview} = this.props.movie
 
-        return this.getInfoTable()
+        return (
+            <div className='movie-box'>
+                {this.getInfoTable()}
+                <p className='movie__info-overview'>
+                    {overview}
+                </p>
+            </div>
+        )
     }
 }
 

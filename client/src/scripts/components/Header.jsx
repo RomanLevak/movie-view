@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 import {singOut, checkIfSingedIn} from '../AC/index'
 
 class Header extends Component {
@@ -9,14 +9,23 @@ class Header extends Component {
     static propTypes = {
         location: PropTypes.object,
         // from connect
-        isSingedIn: PropTypes.bool.isRequired,
         user: PropTypes.object,
-        singOut: PropTypes.func,
-        checkIfSingedIn: PropTypes.func,
+        singOut: PropTypes.func.isRequired,
+        checkIfSingedIn: PropTypes.func.isRequired,
+    }
+
+    componentDidMount() {
+        const {checkIfSingedIn} = this.props
+        checkIfSingedIn()
+    }
+
+    handleSingOutClick = () => {
+        const {singOut} = this.props
+        singOut()
     }
 
     getUserArea() {
-        if(this.props.isSingedIn)
+        if(this.props.user)
             return (
                 <div className='header__buttons'>
                     <div className="header__user">{this.props.user.displayName}</div>
@@ -48,11 +57,6 @@ class Header extends Component {
         )
     }
 
-    handleSingOutClick = () => {
-        const {singOut} = this.props
-        singOut()
-    }
-
     render() {
         return (
             <header className='header'>
@@ -63,11 +67,6 @@ class Header extends Component {
                 {this.getUserArea()}
             </header>
         )
-    }
-
-    componentDidMount() {
-        const {checkIfSingedIn} = this.props
-        checkIfSingedIn()
     }
 }
 

@@ -13,8 +13,8 @@ class Poster extends Component {
             PropTypes.string,
         ]).isRequired,
         // from connect
-        loading: PropTypes.bool,
-        loaded: PropTypes.bool,
+        loading: PropTypes.bool.isRequired,
+        loaded: PropTypes.bool.isRequired,
         movie: PropTypes.object,
         error: PropTypes.string,
         loadMoviePoster: PropTypes.func

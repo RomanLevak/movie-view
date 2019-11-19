@@ -1,4 +1,9 @@
-import {LOAD_MOVIE_INFO, START, SUCCESS, FAIL} from '../constants'
+import {
+    LOAD_MOVIE_INFO,
+    START,
+    SUCCESS,
+    FAIL
+} from '../constants'
 
 const defaultState = {
     loading: false,

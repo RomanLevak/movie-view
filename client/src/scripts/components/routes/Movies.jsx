@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import Explorer from '../Explorer'
+import PropTypes from 'prop-types'
+import {Route, Redirect, Switch} from 'react-router-dom'
+import {genres} from '../../constants'
 import MovieInfo from '../MovieInfo'
 import Results from '../Results'
-import PropTypes from 'prop-types'
-import {Route, Redirect} from 'react-router-dom'
-import {genres} from '../../constants'
+import Explorer from '../Explorer'
 
 class Movies extends Component {
 
@@ -17,13 +17,15 @@ class Movies extends Component {
 
         return (
             <div className="explorer-box">
-                <Route path = {url} render = {this.getDefaultExplorer} exact />
-                <Route path = {`${url}/popular`} render = {this.getDefaultExplorer} exact />
-                <Route path = {`${url}/popular/:page`} render = {this.getDefaultExplorer} exact />
-                <Route path = {`${url}/genres/:genre/:page`} render = {this.getExplorerWithGenre} exact />
-                <Route path = {`${url}/genres/:genre`} render = {this.getExplorerWithGenre} exact />
-                <Route path = {`${url}/search/:query`} render = {this.getResults} exact />
-                <Route path = {`${url}/:id`} render = {this.getMovie} exact />
+                <Switch>
+                    <Route path = {`${url}/popular/:page`} render = {this.getDefaultExplorer} />
+                    <Route path = {`${url}/popular`} render = {this.getDefaultExplorer} />
+                    <Route path = {`${url}/genres/:genre/:page`} render = {this.getExplorerWithGenre} />
+                    <Route path = {`${url}/genres/:genre`} render = {this.getExplorerWithGenre} />
+                    <Route path = {`${url}/search/:query`} render = {this.getResults} />
+                    <Route path = {`${url}/:id`} render = {this.getMovie} />
+                    <Route path = {url} render = {this.getDefaultExplorer} />
+                </Switch>
             </div>
         )
     }
@@ -38,12 +40,19 @@ class Movies extends Component {
         const {page} = match.params
         const {url} = match
 
-        if(!page)
-            return <Redirect to = {`${url}/popular/1`}/>
+        if(!page) {
+            if(url.includes('popular'))
+                return <Redirect to = {`${url}/1`}/>
+            else
+                return <Redirect to = {`${url}/popular/1`}/>
+        }
 
         return (
             <Explorer
-                filters = {{type: 'popular', page: parseInt(page)}}
+                filters = {{
+                    type: 'popular',
+                    page: parseInt(page)
+                }}
                 key = {'popular' + page}
             />
         )

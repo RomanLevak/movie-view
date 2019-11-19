@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import MoviePoster from './MoviePoster'
-import Loader from './Loader'
 import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {searchMovie} from '../AC'
+import MoviePoster from './MoviePoster'
+import Loader from './Loader'
 
 class Results extends Component {
 
     static propTypes = {
-        query: PropTypes.string,
+        query: PropTypes.string.isRequired,
         // form connect
-        movies: PropTypes.array,
+        movies: PropTypes.array.isRequired,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,

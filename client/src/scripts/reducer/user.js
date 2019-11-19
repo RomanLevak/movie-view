@@ -1,12 +1,16 @@
 import {
-    SINGIN, SINGOUT, SINGUP, CHECKAUTH,
-    START, SUCCESS, FAIL
+    SINGIN,
+    SINGOUT,
+    SINGUP,
+    CHECKAUTH,
+    START,
+    SUCCESS,
+    FAIL
 } from '../constants'
 
 const defaultState = {
-    isSingedIn: false,
     loading: false,
-    entity: {},
+    entity: null,
     error: ''
 }
 
@@ -23,7 +27,7 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: true,
-                entity: {},
+                entity: null,
                 error: ''
             }
 
@@ -31,7 +35,6 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: true,
                 entity: payload,
                 error: ''
             }
@@ -40,13 +43,12 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: false,
-                entity: {},
+                entity: null,
                 error: payload
             }
 
         case SINGUP + START:
-            if(userState.isSingedIn)
+            if(userState.entity)
                 return {
                     ...userState,
                     error: 'you are already isSingedIn in'
@@ -54,8 +56,7 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: true,
-                isSingedIn: false,
-                entity: {},
+                entity: null,
                 error: ''
             }
 
@@ -63,7 +64,6 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: true,
                 entity: payload,
                 error: ''
             }
@@ -73,7 +73,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: false,
                 isSingedIn: false,
-                entity: {},
+                entity: null,
                 error: payload
             }
 
@@ -81,7 +81,7 @@ export default (userState = defaultState, action) => {
             if(!userState.isSingedIn)
                 return {
                     ...userState,
-                    error: 'you are already isSingedIn out'
+                    error: 'you are already singedIn out'
                 }
             return {
                 ...userState,
@@ -94,7 +94,7 @@ export default (userState = defaultState, action) => {
                 ...userState,
                 loading: false,
                 isSingedIn: false,
-                entity: {},
+                entity: null,
                 error: ''
             }
 
@@ -110,7 +110,6 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: true,
-                isSingedIn: false,
                 error: ''
             }
 
@@ -120,7 +119,6 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: Boolean(user),
                 entity: user,
                 error: ''
             }
@@ -130,8 +128,7 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: false,
-                entity: {},
+                entity: null,
                 error: payload
             }
     }

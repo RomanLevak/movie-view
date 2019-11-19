@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {loadMovies} from '../AC/index'
 import {genres} from '../constants'
-import MoviePoster from './MoviePoster'
-import PropTypes from 'prop-types'
-import Loader from './Loader'
-import {Link, NavLink} from 'react-router-dom'
 import ReactPaginate from 'react-paginate'
+import Loader from './Loader'
+import MoviePoster from './MoviePoster'
 
 class Explorer extends Component {
 
@@ -28,6 +28,18 @@ class Explorer extends Component {
         loaded: PropTypes.bool.isRequired,
         loadMovies: PropTypes.func.isRequired,
         error: PropTypes.string
+    }
+
+    componentDidMount() {
+        const {loadMovies, loaded, loading, filters} = this.props
+
+        if(!loading || !loaded)
+            loadMovies(filters)
+    }
+
+    onPageChange = ({selected}) => {
+        const {history} = this.context.router
+        history.push(`${selected + 1}`)
     }
 
     getGenresList = () =>
@@ -55,18 +67,6 @@ class Explorer extends Component {
                 <MoviePoster id = {movie.id} />
             </li>
         )
-    }
-
-    componentDidMount() {
-        const {loadMovies, loaded, loading, filters} = this.props
-
-        if(!loading || !loaded)
-            loadMovies(filters)
-    }
-
-    onPageChange = ({selected}) => {
-        const {history} = this.context.router
-        history.push(`${selected + 1}`)
     }
 
     render() {

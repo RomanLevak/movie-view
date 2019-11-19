@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {searchMovie} from '../AC'
-import {connect} from 'react-redux'
-import {mapToArr} from '../helpers'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {mapToArr} from '../helpers'
+import {searchMovie} from '../AC'
 
 class Search extends Component {
 
@@ -13,7 +13,7 @@ class Search extends Component {
 
     static propTypes = {
         // from connect
-        movies: PropTypes.array,
+        movies: PropTypes.array.isRequired,
         searchMovie: PropTypes.func.isRequired
     }
 
@@ -25,25 +25,16 @@ class Search extends Component {
     onChange = e => {
         const {value} = e.target
         const {searchMovie} = this.props
-        // inputing will open the search results
+
         this.setState({
-            value, isResultsOpen: true
+            value,
+            isResultsOpen: true
         })
 
         if(!value)
             return this.onBlur()
 
         searchMovie(value, true)
-    }
-
-    onBlur = () => {
-        // hide results
-        this.setState({isResultsOpen: false})
-    }
-
-    onFocus = () => {
-        // show results
-        this.setState({isResultsOpen: true})
     }
 
     // handles click on 'Enter' key
@@ -57,6 +48,16 @@ class Search extends Component {
         }
     }
 
+    onBlur = () => {
+        // hide results
+        this.setState({isResultsOpen: false})
+    }
+
+    onFocus = () => {
+        // show results
+        this.setState({isResultsOpen: true})
+    }
+
     getResults = () => {
         if(!this.state.isResultsOpen) return null
         const {movies} = this.props
@@ -65,7 +66,11 @@ class Search extends Component {
             <Link
                 to = {`/movies/${movie.id}`}
                 key = {movie.id}
-                onMouseDown = {e => e.preventDefault()} // prevent from onBlur event which would hide Link and redirection wouldn't happen
+                /*
+                 * prevent from onBlur event which would
+                 * hide Link and redirection wouldn't happen
+                 */
+                onMouseDown = {e => e.preventDefault()}
                 onClick = {() => this.onBlur()}
                 className = 'search__item'
             >

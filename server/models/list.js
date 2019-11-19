@@ -30,7 +30,7 @@ listSchema.methods.selectToSend = async function() {
         id: this._id,
         movies: this.movies,
         title: this.title,
-        createrAt: this.createdAt,
+        createdAt: this.createdAt,
         user: this.user.selectToSend()
     }
 }

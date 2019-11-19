@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
 import {Redirect, NavLink} from 'react-router-dom'
+import {connect} from 'react-redux'
 import {singIn, singUp} from '../AC/index'
 
 class Form extends Component {
@@ -13,7 +13,7 @@ class Form extends Component {
         singIn: PropTypes.func.isRequired,
         singUp: PropTypes.func.isRequired,
         isSingedIn: PropTypes.bool.isRequired,
-        loading: PropTypes.bool,
+        loading: PropTypes.bool.isRequired,
         error: PropTypes.string
     }
 
@@ -24,10 +24,10 @@ class Form extends Component {
     }
 
     handleInputChange = e => {
-        const {name, value} = e.target
+        const {id, value} = e.target
 
         this.setState({
-            [name]: value
+            [id]: value
         })
     }
 
@@ -62,13 +62,12 @@ class Form extends Component {
         const type = url.includes('sing-in') ? 'sing in' : 'sing up'
 
         return (
-            <fieldset className='form__field-box'>
+            <>
                 <div className='form__field'>
-                    <label htmlFor="user_email">email</label>
+                    <label htmlFor='email'>email</label>
                     <input className='form__field form__text-input'
-                        id='user_email'
-                        type="email"
-                        name='email'
+                        id='email'
+                        type='email'
                         value={this.state.email}
                         onChange={this.handleInputChange}
                     />
@@ -81,7 +80,6 @@ class Form extends Component {
                             <input className='form__text-input'
                                 id='username'
                                 type="text"
-                                name='username'
                                 value={this.state.username}
                                 onChange={this.handleInputChange}
                             />
@@ -93,7 +91,7 @@ class Form extends Component {
                     <label htmlFor="userPassword">password</label>
                     <input className='form__text-input'
                         type="password"
-                        name='password'
+                        id='password'
                         value={this.state.password}
                         onChange={this.handleInputChange}
                     />
@@ -108,7 +106,7 @@ class Form extends Component {
                         onClick = {this.handleSubmit}
                     />
                 </div>
-            </fieldset>
+            </>
         )
     }
 
@@ -144,7 +142,9 @@ class Form extends Component {
                         sing up
                     </NavLink>
                 </div>
-                {this.getFieldset()}
+                <fieldset className='form__field-box'>
+                    {this.getFieldset()}
+                </fieldset>
             </form>
         )
     }
@@ -152,7 +152,7 @@ class Form extends Component {
 
 export default connect(
     state => ({
-        isSingedIn: state.user.isSingedIn,
+        isSingedIn: Boolean(state.user.entity),
         loading: state.user.loading,
         error: state.user.error
     }),
