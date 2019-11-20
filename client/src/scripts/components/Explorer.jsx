@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link, NavLink} from 'react-router-dom'
-import {connect} from 'react-redux'
-import selectMovies from '../selectors/movies'
-import selectLists from '../selectors/lists'
-import {loadMovies} from '../AC/index'
-import {loadLists} from '../AC/index'
+import connectToMoviesAndLists from './containers/moviesAndLists'
 import {genres} from '../constants'
 import ReactPaginate from 'react-paginate'
 import Loader from './Loader'
@@ -22,13 +18,16 @@ class Explorer extends Component {
         type: PropTypes.oneOf(['movies', 'lists']).isRequired,
         filters: PropTypes.object,
         // from connect
-        Item: PropTypes.elementType,
         entities: PropTypes.array,
         totalPages: PropTypes.number,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         loadEntities: PropTypes.func.isRequired,
         error: PropTypes.string
+    }
+
+    state = {
+        Item: this.props.type == 'movies' ? MoviePoster : ListPoster
     }
 
     componentDidMount() {
@@ -80,7 +79,8 @@ class Explorer extends Component {
     }
 
     getBody = () => {
-        const {Item, entities, loading, loaded, error} = this.props
+        const {entities, loading, loaded, error} = this.props
+        const {Item} = this.state
 
         if(error)
             return <span className = 'error-msg'>{error}</span>
@@ -120,37 +120,4 @@ class Explorer extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    const {type} = ownProps
-
-    if(type == 'movies')
-        return {
-            ...selectMovies(state),
-            Item: MoviePoster
-        }
-
-    if(type == 'lists') {
-        return {
-            ...selectLists(state),
-            Item: ListPoster,
-        }
-    }
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-    const {type, filters} = ownProps
-    let loadEntities
-
-    if(type == 'movies')
-        loadEntities = () => dispatch(loadMovies(filters))
-
-    if(type == 'lists')
-        loadEntities = () => dispatch(loadLists())
-
-    return {loadEntities}
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(Explorer)
+export default connectToMoviesAndLists(Explorer)

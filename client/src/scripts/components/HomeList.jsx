@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import selectMovies from '../selectors/movies'
-import selectLists from '../selectors/lists'
-import {loadMovies, loadLists} from '../AC/index'
+import connectToMoviesAndLists from './containers/moviesAndLists'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import Loader from './Loader'
@@ -152,31 +149,4 @@ class HomeList extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    const {type} = ownProps
-
-    if(type == 'movies')
-        return selectMovies(state)
-
-    else if(type == 'lists')
-        return selectLists(state)
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-    const {type} = ownProps
-    let loadEntities
-
-    if(type == 'movies')
-        loadEntities = () => dispatch(loadMovies({
-            type: 'popular', page: 1
-        }))
-
-    if(type == 'lists')
-        loadEntities = () => dispatch(loadLists())
-    return {loadEntities}
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(HomeList)
+export default connectToMoviesAndLists(HomeList)
