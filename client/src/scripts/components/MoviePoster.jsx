@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import getMoviePoster from '../selectors/movie-poster'
+import makeSelectMoviePoster from '../selectors/movie-poster'
 import {loadMoviePoster} from '../AC/index'
 
 class Poster extends Component {
@@ -72,7 +72,14 @@ class Poster extends Component {
     }
 }
 
+const makeMapStateToProps = () => {
+    const selectMoviePoster = makeSelectMoviePoster()
+
+    return (state, props) =>
+        selectMoviePoster(state, props)
+}
+
 export default connect(
-    (state, ownProps) => getMoviePoster(state, ownProps.id),
+    makeMapStateToProps,
     {loadMoviePoster}
 )(Poster)

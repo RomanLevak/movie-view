@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {mapToArr} from '../helpers'
+import selectMovies from '../selectors/movies'
+import selectLists from '../selectors/lists'
 import {loadMovies} from '../AC/index'
 import {loadLists} from '../AC/index'
 import {genres} from '../constants'
@@ -124,21 +125,14 @@ function mapStateToProps(state, ownProps) {
 
     if(type == 'movies')
         return {
-            Item: MoviePoster,
-            entities: mapToArr(state.movies.entities),
-            totalPages: state.movies.totalPages,
-            loading: state.movies.loading,
-            loaded: state.movies.loaded,
-            error: state.movies.error
+            ...selectMovies(state),
+            Item: MoviePoster
         }
 
     if(type == 'lists') {
         return {
+            ...selectLists(state),
             Item: ListPoster,
-            entities: mapToArr(state.lists.entities),
-            loading: state.lists.loading,
-            loaded: state.lists.loaded,
-            error: state.lists.error
         }
     }
 }

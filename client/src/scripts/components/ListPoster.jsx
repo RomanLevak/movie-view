@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import makeSelectListPoster from '../selectors/list-poster'
 import {loadListPoster} from '../AC/index'
 import MoviePoster from './MoviePoster'
 
@@ -90,22 +91,14 @@ class ListPoster extends Component {
     }
 }
 
+const makeMapStateToProps = () => {
+    const selectListPoster = makeSelectListPoster()
+
+    return (state, props) =>
+        selectListPoster(state, props)
+}
+
 export default connect(
-    (state, ownProps) => {
-        const {id} = ownProps
-
-        if(!state.listPosters[id])
-            return {
-                loading: true,
-                loaded: false,
-                error: '',
-                movie: {}
-            }
-
-        return {
-            ...state.listPosters[id],
-            list: state.listPosters[id].entity
-        }
-    },
+    makeMapStateToProps,
     {loadListPoster}
 )(ListPoster)

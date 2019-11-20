@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {mapToArr} from '../helpers'
+import selectMovies from '../selectors/movies'
+import selectLists from '../selectors/lists'
 import {loadMovies, loadLists} from '../AC/index'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
@@ -155,21 +156,10 @@ function mapStateToProps(state, ownProps) {
     const {type} = ownProps
 
     if(type == 'movies')
-        return {
-            entities: mapToArr(state.movies.entities),
-            loading: state.movies.loading,
-            loaded: state.movies.loaded,
-            error: state.movies.error
-        }
+        return selectMovies(state)
 
-    if(type == 'lists') {
-        return {
-            entities: mapToArr(state.lists.entities),
-            loading: state.lists.loading,
-            loaded: state.lists.loaded,
-            error: state.lists.error
-        }
-    }
+    else if(type == 'lists')
+        return selectLists(state)
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
