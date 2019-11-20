@@ -6,6 +6,7 @@ import {
     SEARCH_MOVIE,
     LOAD_LISTS,
     LOAD_LIST_INFO,
+    LOAD_LIST_POSTER,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -15,12 +16,12 @@ import {
 export function loadMovies(filters) {
     const {page} = filters
     let APIurl = ''
-    window.loadLists = loadLists
-    if(filters.type == 'popular')
-        APIurl = `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${page}`
 
-    else if(filters.genreID)
+    if(filters.genreID)
         APIurl = `/tmdbapi/discover/movie?api_key=${API_KEY}&page=${page}&with_genres=${filters.genreID}`
+
+    else
+        APIurl = `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${page}`
 
     return {
         type: LOAD_MOVIES,
@@ -69,6 +70,17 @@ export function loadLists(filters = {}) {
 export function loadListInfo(id) {
     return {
         type: LOAD_LIST_INFO,
+        id,
+        callAPI: {
+            url: `/server/lists/${id}`
+        }
+    }
+}
+
+export function loadListPoster(id) {
+    return {
+        type: LOAD_LIST_POSTER,
+        id,
         callAPI: {
             url: `/server/lists/${id}`
         }

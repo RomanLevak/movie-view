@@ -6,13 +6,13 @@ export default () => next => action => {
     if(!callAPI)
         return next(action)
 
-    const {method} = callAPI
-
     next({
         ...rest, type: type + START
     })
 
-    fetch(callAPI.url, {
+    const {method, url} = callAPI
+
+    fetch(url, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -32,9 +32,11 @@ export default () => next => action => {
                 payload: response
             })
         })
-        .catch(error => next({
-            ...rest,
-            type: type + FAIL,
-            payload: error.message
-        }))
+        .catch(error => {
+            next({
+                ...rest,
+                type: type + FAIL,
+                payload: error.message
+            })
+        })
 }

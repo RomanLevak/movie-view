@@ -9,6 +9,7 @@ export const CHANGE_PAGE = 'CHANGE_PAGE'
 
 export const LOAD_LISTS = 'LOAD_LISTS'
 export const LOAD_LIST_INFO = 'LOAD_LIST_INFO'
+export const LOAD_LIST_POSTER = 'LOAD_LIST_POSTER'
 
 export const SINGIN = 'SINGIN'
 export const SINGOUT = 'SINGOUT'
