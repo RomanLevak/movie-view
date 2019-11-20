@@ -2,35 +2,38 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {mapToArr} from '../helpers'
+import {loadListPoster} from '../AC/index'
 import MoviePoster from './MoviePoster'
 
 class ListPoster extends Component {
 
     static propTypes = {
-        list: PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            moviesIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-        }).isRequired,
-        author: PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired
-        }).isRequired,
+        id: PropTypes.string.isRequired,
         // from connect
-        posters: PropTypes.array
+        list: PropTypes.object,
+        loading: PropTypes.bool.isRequired,
+        loaded: PropTypes.bool.isRequired,
+        error: PropTypes.string,
+        loadListPoster: PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        const {id} = this.props
+        const {loaded, loading, loadListPoster} = this.props
+
+        if(!loading || !loaded)
+            loadListPoster(id)
     }
 
     getMiniPosters = () => {
         let imgs = []
 
-        this.props.list.moviesIds.slice(0, 4).map(movieId =>
+        this.props.list.movies.slice(0, 4).map(movieId =>
             imgs.push(
                 <MoviePoster
                     isMini
                     key = {movieId}
                     id = {movieId}
-                    {...this.props.posters[movieId]}
                 />
             )
         )
@@ -39,9 +42,18 @@ class ListPoster extends Component {
     }
 
     render() {
-        const {title, id} = this.props.list
-        const authorId = this.props.author.id
-        const authorName = this.props.author.name
+        const {loading, loaded, error, id, list} = this.props
+
+        if(error)
+            return <span className="error-msg">{error}</span>
+
+        else if(loading || !loaded)
+            return <span>loading</span>
+
+        const {title} = list
+
+        const authorId = list.user.id
+        const authorName = list.user.displayName
 
         return (
             <div className='poster-box'>
@@ -79,7 +91,21 @@ class ListPoster extends Component {
 }
 
 export default connect(
-    state => ({
-        posters: mapToArr(state.posters)
-    })
+    (state, ownProps) => {
+        const {id} = ownProps
+
+        if(!state.listPosters[id])
+            return {
+                loading: true,
+                loaded: false,
+                error: '',
+                movie: {}
+            }
+
+        return {
+            ...state.listPosters[id],
+            list: state.listPosters[id].entity
+        }
+    },
+    {loadListPoster}
 )(ListPoster)

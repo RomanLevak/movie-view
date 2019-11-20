@@ -49,8 +49,8 @@ class Movies extends Component {
 
         return (
             <Explorer
+                type = 'movies'
                 filters = {{
-                    type: 'popular',
                     page: parseInt(page)
                 }}
                 key = {'popular' + page}
@@ -73,9 +73,9 @@ class Movies extends Component {
 
         return (
             <Explorer
+                type = 'movies'
                 filters = {{
                     genreID,
-                    type: genre,
                     page: parseInt(page)
                 }}
                 key = {genreID + page}

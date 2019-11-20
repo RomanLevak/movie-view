@@ -4,10 +4,12 @@ import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {loadMovies} from '../AC/index'
+import {loadLists} from '../AC/index'
 import {genres} from '../constants'
 import ReactPaginate from 'react-paginate'
 import Loader from './Loader'
 import MoviePoster from './MoviePoster'
+import ListPoster from './ListPoster'
 
 class Explorer extends Component {
 
@@ -16,25 +18,23 @@ class Explorer extends Component {
     }
 
     static propTypes = {
-        filters: PropTypes.shape({
-            genreID: PropTypes.number,
-            type: PropTypes.string.isRequired,
-            page: PropTypes.number.isRequired
-        }).isRequired,
+        type: PropTypes.oneOf(['movies', 'lists']).isRequired,
+        filters: PropTypes.object,
         // from connect
-        movies: PropTypes.array,
-        total_pages: PropTypes.number,
+        Item: PropTypes.elementType,
+        entities: PropTypes.array,
+        totalPages: PropTypes.number,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
-        loadMovies: PropTypes.func.isRequired,
+        loadEntities: PropTypes.func.isRequired,
         error: PropTypes.string
     }
 
     componentDidMount() {
-        const {loadMovies, loaded, loading, filters} = this.props
+        const {loadEntities, loaded, loading, filters} = this.props
 
         if(!loading || !loaded)
-            loadMovies(filters)
+            loadEntities(filters)
     }
 
     onPageChange = ({selected}) => {
@@ -53,8 +53,33 @@ class Explorer extends Component {
             </li>
         )
 
+    getPagination = () => {
+        const {totalPages} = this.props
+
+        if(!totalPages || totalPages <= 1)
+            return null
+
+        return (
+            <ReactPaginate
+                pageCount={this.props.totalPages}
+                pageRangeDisplayed={7}
+                marginPagesDisplayed={2}
+                onPageChange={this.onPageChange}
+                initialPage={this.props.filters.page - 1}
+                disableInitialCallback
+                previousLabel='<'
+                nextLabel='>'
+                containerClassName='pagination-list'
+                activeClassName='pagination__item-active'
+                pageClassName='pagination__item flex-center'
+                previousClassName='pagination__item flex-center'
+                nextClassName='pagination__item flex-center'
+            />
+        )
+    }
+
     getBody = () => {
-        const {movies, loading, loaded, error} = this.props
+        const {Item, entities, loading, loaded, error} = this.props
 
         if(error)
             return <span className = 'error-msg'>{error}</span>
@@ -62,9 +87,9 @@ class Explorer extends Component {
         if(loading || !loaded)
             return <Loader />
 
-        return movies.slice(0, 10).map(movie =>
-            <li className = 'explorer__item' key = {movie.id}>
-                <MoviePoster id = {movie.id} />
+        return entities.slice(0, 10).map(entity =>
+            <li className = 'explorer__item' key = {entity.id}>
+                <Item id = {entity.id} />
             </li>
         )
     }
@@ -87,34 +112,51 @@ class Explorer extends Component {
                     </ul>
                 </div>
                 <div className='explorer-pagination pagination pagination-box'>
-                    <ReactPaginate
-                        pageCount = 			{this.props.total_pages}
-                        pageRangeDisplayed =	{7}
-                        marginPagesDisplayed =	{2}
-                        onPageChange =			{this.onPageChange}
-                        initialPage =			{this.props.filters.page - 1}
-                        disableInitialCallback
-                        previousLabel 	= '<'
-                        nextLabel 		= '>'
-                        containerClassName = 	'pagination-list'
-                        activeClassName = 		'pagination__item-active'
-                        pageClassName = 		'pagination__item flex-center'
-                        previousClassName = 	'pagination__item flex-center'
-                        nextClassName = 		'pagination__item flex-center'
-                    />
+                    {this.getPagination()}
                 </div>
             </div>
         )
     }
 }
 
+function mapStateToProps(state, ownProps) {
+    const {type} = ownProps
+
+    if(type == 'movies')
+        return {
+            Item: MoviePoster,
+            entities: mapToArr(state.movies.entities),
+            totalPages: state.movies.totalPages,
+            loading: state.movies.loading,
+            loaded: state.movies.loaded,
+            error: state.movies.error
+        }
+
+    if(type == 'lists') {
+        return {
+            Item: ListPoster,
+            entities: mapToArr(state.lists.entities),
+            loading: state.lists.loading,
+            loaded: state.lists.loaded,
+            error: state.lists.error
+        }
+    }
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+    const {type, filters} = ownProps
+    let loadEntities
+
+    if(type == 'movies')
+        loadEntities = () => dispatch(loadMovies(filters))
+
+    if(type == 'lists')
+        loadEntities = () => dispatch(loadLists())
+
+    return {loadEntities}
+}
+
 export default connect(
-    state => ({
-        movies: mapToArr(state.movies.entities),
-        total_pages: state.movies.total_pages,
-        loading: state.movies.loading,
-        loaded: state.movies.loaded,
-        error: state.movies.error
-    }),
-    {loadMovies},
+    mapStateToProps,
+    mapDispatchToProps,
 )(Explorer)

@@ -31,14 +31,14 @@ export default (moviesState = defaultState, action) => {
             let {results, total_pages} = payload
             let movies = filterMovies(results)
             // api maxiimal requested page allowed is 1000
-            total_pages = total_pages > 1000 ? 1000 : total_pages
+            let totalPages = total_pages > 1000 ? 1000 : total_pages
 
             return {
                 ...moviesState,
                 loaded: true,
                 loading: false,
                 entities: movies,
-                total_pages,
+                totalPages,
                 error: ''
             }
         }

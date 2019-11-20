@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import getMoviePoster from '../selectors/movie-poster'
 import {loadMoviePoster} from '../AC/index'
 
 class Poster extends Component {
@@ -72,21 +73,6 @@ class Poster extends Component {
 }
 
 export default connect(
-    (state, ownProps) => {
-        const {id} = ownProps
-
-        if(!state.posters[id])
-            return {
-                loading: false,
-                loaded: false,
-                error: '',
-                movie: {}
-            }
-
-        return {
-            ...state.posters[id],
-            movie: state.posters[id].entity
-        }
-    },
+    (state, ownProps) => getMoviePoster(state, ownProps.id),
     {loadMoviePoster}
 )(Poster)

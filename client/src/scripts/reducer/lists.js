@@ -11,7 +11,8 @@ const defaultState = {
     loading: false,
     loaded: false,
     error: '',
-    entities: {}
+    entities: {},
+    totalPages: 0
 }
 
 export default (listsState = defaultState, action) => {
@@ -24,18 +25,20 @@ export default (listsState = defaultState, action) => {
                 loaded: false,
                 loading: true,
                 error: '',
-                entities: {}
+                entities: {},
             }
 
         case LOAD_LISTS + SUCCESS: {
             const {lists} = payload
+            const totalPages = payload.total_pages
 
             return {
                 ...listsState,
                 loaded: true,
                 loading: false,
                 error: '',
-                entities: arrToMap(lists)
+                entities: arrToMap(lists),
+                totalPages
             }
         }
 
@@ -45,7 +48,8 @@ export default (listsState = defaultState, action) => {
                 loaded: false,
                 loading: true,
                 entities: {},
-                error: ''
+                totalPages: 0,
+                error: payload
             }
     }
 
