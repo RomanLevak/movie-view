@@ -10,7 +10,7 @@ import {filterMovies} from '../helpers'
 const defaultState = {
     loaded: false,
     loading: false,
-    tempResults: {}, // used to show results under search input while typing
+    tempResults: {}, // results under search input
     entities: {},
     error: ''
 }

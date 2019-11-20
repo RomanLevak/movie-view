@@ -1,12 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link, NavLink} from 'react-router-dom'
-import connectToMoviesAndLists from './containers/moviesAndLists'
+import connectToMoviesAndLists from './decorators/moviesAndLists'
 import {genres} from '../constants'
 import ReactPaginate from 'react-paginate'
 import Loader from './Loader'
-import MoviePoster from './MoviePoster'
-import ListPoster from './ListPoster'
 
 class Explorer extends Component {
 
@@ -16,6 +14,7 @@ class Explorer extends Component {
 
     static propTypes = {
         type: PropTypes.oneOf(['movies', 'lists']).isRequired,
+        Item: PropTypes.elementType.isRequired,
         filters: PropTypes.object,
         // from connect
         entities: PropTypes.array,
@@ -24,10 +23,6 @@ class Explorer extends Component {
         loaded: PropTypes.bool.isRequired,
         loadEntities: PropTypes.func.isRequired,
         error: PropTypes.string
-    }
-
-    state = {
-        Item: this.props.type == 'movies' ? MoviePoster : ListPoster
     }
 
     componentDidMount() {
@@ -79,8 +74,7 @@ class Explorer extends Component {
     }
 
     getBody = () => {
-        const {entities, loading, loaded, error} = this.props
-        const {Item} = this.state
+        const {Item, entities, loading, loaded, error} = this.props
 
         if(error)
             return <span className = 'error-msg'>{error}</span>
