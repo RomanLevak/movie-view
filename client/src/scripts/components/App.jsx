@@ -34,6 +34,7 @@ class App extends Component {
                                     <>
                                         <HomeList
                                             type='movies'
+                                            withSlider
                                             title = 'Popular now'
                                         />
                                         <HomeList

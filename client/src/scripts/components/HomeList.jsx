@@ -36,6 +36,7 @@ class HomeList extends Component {
     static propTypes = {
         type: PropTypes.oneOf(['movies', 'lists']),
         title: PropTypes.string.isRequired,
+        withSlider: PropTypes.bool,
         // from connect
         entities: PropTypes.arrayOf(PropTypes.object).isRequired,
         loading: PropTypes.bool.isRequired,
@@ -51,6 +52,26 @@ class HomeList extends Component {
             loadEntities()
     }
 
+    getSlider = items => {
+        const settings = {
+            dots: false,
+            infinite: true,
+            speed: 1100,
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            nextArrow: <Arrow next />,
+            prevArrow: <Arrow />
+        }
+
+        return (
+            <ul className='home-list__slider'>
+                <Slider className='flex-center' {...settings}>
+                    {items}
+                </Slider>
+            </ul>
+        )
+    }
+
     getListsArr = () => {
         const lists = this.props.entities
 
@@ -59,18 +80,7 @@ class HomeList extends Component {
         lists.slice(0, 6).map(list =>
             items.push(
                 <li className='home-list__item' key={list.id}>
-                    <ListPoster
-                        key = {list.id}
-                        list = {{
-                            id: list.id,
-                            title: list.title,
-                            moviesIds: list.movies
-                        }}
-                        author = {{
-                            id: list.user.id,
-                            name: list.user.displayName
-                        }}
-                    />
+                    <ListPoster id = {list.id} />
                 </li>
             )
         )
@@ -95,39 +105,26 @@ class HomeList extends Component {
     }
 
     getBody = () => {
-        const {type, title} = this.props
+        const {type, withSlider} = this.props
 
         let items = []
 
         if(type == 'movies')
             items = this.getMoviesArr()
-
         else if(type == 'lists')
             items = this.getListsArr()
 
-        // settings for slider
-        const settings = {
-            dots: false,
-            infinite: true,
-            speed: 1100,
-            slidesToShow: 6,
-            slidesToScroll: 6,
-            nextArrow: <Arrow next />,
-            prevArrow: <Arrow />
-        }
+        if(withSlider)
+            return (
+                <ul className='home-list__slider'>
+                    {this.getSlider(items)}
+                </ul>
+            )
 
         return (
-            <>
-                <h2 className='home-list__title'>{title}</h2>
-                <Slider className='flex-center'
-                    {...settings}
-                >
-                    {items}
-                </Slider>
-                <Link to = {`/${type}`} className='home-list__link'>
-                    view more...
-                </Link>
-            </>
+            <ul className = 'home-list'>
+                {items}
+            </ul>
         )
     }
 
@@ -135,14 +132,20 @@ class HomeList extends Component {
         const {loading, loaded, error} = this.props
 
         if(error)
-            return <span>error</span>
+            return <span className = 'error-msg'>{error}</span>
 
         if(loading || !loaded)
             return <Loader />
 
+        const {title, type} = this.props
+
         return (
-            <div className='home-list home-list-box'>
-                {this.getBody()}
+            <div className='home-list-box'>
+                <h2 className='home-list__title'>{title}</h2>
+                    {this.getBody()}
+                <Link to={`/${type}`} className='home-list__link'>
+                    view more...
+                </Link>
             </div>
         )
     }
