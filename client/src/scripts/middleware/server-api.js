@@ -3,7 +3,7 @@ import {START, SUCCESS, FAIL} from '../constants'
 export default () => next => action => {
     const {callAPI, type, ...rest} = action
 
-    if(!callAPI)
+    if(!callAPI || !callAPI.url.startsWith('/server'))
         return next(action)
 
     next({
