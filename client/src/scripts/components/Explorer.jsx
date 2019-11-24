@@ -82,7 +82,7 @@ class Explorer extends Component {
         if(loading || !loaded)
             return <Loader type='squares' />
 
-        return entities.slice(0, 10).map(entity =>
+        return entities.slice(0, 12).map(entity =>
             <li className = 'explorer__item' key = {entity.id}>
                 <Item id = {entity.id} />
             </li>
@@ -92,7 +92,7 @@ class Explorer extends Component {
     render() {
         return (
             <div className='explorer'>
-                <ul className='explorer-list'>
+                <ul className='explorer__list'>
                     {this.getBody()}
                 </ul>
                 <div className='explorer__sidebar sidebar'>
@@ -106,7 +106,7 @@ class Explorer extends Component {
                         {this.getGenresList()}
                     </ul>
                 </div>
-                <div className='explorer-pagination pagination pagination-box'>
+                <div className='explorer__pagination pagination pagination-box'>
                     {this.getPagination()}
                 </div>
             </div>

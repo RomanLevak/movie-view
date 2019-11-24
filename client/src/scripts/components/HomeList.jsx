@@ -72,11 +72,12 @@ class HomeList extends Component {
 
         return (
             <div className='home-list-box'>
-                <h2 className='home-list__title'>{title}</h2>
+                <h2 className='home-list__title'>
+                    <Link to={`/${type}`} className='home-list__link'>
+                        {title}
+                    </Link>
+                </h2>
                 {this.getBody()}
-                <Link to={`/${type}`} className='home-list__link'>
-                    view more...
-                </Link>
             </div>
         )
     }

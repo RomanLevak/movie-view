@@ -48,7 +48,7 @@ class Results extends Component {
                     <h2 className = 'results__title'>
                         Searh results for:
                         <span className = 'results__query'>
-                            {this.props.query}
+                            {' ' + this.props.query}
                         </span>
                     </h2>
                     <ul className='results-list'>

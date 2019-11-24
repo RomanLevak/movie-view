@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {singOut, checkIfSingedIn} from '../AC/index'
+import Search from './Search'
 
 class Header extends Component {
 
@@ -63,7 +64,10 @@ class Header extends Component {
                 <div className='home-icon-box'>
                     <Link to='/'><img className='home-icon' src='/styles/images/robot.svg'/></Link>
                 </div>
-                <h1 className='header__title'> <Link to = '/'> movieview</Link></h1>
+                <h1 className='header__title'>
+                    <Link to = '/'> movieview</Link>
+                </h1>
+                <Search />
                 {this.getUserArea()}
             </header>
         )

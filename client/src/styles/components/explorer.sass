@@ -5,33 +5,36 @@
 		height: 100%
 	display: flex
 	flex-wrap: wrap
+	height: 100%
 	&__item
-		padding: 0 5px
-		width: 20%
-		&:nth-last-child(-n+5)	//last 5 elements
-			margin-top: 1.3vw		
-	&-list
+		padding: 4px
+		max-width: calc(100%/6)
+	&__list
 		position: relative
-		width: calc(100% - 130px)
+		margin: 0 auto
+		width: calc(100% - 115px)
+		max-width: 896px
+		height: calc(100% - 33px)
 		display: flex
+		align-content: flex-start
+		justify-content: space-around
 		flex-wrap: wrap
 		padding: 10px 0
 		padding-top: 0
-	&-pagination
-		margin-top: 5px
-		padding-bottom: 12px
 	&__sidebar
-		margin-left: auto
-		width: 130px
-		flex: none
+		width: 115px
 		padding-left: 5px
 		padding-top: 4px
 		text-align-last: left
+	&__pagination
+		padding-bottom: 5px
 
-@media (max-width: 660px)
+@media (max-width: 768px)
 	.explorer
+		&__list
+			height: auto
 		&__item
-			width: 25%
+			min-width: 25%
 
 @media (max-width: 576px)
 	.explorer

@@ -65,13 +65,20 @@ class MovieInfo extends Component {
                             <tr>
                                 <td>Genres</td>
                                 <td> {
-                                    genres.map(genre =>
-                                        <Link className='movie__info-link'
-                                            to = {`/movies/genres/${genre.name}`}
-                                            key = {genre.id}
-                                        >
-                                            {genre.name}
-                                        </Link>
+                                    genres.map((genre, i, arr) =>
+                                        <>
+                                            <Link className='movie__info-link'
+                                                to = {`/movies/genres/${genre.name}`}
+                                                key = {genre.id}
+                                            >
+                                                {genre.name}
+                                            </Link>
+                                            {
+                                                i !== arr.length - 1 ?
+                                                    <span>, </span> :
+                                                    null
+                                            }
+                                        </>
                                     )
                                 }
                                 </td>

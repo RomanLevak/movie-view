@@ -19,7 +19,6 @@
 		left: 50%
 		transform: translateX(-50%)
 
-
 .movie
 	&-img
 		max-width: 100%
@@ -29,7 +28,7 @@
 			font-size: 14px
 		&__title
 			color: $seagreen5
-			text-align: left
+			text-align: center
 		&__year
 			position: absolute
 			bottom: 3px
@@ -49,12 +48,13 @@
 	&__info
 		font-size: 15px
 		position: relative
-		min-height: 70px
+		min-height: 60px
 		background: $seagreen0
 	&__title
 		display: inline-block
 		text-align: left
 		padding-top: 7px
+		font-size: 13px
 		color: $green3
 		&:hover
 			text-decoration: underline
@@ -63,6 +63,7 @@
 			position: absolute
 			bottom: 3px
 			right: 3px
+			font-size: 12px
 			color: $seagreen3
 		&-name
 			padding-left: 8px
@@ -96,6 +97,8 @@
 		&__info
 			z-index: 2
 			font-size: 13px
+		&__title
+
 @media (max-width: 576px)
 	.poster
 		&-box

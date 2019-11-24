@@ -21,7 +21,6 @@ class App extends Component {
                 <>
                     <Route render = {props => <Header {...props} />} />
                     <main className='content-box'>
-                        <Search />
                         <Switch>
                             <Route
                                 path='/(sing-in|sing-up)/'
