@@ -29,7 +29,7 @@ class Results extends Component {
         const {movies, loading, error} = this.props
 
         if(loading)
-            return <Loader />
+            return <Loader type='squares' />
 
         if(error)
             return <span className = 'error-msg'>{error}</span>

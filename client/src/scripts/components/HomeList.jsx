@@ -66,7 +66,7 @@ class HomeList extends Component {
             return <span className = 'error-msg'>{error}</span>
 
         if(loading || !loaded)
-            return <Loader />
+            return <Loader sype='squares' />
 
         const {title, type} = this.props
 

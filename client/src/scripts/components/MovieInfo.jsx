@@ -106,7 +106,7 @@ class MovieInfo extends Component {
         if(loading || !loaded)
             return (
                 <div className='movie-box'>
-                    <Loader />
+                    <Loader type='squares' />
                 </div>
             )
         const {overview} = this.props.movie

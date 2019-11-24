@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import makeSelectMoviePoster from '../selectors/movie-poster'
 import {loadMoviePoster} from '../AC/index'
+import Loader from './Loader'
 
 class Poster extends Component {
 
@@ -29,27 +30,59 @@ class Poster extends Component {
             loadMoviePoster(id)
     }
 
-    render() {
-        const {loading, loaded, error, movie, id} = this.props
-
-        let posterPath = ''
+    getPosterPath = () => {
+        const {loading, loaded, error, movie} = this.props
 
         if(error)
-            posterPath = '/styles/images/not-found.svg'
+            return '/styles/images/not-found.svg'
 
-        else if(loading || !loaded)
-            return 'loading'
+        if(loading || !loaded)
+            return '/styles/images/blank-3x2.png'
 
-        else if(!movie.poster_path)
-            posterPath = '/styles/images/not-found.svg'
+        if(movie && movie.poster_path)
+            return `/tmdbimg/${movie.poster_path}`
 
-        else
-            posterPath = `/tmdbimg/${movie.poster_path}`
+        return '/styles/images/not-found.svg'
+    }
 
-        if(this.props.isMini)
+    getMiniBody = () => {
+        const {loading, loaded} = this.props
+
+        if(loading || !loaded)
             return (
                 <div className='list-poster__img-box'>
-                    <img src={posterPath} />
+                    <img
+                        src='/styles/images/blank-3x2.png'
+                        className='movie-img blank-img'
+                    />
+                </div>
+            )
+
+        return (
+            <div className='list-poster__img-box'>
+                <img src={this.getPosterPath()} />
+            </div>
+        )
+    }
+
+    getBody = () => {
+        const {loading, loaded, movie, id} = this.props
+
+        if(loading || !loaded)
+            return (
+                <div className='poster-box movie-poster'>
+                    <img
+                        src={this.getPosterPath()}
+                        className='movie-img blank-img'
+                    />
+                    <div className='poster__loader-box'>
+                        <Loader type='spinner'/>
+                    </div>
+                    <div className='poster__text-box'>
+                        <span className='movie-poster__title'>
+                            ...
+                        </span>
+                    </div>
                 </div>
             )
 
@@ -57,9 +90,8 @@ class Poster extends Component {
 
         return (
             <div className='poster-box movie-poster'>
-
                 <Link to={`/movies/${id}`}>
-                    <img src={posterPath} className='movie-img' />
+                    <img src={this.getPosterPath()} className='movie-img' />
                 </Link>
                 <div className='poster__text-box'>
                     <Link to={`/movies/${id}`}>
@@ -69,6 +101,13 @@ class Poster extends Component {
                 </div>
             </div>
         )
+    }
+
+    render() {
+        if(this.props.isMini)
+            return this.getMiniBody()
+        else
+            return this.getBody()
     }
 }
 

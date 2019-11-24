@@ -80,7 +80,7 @@ class Explorer extends Component {
             return <span className = 'error-msg'>{error}</span>
 
         if(loading || !loaded)
-            return <Loader />
+            return <Loader type='squares' />
 
         return entities.slice(0, 10).map(entity =>
             <li className = 'explorer__item' key = {entity.id}>

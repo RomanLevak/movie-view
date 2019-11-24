@@ -56,7 +56,7 @@ class ListInfo extends Component {
         if(loading || !loaded)
             return (
                 <div className='list list-box'>
-                    <Loader />
+                    <Loader type='squares' />
                 </div>
             )
 

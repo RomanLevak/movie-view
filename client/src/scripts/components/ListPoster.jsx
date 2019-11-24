@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import makeSelectListPoster from '../selectors/list-poster'
 import {loadListPoster} from '../AC/index'
+import Loader from './Loader'
 import MoviePoster from './MoviePoster'
 
 class ListPoster extends Component {
@@ -42,6 +43,16 @@ class ListPoster extends Component {
         return imgs
     }
 
+    getLoadingBody = () =>
+        <div className='poster-box'>
+            <div className='list-poster__imgs-box poster__loader-box'>
+                <Loader type = 'spinner'/>
+            </div>
+            <div className='list-poster__info'>
+                <span className='list-poster__title'>...</span>
+            </div>
+        </div>
+
     render() {
         const {loading, loaded, error, id, list} = this.props
 
@@ -49,7 +60,7 @@ class ListPoster extends Component {
             return <span className="error-msg">{error}</span>
 
         else if(loading || !loaded)
-            return <span>loading</span>
+            return this.getLoadingBody()
 
         const {title} = list
 
