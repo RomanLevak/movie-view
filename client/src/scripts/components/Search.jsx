@@ -81,6 +81,8 @@ class Search extends Component {
     }
 
     render() {
+        const {value} = this.state
+
         return (
             <div className='search-box'>
                 <div className='search__input-box'
@@ -95,7 +97,7 @@ class Search extends Component {
                         placeholder='Find movies'
                     />
                     <Link
-                        to = {`/movies/search/${this.state.value}`}
+                        to = {`/movies/search/${value}`}
                         className='search__btn btn-search flex-center'
                         onClick = {this.onBlur}
                     >

@@ -49,7 +49,11 @@ class Form extends Component {
 
     getStatusArea = () => {
         if(this.props.error)
-            return <span className="error-msg">{this.props.error}</span>
+            return (
+                <span className='error-msg'>
+                    {this.props.error}
+                </span>
+            )
 
         if(this.props.loading)
             return 'loading...'
@@ -59,13 +63,16 @@ class Form extends Component {
 
     getFieldset = () => {
         const {url} = this.props.match
-        const type = url.includes('sing-in') ? 'sing in' : 'sing up'
+        const type = url.includes('sing-in') ?
+            'sing in' :
+            'sing up'
 
         return (
             <>
                 <div className='form__field'>
                     <label htmlFor='email'>email</label>
-                    <input className='form__field form__text-input'
+                    <input
+                        className='form__field form__text-input'
                         id='email'
                         type='email'
                         value={this.state.email}
@@ -76,10 +83,12 @@ class Form extends Component {
                     type == 'sing up'
                         ?
                         <div className='form__field'>
-                            <label htmlFor="userName">username</label>
+                            <label htmlFor='userName'>
+                                username
+                            </label>
                             <input className='form__text-input'
                                 id='username'
-                                type="text"
+                                type='text'
                                 value={this.state.username}
                                 onChange={this.handleInputChange}
                             />
@@ -88,18 +97,20 @@ class Form extends Component {
                         null
                 }
                 <div className='form__field'>
-                    <label htmlFor="userPassword">password</label>
+                    <label htmlFor='userPassword'>
+                        password
+                    </label>
                     <input className='form__text-input'
-                        type="password"
+                        type='password'
                         id='password'
                         value={this.state.password}
                         onChange={this.handleInputChange}
                     />
                 </div>
-                <div className="form__status form__status-box">
+                <div className='form__status form__status-box'>
                     {this.getStatusArea()}
                 </div>
-                <div className="form__buttons-wrap">
+                <div className='form__buttons-wrap'>
                     <input className='form__button'
                         type='submit'
                         value={type}
@@ -124,10 +135,10 @@ class Form extends Component {
             <form className='form form-box'
                 onSubmit={this.handleSubmit}
             >
-                <div className="form__tabs form__tabs-box">
+                <div className='form__tabs form__tabs-box'>
                     <NavLink
                         to = '/sing-in'
-                        type="button"
+                        type='button'
                         className='form__tabs-btn'
                         activeClassName='form__tabs-btn-active'
                     >
@@ -135,7 +146,7 @@ class Form extends Component {
                     </NavLink>
                     <NavLink
                         to = '/sing-up'
-                        type="button"
+                        type='button'
                         className='form__tabs-btn'
                         activeClassName='form__tabs-btn-active'
                     >

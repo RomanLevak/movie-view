@@ -19,16 +19,19 @@ export function loadMovies(filters) {
     if(!filters)
         return {
             type: LOAD_MOVIES,
-            callAPI: {url: `/tmdbapi/movie/popular?api_key=${API_KEY}`}
+            callAPI: {url: `/tmdbapi/movie/popular?api_key=` +
+                `${API_KEY}`}
         }
 
     const {page} = filters
 
     if(filters.genreID)
-        url = `/tmdbapi/discover/movie?api_key=${API_KEY}&page=${page}&with_genres=${filters.genreID}`
+        url = `/tmdbapi/discover/movie?api_key=${API_KEY}` +
+                `&page=${page}&with_genres=${filters.genreID}`
 
     else
-        url = `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${page}`
+        url = `/tmdbapi/movie/popular?api_key=${API_KEY}` +
+            `&page=${page}`
 
     return {
         type: LOAD_MOVIES,
@@ -39,7 +42,9 @@ export function loadMovies(filters) {
 export function loadMovieInfo(id) {
     return {
         type: LOAD_MOVIE_INFO,
-        callAPI: {url: `/tmdbapi/movie/${id}?api_key=${API_KEY}`}
+        callAPI: {
+            url: `/tmdbapi/movie/${id}?api_key=${API_KEY}`
+        }
     }
 }
 
@@ -47,7 +52,9 @@ export function loadMoviePoster(id) {
     return {
         type: LOAD_MOVIE_POSTER,
         id,
-        callAPI: {url: `/tmdbapi/movie/${id}?api_key=${API_KEY}`},
+        callAPI: {
+            url: `/tmdbapi/movie/${id}?`+
+            `api_key=${API_KEY}`},
     }
 }
 
@@ -55,7 +62,10 @@ export function searchMovie(query, temp = false) {
     return {
         type: SEARCH_MOVIE,
         temp,
-        callAPI: {url: `/tmdbapi/search/movie?api_key=${API_KEY}&query=${query}`}
+        callAPI: {
+            url: `/tmdbapi/search/movie?`+
+            `api_key=${API_KEY}&query=${query}`
+        }
     }
 }
 

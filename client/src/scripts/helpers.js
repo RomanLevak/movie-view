@@ -27,6 +27,8 @@ export function filterMovies(movies) {
 }
 
 export function parseDate(rawDateString) {
-    let result = new Date(Date.parse(rawDateString)).toLocaleString()
+    let result = new Date(Date.parse(rawDateString))
+        .toLocaleString()
+
     return result.substring(0, 10)
 }

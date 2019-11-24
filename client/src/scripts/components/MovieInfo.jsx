@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -28,77 +28,74 @@ class MovieInfo extends Component {
         const {
             title, vote_average,
             release_date, adult,
-            original_language, poster_path,
-            genres, production_countries,
+            original_language, genres,
+            production_countries,
             tagline, runtime, budget
         } = this.props.movie
 
         return (
-            <>
-                <div className='movie__img flex-center'>
-                    <img src = {`/tmdbimg/${poster_path}`} />
-                </div>
-                <div className='movie__info-box'>
-                    <table className='movie__info'>
-                        <caption>{title}</caption>
-                        <tbody>
-                            <tr>
-                                <td>Tagline</td>
-                                <td>{tagline}</td>
-                            </tr>
-                            <tr>
-                                <td>Rating</td>
-                                <td>TMDB {vote_average}</td>
-                            </tr>
-                            <tr>
-                                <td>Release date</td>
-                                <td>{release_date}</td>
-                            </tr>
-                            <tr>
-                                <td>Original language</td>
-                                <td>{original_language}</td>
-                            </tr>
-                            <tr>
-                                <td>Counries</td>
-                                <td>{production_countries.map(country => country.name)}</td>
-                            </tr>
-                            <tr>
-                                <td>Genres</td>
-                                <td> {
-                                    genres.map((genre, i, arr) =>
-                                        <>
-                                            <Link className='movie__info-link'
-                                                to = {`/movies/genres/${genre.name}`}
-                                                key = {genre.id}
-                                            >
-                                                {genre.name}
-                                            </Link>
-                                            {
-                                                i !== arr.length - 1 ?
-                                                    <span>, </span> :
-                                                    null
-                                            }
-                                        </>
-                                    )
-                                }
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Adult</td>
-                                <td>{adult ? 'yes' : 'no'}</td>
-                            </tr>
-                            <tr>
-                                <td>Runtime</td>
-                                <td>{`${runtime}m`}</td>
-                            </tr>
-                            <tr>
-                                <td>Budget</td>
-                                <td>{`${budget} $`}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </>
+            <table className='movie__info'>
+                <caption>{title}</caption>
+                <tbody>
+                    <tr>
+                        <td>Tagline</td>
+                        <td>{tagline}</td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td>TMDB {vote_average}</td>
+                    </tr>
+                    <tr>
+                        <td>Release date</td>
+                        <td>{release_date}</td>
+                    </tr>
+                    <tr>
+                        <td>Original language</td>
+                        <td>{original_language}</td>
+                    </tr>
+                    <tr>
+                        <td>Counries</td>
+                        <td>
+                        {
+                            production_countries.map(country => country.name)
+                        }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Genres</td>
+                        <td> {
+                            genres.map((genre, i, arr) =>
+                                <Fragment key = {genre.id}>
+                                    <Link
+                                        to = {`/movies/genres/${genre.name}`}
+                                        className='movie__info-link'
+                                    >
+                                        {genre.name}
+                                    </Link>
+                                    {
+                                        i !== arr.length - 1 ?
+                                            <span>, </span> :
+                                            null
+                                    }
+                                </Fragment>
+                            )
+                        }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Adult</td>
+                        <td>{adult ? 'yes' : 'no'}</td>
+                    </tr>
+                    <tr>
+                        <td>Runtime</td>
+                        <td>{`${runtime}m`}</td>
+                    </tr>
+                    <tr>
+                        <td>Budget</td>
+                        <td>{`${budget} $`}</td>
+                    </tr>
+                </tbody>
+            </table>
         )
     }
 
@@ -116,11 +113,16 @@ class MovieInfo extends Component {
                     <Loader type='squares' />
                 </div>
             )
-        const {overview} = this.props.movie
+        const {overview, poster_path} = this.props.movie
 
         return (
             <div className='movie-box'>
-                {this.getInfoTable()}
+                <div className='movie__img flex-center'>
+                    <img src = {`/tmdbimg/${poster_path}`} />
+                </div>
+                <div className='movie__info-box'>
+                    {this.getInfoTable()}
+                </div>
                 <p className='movie__info-overview'>
                     {overview}
                 </p>

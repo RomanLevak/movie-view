@@ -46,7 +46,9 @@ class HomeList extends Component {
         )
 
         return (
-            <ul className = {'home-list' + (withSlider ? '__slider' : '')}>
+            <ul className = {
+                'home-list' + (withSlider ? '__slider' : '')
+            }>
                 {
                     withSlider ?
                         <Slider>
@@ -73,7 +75,10 @@ class HomeList extends Component {
         return (
             <div className='home-list-box'>
                 <h2 className='home-list__title'>
-                    <Link to={`/${type}`} className='home-list__link'>
+                    <Link
+                        to={`/${type}`}
+                        className='home-list__link'
+                    >
                         {title}
                     </Link>
                 </h2>

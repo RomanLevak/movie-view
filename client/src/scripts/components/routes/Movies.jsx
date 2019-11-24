@@ -16,17 +16,15 @@ class Movies extends Component {
         const {url} = this.props.match
 
         return (
-            <div className="explorer-box">
-                <Switch>
-                    <Route path = {`${url}/popular/:page`} render = {this.getDefaultExplorer} />
-                    <Route path = {`${url}/popular`} render = {this.getDefaultExplorer} />
-                    <Route path = {`${url}/genres/:genre/:page`} render = {this.getExplorerWithGenre} />
-                    <Route path = {`${url}/genres/:genre`} render = {this.getExplorerWithGenre} />
-                    <Route path = {`${url}/search/:query`} render = {this.getResults} />
-                    <Route path = {`${url}/:id`} render = {this.getMovie} />
-                    <Route path = {url} render = {this.getDefaultExplorer} />
-                </Switch>
-            </div>
+            <Switch>
+                <Route path = {`${url}/popular/:page`} render = {this.getDefaultExplorer} />
+                <Route path = {`${url}/popular`} render = {this.getDefaultExplorer} />
+                <Route path = {`${url}/genres/:genre/:page`} render = {this.getExplorerWithGenre} />
+                <Route path = {`${url}/genres/:genre`} render = {this.getExplorerWithGenre} />
+                <Route path = {`${url}/search/:query`} render = {this.getResults} />
+                <Route path = {`${url}/:id`} render = {this.getMovie} />
+                <Route path = {url} render = {this.getDefaultExplorer} />
+            </Switch>
         )
     }
 

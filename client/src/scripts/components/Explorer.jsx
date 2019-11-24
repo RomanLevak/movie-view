@@ -56,19 +56,19 @@ class Explorer extends Component {
 
         return (
             <ReactPaginate
-                pageCount={this.props.totalPages}
-                pageRangeDisplayed={7}
-                marginPagesDisplayed={2}
-                onPageChange={this.onPageChange}
-                initialPage={this.props.filters.page - 1}
+                pageCount              = {this.props.totalPages}
+                pageRangeDisplayed     = {7}
+                marginPagesDisplayed   ={2}
+                onPageChange           = {this.onPageChange}
+                initialPage            = {this.props.filters.page - 1}
                 disableInitialCallback
-                previousLabel='<'
-                nextLabel='>'
-                containerClassName='pagination-list'
-                activeClassName='pagination__item-active'
-                pageClassName='pagination__item flex-center'
-                previousClassName='pagination__item flex-center'
-                nextClassName='pagination__item flex-center'
+                previousLabel          = '<'
+                nextLabel              = '>'
+                containerClassName     = 'pagination-list'
+                activeClassName        = 'pagination__item-active'
+                pageClassName          = 'pagination__item flex-center'
+                previousClassName      = 'pagination__item flex-center'
+                nextClassName          = 'pagination__item flex-center'
             />
         )
     }
@@ -91,7 +91,7 @@ class Explorer extends Component {
 
     render() {
         return (
-            <div className='explorer'>
+            <div className='explorer explorer-box'>
                 <ul className='explorer__list'>
                     {this.getBody()}
                 </ul>

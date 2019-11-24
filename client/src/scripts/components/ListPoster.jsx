@@ -57,7 +57,7 @@ class ListPoster extends Component {
         const {loading, loaded, error, id, list} = this.props
 
         if(error)
-            return <span className="error-msg">{error}</span>
+            return <span className='error-msg'>{error}</span>
 
         else if(loading || !loaded)
             return this.getLoadingBody()
@@ -86,7 +86,9 @@ class ListPoster extends Component {
                             ...this.props
                         }}
                     >
-                        <span className='list-poster__title'>{title}</span>
+                        <span className='list-poster__title'>
+                            {title}
+                        </span>
                     </Link>
                     <span className='list-poster__author-box'>
                         author:

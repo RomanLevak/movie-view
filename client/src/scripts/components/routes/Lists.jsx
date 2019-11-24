@@ -15,8 +15,12 @@ class Lists extends Component {
 
         return (
             <Switch>
-                <Route path = {`${url}/:id`} render = {this.getListInfo} />
-                <Route path = {`${url}`} render = {this.getExplorerForLists} />
+                <Route path = {`${url}/:id`}
+                    render = {this.getListInfo}
+                />
+                <Route path = {`${url}`}
+                    render = {this.getExplorerForLists}
+                />
             </Switch>
         )
     }

@@ -31,7 +31,10 @@ export default (listInfo = defaultState, action) => {
                 loaded: true,
                 loading: false,
                 error: '',
-                entity: payload
+                entity: {
+                    ...payload,
+                    author: payload.user
+                }
             }
 
         case LOAD_LIST_INFO + FAIL:

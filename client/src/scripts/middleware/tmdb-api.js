@@ -10,9 +10,6 @@ export default () => next => action => {
     tmdbAPIHandler.addRequest(next, action)
 }
 
-// let i = 0
-// let addedSyncRequests = 0
-
 /*
  * tmdb API do not have an option
  * to get an info about array of movies by their
@@ -21,17 +18,20 @@ export default () => next => action => {
  *     (f.e. HomeList with 6 ListPosters
  *     and each one consists of 4 MoviePosters)
  * each one makes request to tmdb API for its own
- * data about movie, such requests would
- * often fail with a 429 status(Too Many Requests)
+ * data about movie. Such requests would
+ * often fail with a 429 status(Too Many Requests).
  * tmdbAPIHandler helps to avoid such behavior
  *     (by storing the requests in queue and then
  *      making a several requests from queue
  *      only after previous ones got response)
- * and handles responses with 429 statusCode
- * too see how it works in browser console
+ * and handles responses with 429 statusCode.
+ * To see how it works in browser console
  * uncomment all lines in this file, that starts
  * with '//'
  */
+
+// let i = 0
+// let addedSyncRequests = 0
 
 const tmdbAPIHandler = {
     /*
@@ -64,7 +64,7 @@ const tmdbAPIHandler = {
 
     /*
      * true if setTimeout that runs after
-     * a synchronous filling requests queue
+     * a synchronous filling a queue
      * is already set
      */
     isBeingFilledTimeOutSet: false,
@@ -94,7 +94,7 @@ const tmdbAPIHandler = {
         if(!this.isBeingFilledTimeOutSet) {
             this.isBeingFilledTimeOutSet = true
 
-            // console.log('start adding sync requests')
+            // console.log('start synchronously adding requests')
 
             setTimeout(
                 () => {
@@ -145,7 +145,7 @@ const tmdbAPIHandler = {
                 this.makeRequests()
             })
             .catch(error => {
-                // console.log('failed portion ' + i)
+                // console.log('failed portion ' + i--)
 
                 this.isWaitingResponse = false
 

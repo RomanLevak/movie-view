@@ -91,13 +91,20 @@ class Poster extends Component {
         return (
             <div className='poster-box movie-poster'>
                 <Link to={`/movies/${id}`}>
-                    <img src={this.getPosterPath()} className='movie-img' />
+                    <img
+                        className='movie-img'
+                        src={this.getPosterPath()}
+                    />
                 </Link>
                 <div className='poster__text-box'>
                     <Link to={`/movies/${id}`}>
-                        <span className='movie-poster__title'>{title}</span>
+                        <span className='movie-poster__title'>
+                            {title}
+                        </span>
                     </Link>
-                    <span className='movie-poster__year'>{year}</span>
+                    <span className='movie-poster__year'>
+                        {year}
+                    </span>
                 </div>
             </div>
         )

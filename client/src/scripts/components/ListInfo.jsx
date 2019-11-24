@@ -61,24 +61,23 @@ class ListInfo extends Component {
             )
 
         const {list} = this.props
-        const {title} = list
-        const author = list.user
+        const {title, author} = list
 
         return (
             <div className='list list-box'>
                 <h2 className='list__title'>
                     {title}
                 </h2>
-                <div className="list__data">
-                    <span className="list__author">
+                <div className='list__data'>
+                    <span className='list__author'>
                         author:
-                        <span className="list__author-name">
+                        <span className='list__author-name'>
                             {author.displayName}
                         </span>
                     </span>
-                    <span className="list__created">
+                    <span className='list__created'>
                         created at:
-                        <span className="list__created-time">
+                        <span className='list__created-time'>
                             {parseDate(list.createdAt)}
                         </span>
                     </span>

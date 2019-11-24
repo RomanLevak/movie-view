@@ -29,9 +29,17 @@ class Header extends Component {
         if(this.props.user)
             return (
                 <div className='header__buttons'>
-                    <div className="header__user">{this.props.user.displayName}</div>
-                    <button onClick={this.handleSingOutClick} className="header__singout">
-                        <img className='header__singout-img' src="/styles/images/logout.svg" alt=""/>
+                    <div className='header__user'>
+                        {this.props.user.displayName}
+                    </div>
+                    <button
+                        className='header__singout'
+                        onClick={this.handleSingOutClick}
+                    >
+                        <img
+                            className='header__singout-img'
+                            src='/styles/images/logout.svg'
+                        />
                     </button>
                 </div>
             )
@@ -62,7 +70,12 @@ class Header extends Component {
         return (
             <header className='header'>
                 <div className='home-icon-box'>
-                    <Link to='/'><img className='home-icon' src='/styles/images/robot.svg'/></Link>
+                    <Link to='/'>
+                        <img
+                            className='home-icon'
+                            src='/styles/images/robot.svg'
+                        />
+                    </Link>
                 </div>
                 <h1 className='header__title'>
                     <Link to = '/'> movieview</Link>
