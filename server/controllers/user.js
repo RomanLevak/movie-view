@@ -81,7 +81,7 @@ const checkAuth =  (req, res, next) => {
 const getSelf = (req, res, next) => {
     const {user} = req
 
-    if(req.isAuthenticated())
+    if(req.user)
         return res.json(user.selectToSend({withEmail: true}))
 
     res.json(null)
