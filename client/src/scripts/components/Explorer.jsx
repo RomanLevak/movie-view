@@ -58,7 +58,7 @@ class Explorer extends Component {
             <ReactPaginate
                 pageCount              = {this.props.totalPages}
                 pageRangeDisplayed     = {7}
-                marginPagesDisplayed   ={2}
+                marginPagesDisplayed   = {2}
                 onPageChange           = {this.onPageChange}
                 initialPage            = {this.props.filters.page - 1}
                 disableInitialCallback
@@ -97,9 +97,19 @@ class Explorer extends Component {
                 </ul>
                 <div className='explorer__sidebar sidebar'>
                     <h6 className='sidebar__item'>
-                        <Link to = '/movies' className='sidebar__item'>
+                        <NavLink
+                            to = '/movies'
+                            className='sidebar__item'
+                            activeClassName='sidebar__item-active'
+                        >
                             Popular now
-                        </Link>
+                        </NavLink>
+                        <NavLink to = '/lists/'
+                            className='sidebar__item'
+                            activeClassName='sidebar__item-active'
+                        >
+                            Latest lists
+                        </NavLink>
                     </h6>
                     <h6 className='sidebar-list__heading'>Genres</h6>
                     <ul className='sidebar-list'>

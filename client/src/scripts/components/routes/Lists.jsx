@@ -25,16 +25,14 @@ class Lists extends Component {
         )
     }
 
-    getExplorerForLists = () => {
-        return <Explorer type='lists' />
-    }
+    getExplorerForLists = () =>
+        <Explorer type='lists' />
 
     getListInfo = ({match}) => {
         const {id} = match.params
 
         return <ListInfo id = {id} />
     }
-
 }
 
 export default Lists
