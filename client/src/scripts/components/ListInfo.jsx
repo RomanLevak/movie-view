@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
-import {loadListInfo} from '../AC/index'
+import {loadListInfo, updateList} from '../AC/index'
 import Loader from './Loader'
 import MoviePoster from './MoviePoster'
 
@@ -17,8 +17,31 @@ class ListInfo extends Component {
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,
-        loadListInfo: PropTypes.func.isRequired
+        isOwner: PropTypes.bool.isRequired,
+        loadListInfo: PropTypes.func.isRequired,
+        updateList: PropTypes.func.isRequired
     }
+
+    state = {
+        editable: this.props.isOwner,
+        isEditTitle: false,
+        value: ''
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        let updatedState = {}
+
+        if(state.isEditTitle)
+            return null
+
+        updatedState.editable = props.isOwner
+        updatedState.value = props.list.title
+
+        return updatedState
+    }
+
+    setTitleInputRef = el =>
+        this.titleInput = el
 
     componentDidMount() {
         const {loadListInfo, loading, loaded, id} = this.props
@@ -26,6 +49,31 @@ class ListInfo extends Component {
         if(!loaded || !loading)
             loadListInfo(id)
     }
+
+    componentDidUpdate = () => {
+        if(this.titleInput)
+            this.titleInput.focus()
+    }
+
+    handleEditBtnClick = () => {
+        this.setState({isEditTitle: !this.state.isEditTitle})
+
+        // if title wasn't changed
+        if(this.state.value == this.props.list.title)
+            return
+
+        const {value} = this.state
+        const {updateList} = this.props
+        const {id} = this.props.list
+
+        updateList(id, [{
+            propName: 'title',
+            value
+        }])
+    }
+
+    handleTitleChange = e =>
+        this.setState({value: e.target.value})
 
     getMoviePosters = () => {
         const movieIds = this.props.list.movies
@@ -47,6 +95,7 @@ class ListInfo extends Component {
 
     render() {
         const {loading, loaded, error} = this.props
+        const {editable, isEditTitle} = this.state
 
         if(error)
             return error === 'Not Found' ?
@@ -65,9 +114,30 @@ class ListInfo extends Component {
 
         return (
             <div className='list list-box'>
-                <h2 className='list__title'>
-                    {title}
-                </h2>
+                <div className='list__title-box'>
+                    <h2 className='list__title'>
+                        { isEditTitle ?
+                            <input
+                                className='list__title-input'
+                                ref={this.setTitleInputRef}
+                                value={this.state.value}
+                                onChange={this.handleTitleChange}
+                            />
+                            :
+                            title
+                        }
+                    </h2>
+                    { editable ?
+                        <span
+                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '')}
+                            onClick={this.handleEditBtnClick}
+                        >
+                            {isEditTitle ? '✓' : '🖉'}
+                        </span>
+                        :
+                        null
+                    }
+                </div>
                 <div className='list__data'>
                     <span className='list__author'>
                         author:
@@ -91,11 +161,20 @@ class ListInfo extends Component {
 }
 
 export default connect(
-    state => ({
-        list: state.listInfo.entity,
-        loading: state.listInfo.loading,
-        loaded: state.listInfo.loaded,
-        error: state.listInfo.error
-    }),
-    {loadListInfo}
+    state => {
+        const {listInfo, user} = state
+        let isOwner = false
+
+        if(listInfo.loaded && user.entity)
+            isOwner = listInfo.entity.author.id == user.entity.id
+
+        return {
+            list: listInfo.entity,
+            loading: listInfo.loading,
+            loaded: listInfo.loaded,
+            error: listInfo.error,
+            isOwner
+        }
+    },
+    {loadListInfo, updateList}
 )(ListInfo)

@@ -7,10 +7,26 @@
 		height: 100%
 		max-width: 940px
 		padding: 12px
+		text-align: left
 	&__title
-		color: $green3
+		&-box
+			display: flex
+			align-items: center
+		&-input
+			max-height: 28px
+			font: inherit
+			color: inherit
+			padding: 0
+			background: transparent
+		max-height: 28px
 		font-size: 28px
-		text-align-last: left
+		color: $green3
+		&-edit
+			font-size: 18px
+			font-weight: bold
+			margin-left: 4px
+			color: $grey1
+			cursor: pointer
 	&__data
 		max-width: 200px
 		margin-left: auto

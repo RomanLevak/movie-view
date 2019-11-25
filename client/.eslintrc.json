@@ -73,7 +73,8 @@
             "object-curly-spacing": ["warn", "never"],
             "padding-line-between-statements": [
                 "warn",
-                {"blankLine": "always", "prev": "*", "next": "case"}
+                {"blankLine": "always", "prev": "*", "next": "case"},
+                {"blankLine": "any", "prev": "case", "next": "case"}
             ],
             "semi": ["warn", "never"],
             "space-before-blocks": "warn",

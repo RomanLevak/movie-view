@@ -7,6 +7,7 @@ import {
     LOAD_LISTS,
     LOAD_LIST_INFO,
     LOAD_LIST_POSTER,
+    UPDATE_LIST,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -19,8 +20,9 @@ export function loadMovies(filters) {
     if(!filters)
         return {
             type: LOAD_MOVIES,
-            callAPI: {url: `/tmdbapi/movie/popular?api_key=` +
-                `${API_KEY}`}
+            callAPI: {
+                url: `/tmdbapi/movie/popular?api_key=${API_KEY}`
+            }
         }
 
     const {page} = filters
@@ -63,8 +65,8 @@ export function searchMovie(query, temp = false) {
         type: SEARCH_MOVIE,
         temp,
         callAPI: {
-            url: `/tmdbapi/search/movie?`+
-            `api_key=${API_KEY}&query=${query}`
+            url: '/tmdbapi/search/movie?' +
+                `api_key=${API_KEY}&query=${query}`
         }
     }
 }
@@ -100,6 +102,17 @@ export function loadListPoster(id) {
         id,
         callAPI: {
             url: `/server/lists/${id}`
+        }
+    }
+}
+
+export function updateList(id, body) {
+    return {
+        type: UPDATE_LIST,
+        callAPI: {
+            url: `/server/lists/${id}`,
+            method: 'PUT',
+            body
         }
     }
 }

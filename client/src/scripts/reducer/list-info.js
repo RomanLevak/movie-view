@@ -1,5 +1,6 @@
 import {
     LOAD_LIST_INFO,
+    UPDATE_LIST,
     START,
     SUCCESS,
     FAIL
@@ -17,6 +18,8 @@ export default (listInfo = defaultState, action) => {
 
     switch(type) {
         case LOAD_LIST_INFO + START:
+        // falls through
+        case UPDATE_LIST + START:
             return {
                 ...listInfo,
                 loaded: false,
@@ -26,6 +29,8 @@ export default (listInfo = defaultState, action) => {
             }
 
         case LOAD_LIST_INFO + SUCCESS:
+        // falls through
+        case UPDATE_LIST + SUCCESS:
             return {
                 ...listInfo,
                 loaded: true,
@@ -38,6 +43,8 @@ export default (listInfo = defaultState, action) => {
             }
 
         case LOAD_LIST_INFO + FAIL:
+        // falls through
+        case UPDATE_LIST + FAIL:
             return {
                 ...listInfo,
                 loaded: false,

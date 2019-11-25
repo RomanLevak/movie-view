@@ -10,14 +10,14 @@ export default () => next => action => {
         ...rest, type: type + START
     })
 
-    const {method, url} = callAPI
+    const {method, url, body} = callAPI
 
     fetch(url, {
         headers: {
             'Content-Type': 'application/json',
         },
         method: method || 'GET',
-        body: method == 'POST' ? JSON.stringify(callAPI.body) : null
+        body: body ? JSON.stringify(body) : null
     })
         .then(response => {
             if(response.status >= 400)
