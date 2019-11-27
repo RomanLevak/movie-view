@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         loadEntities = () => dispatch(loadMovies(filters))
 
     if(type == 'lists')
-        loadEntities = () => dispatch(loadLists())
+        loadEntities = () => dispatch(loadLists(filters))
 
     return {loadEntities}
 }

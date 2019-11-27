@@ -5,13 +5,11 @@ import {
     FAIL,
 } from '../constants'
 
-import {arrToMap} from '../helpers'
-
 const defaultState = {
     loading: false,
     loaded: false,
     error: '',
-    entities: {},
+    entities: [],
     totalPages: 0
 }
 
@@ -25,19 +23,26 @@ export default (listsState = defaultState, action) => {
                 loaded: false,
                 loading: true,
                 error: '',
-                entities: {},
+                entities: [],
             }
 
         case LOAD_LISTS + SUCCESS: {
-            const {lists} = payload
-            const totalPages = payload.total_pages
+            let lists
+            let totalPages
+
+            if(Array.isArray(payload))
+                lists = payload
+            else {
+                lists = payload.lists
+                totalPages = payload.total_pages
+            }
 
             return {
                 ...listsState,
                 loaded: true,
                 loading: false,
                 error: '',
-                entities: arrToMap(lists),
+                entities: lists,
                 totalPages
             }
         }
@@ -47,7 +52,7 @@ export default (listsState = defaultState, action) => {
                 ...listsState,
                 loaded: false,
                 loading: true,
-                entities: {},
+                entities: [],
                 totalPages: 0,
                 error: payload
             }

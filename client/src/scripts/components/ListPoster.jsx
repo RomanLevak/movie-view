@@ -92,10 +92,11 @@ class ListPoster extends Component {
                     </Link>
                     <span className='list-poster__author-box'>
                         author:
-                        <Link to={`/lists/author/${authorId}`}>
-                            <span className='list-poster__author-name'>
-                                {authorName}
-                            </span>
+                        <Link
+                            to={`/lists/author/${authorId}`}
+                            className='list-poster__author-name'
+                        >
+                            {authorName}
                         </Link>
                     </span>
                 </div>

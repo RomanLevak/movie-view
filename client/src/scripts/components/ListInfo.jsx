@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
 import {loadListInfo, updateList} from '../AC/index'
@@ -141,9 +141,12 @@ class ListInfo extends Component {
                 <div className='list__data'>
                     <span className='list__author'>
                         author:
-                        <span className='list__author-name'>
+                        <Link
+                            to={`/lists/author/${author.id}`}
+                            className='list__author-name'
+                        >
                             {author.displayName}
-                        </span>
+                        </Link>
                     </span>
                     <span className='list__created'>
                         created at:

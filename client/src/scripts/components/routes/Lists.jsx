@@ -15,6 +15,9 @@ class Lists extends Component {
 
         return (
             <Switch>
+                <Route path = {`${url}/author/:authorId`}
+                    render = {this.getExplorerForLists}
+                />
                 <Route path = {`${url}/:id`}
                     render = {this.getListInfo}
                 />
@@ -25,8 +28,20 @@ class Lists extends Component {
         )
     }
 
-    getExplorerForLists = () =>
-        <Explorer type='lists' />
+    getExplorerForLists = ({match}) => {
+        const {authorId} = match.params
+
+        if(authorId)
+            return (
+                <Explorer
+                    type='lists'
+                    filters = {{authorId}}
+                    key = {authorId}
+                />
+            )
+
+        return <Explorer type='lists' />
+    }
 
     getListInfo = ({match}) => {
         const {id} = match.params
