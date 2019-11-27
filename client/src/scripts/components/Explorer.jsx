@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link, NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import connectToMoviesAndLists from './decorators/moviesAndLists'
 import {genres} from '../constants'
 import ReactPaginate from 'react-paginate'
@@ -22,7 +22,13 @@ class Explorer extends Component {
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         loadEntities: PropTypes.func.isRequired,
-        error: PropTypes.string
+        error: PropTypes.string,
+        /*
+         * if Explorer renders a lists of specific author,
+         * isOwner will tell if logged user is an author
+         * of these lists
+         */
+        isOwner: PropTypes.bool
     }
 
     componentDidMount() {
@@ -74,13 +80,24 @@ class Explorer extends Component {
     }
 
     getBody = () => {
-        const {Item, entities, loading, loaded, error} = this.props
+        const {
+            Item, entities, filters,
+            isOwner, type,
+            loading, loaded, error
+        } = this.props
 
         if(error)
             return <span className = 'error-msg'>{error}</span>
 
         if(loading || !loaded)
             return <Loader type='squares' />
+
+        if(!entities.length && filters.authorName)
+            return (
+                <span className='explorer__list-msg'>
+                    {filters.authorName} doesn{'\''}t have any lists yet
+                </span>
+            )
 
         return entities.slice(0, 12).map(entity =>
             <li className = 'explorer__item' key = {entity.id}>

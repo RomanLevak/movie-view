@@ -14,11 +14,37 @@ function mapStateToProps(state, ownProps) {
             Item: MoviePoster
         }
 
-    else if(type == 'lists')
+    else if(type == 'lists') {
+        /*
+         * next script will add isOwner: true/false property,
+         * if component needs to select a lists of specific author,
+         * depending on the logged user
+         */
+
+        const {filters} = ownProps
+        let authorName = ''
+
+        if(filters && filters.authorName)
+            authorName = filters.authorName
+
+        if(
+            authorName &&
+            state.user.entity
+        ) {
+            const loggedUserName = state.user.entity.displayName
+
+            return {
+                ...selectLists(state),
+                Item: ListPoster,
+                isOwner: authorName == loggedUserName
+            }
+        }
+
         return {
             ...selectLists(state),
-            Item: ListPoster
+            Item: ListPoster,
         }
+    }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
