@@ -72,11 +72,11 @@ export function searchMovie(query, temp = false) {
 }
 
 export function loadLists(filters = {}) {
-    const {authorId, page} = filters
+    const {authorName, page} = filters
     let url = ''
 
-    if(authorId)
-        url = `/server/lists/user/${authorId}`
+    if(authorName)
+        url = `/server/lists/username/${authorName}`
     else
         url = `/server/lists/latest${page ? page : ''}`
 

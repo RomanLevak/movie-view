@@ -64,7 +64,6 @@ class ListPoster extends Component {
 
         const {title} = list
 
-        const authorId = list.user.id
         const authorName = list.user.displayName
 
         return (
@@ -93,7 +92,7 @@ class ListPoster extends Component {
                     <span className='list-poster__author-box'>
                         author:
                         <Link
-                            to={`/lists/author/${authorId}`}
+                            to={`/lists/author/${authorName}`}
                             className='list-poster__author-name'
                         >
                             {authorName}
