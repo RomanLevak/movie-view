@@ -111,6 +111,7 @@ class ListInfo extends Component {
 
         const {list} = this.props
         const {title, author} = list
+        const authorName = author.displayName
 
         return (
             <div className='list list-box'>
@@ -142,7 +143,7 @@ class ListInfo extends Component {
                     <span className='list__author'>
                         author:
                         <Link
-                            to={`/lists/author/${author.id}`}
+                            to={`/lists/author/${authorName}`}
                             className='list__author-name'
                         >
                             {author.displayName}

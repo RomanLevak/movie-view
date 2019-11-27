@@ -28,12 +28,13 @@ class Header extends Component {
     getUserArea() {
         if(this.props.user) {
             const {user} = this.props
+            const {displayName} = user
 
             return (
                 <div className='header__buttons'>
                     <div className='header__user'>
-                        <Link to={`/lists/author/${user.id}`}>
-                            {user.displayName}
+                        <Link to={`/lists/author/${displayName}`}>
+                            {displayName}
                         </Link>
                     </div>
                     <button
