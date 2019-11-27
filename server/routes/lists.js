@@ -1,7 +1,7 @@
 const {
     getLatest,
     getById,
-    getAllListsFromUser,
+    getListsByUserId,
     create,
     update,
     remove,
@@ -11,6 +11,7 @@ const {
 } = require('../controllers/lists')
 const {checkAuth} = require('../controllers/user')
 const checkId = require('../middlewares/check-id')
+const appendUserIdByName = require('../middlewares/append-userid-by-name')
 
 const router = require('express').Router()
 
@@ -29,6 +30,11 @@ router.route('/:id/:movieId')
     .put(checkId, checkOwner, addMovie)
     .delete(checkId, checkOwner, removeMovie)
 
-router.get('/user/:userId', getAllListsFromUser)
+router.get('/user/:userId', getListsByUserId)
+router.get(
+    '/username/:userName',
+    appendUserIdByName,
+    getListsByUserId
+)
 
 module.exports = router

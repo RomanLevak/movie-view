@@ -79,4 +79,16 @@ userSchema.methods.selectToSend = function(options = {}) {
     }
 }
 
+userSchema.statics.getIdByName = async function(name) {
+    const user = await this.findOne({displayName: {
+        // case insensitive search
+        $regex: new RegExp(name, 'i')
+    }})
+
+    if(!user)
+        return null
+
+    return user.id
+}
+
 module.exports = mongoose.model('User', userSchema)

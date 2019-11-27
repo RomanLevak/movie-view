@@ -29,7 +29,7 @@ const getById = ah(async (req, res, next) => {
     }
 })
 
-const getAllListsFromUser = ah(async (req, res, next) => {
+const getListsByUserId = ah(async (req, res, next) => {
     const userId = req.params.userId
     const lists = await List.find({user: userId})
 
@@ -128,7 +128,7 @@ const removeMovie = ah(async (req, res, next) => {
 module.exports = {
     getLatest,
     getById,
-    getAllListsFromUser,
+    getListsByUserId,
     create,
     update,
     remove,
