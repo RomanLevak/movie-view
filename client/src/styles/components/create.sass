@@ -1,0 +1,31 @@
+.create
+    &-box
+        position: relative
+    padding: 0 3px
+    font-size: 16px
+    font-weight: bold
+    border: 2px solid $yellow2
+    color: $yellow4
+    &__input
+        &-box
+            position: absolute
+            z-index: 1
+            margin-right: 50%
+            transform: translateX(-50%)
+            width: 240px
+            height: 50px
+            padding: 0 4px
+            display: flex
+            align-items: center
+            background: $black-transparent
+        height: 35px
+        padding: 0 2px
+        background: transparent
+        border: 2px solid $yellow2
+        color: $yellow4
+        font-size: 17px
+        width: calc(100% - 30px)
+        &-btn
+            height: 100%
+            color: $green2
+            font-size: 22px

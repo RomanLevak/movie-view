@@ -7,7 +7,9 @@ import {
     LOAD_LISTS,
     LOAD_LIST_INFO,
     LOAD_LIST_POSTER,
+    CREATE_LIST,
     UPDATE_LIST,
+    RESET,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -103,6 +105,23 @@ export function loadListPoster(id) {
         callAPI: {
             url: `/server/lists/${id}`
         }
+    }
+}
+
+export function createList(title) {
+    return {
+        type: CREATE_LIST,
+        callAPI: {
+            url: '/server/lists/',
+            method: 'POST',
+            body: {title}
+        }
+    }
+}
+
+export function resetCreateList() {
+    return {
+        type: CREATE_LIST + RESET,
     }
 }
 

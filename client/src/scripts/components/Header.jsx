@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import selectUser from '../selectors/user'
 import {singOut, checkIfSingedIn} from '../AC/index'
+import CreateBtn from './createBtn'
 import Search from './Search'
 
 class Header extends Component {
@@ -33,6 +34,7 @@ class Header extends Component {
 
             return (
                 <div className='header__buttons'>
+                    <CreateBtn />
                     <div className='header__user'>
                         <Link to={`/lists/author/${name}`}>
                             {name}
