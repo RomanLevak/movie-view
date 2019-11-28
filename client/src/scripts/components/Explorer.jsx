@@ -118,13 +118,15 @@ class Explorer extends Component {
                 <div className='explorer__sidebar sidebar'>
                     <h6 className='sidebar__item'>
                         <NavLink
-                            to = '/movies'
+                            to = '/movies/popular/1'
+                            exact
                             className='sidebar__item'
                             activeClassName='sidebar__item-active'
                         >
                             Popular now
                         </NavLink>
                         <NavLink to = '/lists/'
+                            exact
                             className='sidebar__item'
                             activeClassName='sidebar__item-active'
                         >

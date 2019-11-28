@@ -25,7 +25,7 @@
 	&-poster
 		text-align: center
 		&__title, &__year
-			font-size: 14px
+			font-size: 12px
 		&__title
 			color: $seagreen5
 			text-align: center
@@ -36,10 +36,24 @@
 			color: $seagreen3
 
 .list-poster
+	&__imgs-box
+		width: 100%
+		// setting the ratio between width and height
+		padding-top: 152.135218545%
+		position: relative
 	&__img-box
-		display: inline-block
+		position: absolute
+		top: 0
 		width: 25%
 		overflow: hidden
+		&:nth-child(1)
+			left: 0
+		&:nth-child(2)
+			left: 25%
+		&:nth-child(3)
+			left: 50%
+		&:nth-child(4)
+			left: 75%
 		img
 			display: block
 			width: 400%
@@ -87,8 +101,8 @@
 			&:nth-last-child(-n+2)
 				display: none
 			&:nth-child(2)
-				position: absolute
 				top: 50%
+				left: 0%
 				z-index: 1
 			& img
 				transform: translate(0, -25%)

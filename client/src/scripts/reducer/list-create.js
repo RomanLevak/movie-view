@@ -27,7 +27,6 @@ export default (editedList = defaultState, action) => {
             }
 
         case CREATE_LIST + SUCCESS:
-            console.log(payload)
             return {
                 ...editedList,
                 loaded: true,

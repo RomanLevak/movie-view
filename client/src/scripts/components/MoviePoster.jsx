@@ -13,7 +13,7 @@ class Poster extends Component {
         id: PropTypes.oneOfType([
             PropTypes.number,
             PropTypes.string,
-        ]).isRequired,
+        ]),
         // from connect
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
@@ -27,7 +27,7 @@ class Poster extends Component {
         const {loaded, loadMoviePoster, movie} = this.props
 
         if(!loaded || !movie)
-            loadMoviePoster(id)
+            id && loadMoviePoster(id)
     }
 
     getPosterPath = () => {
@@ -50,12 +50,17 @@ class Poster extends Component {
 
         if(loading || !loaded)
             return (
-                <div className='list-poster__img-box'>
-                    <img
-                        src='/styles/images/blank-3x2.png'
-                        className='movie-img blank-img'
-                    />
-                </div>
+                <>
+                    <div className='list-poster__img-box'>
+                        <img
+                            src='/styles/images/blank-3x2.png'
+                            className='movie-img blank-img'
+                        />
+                    </div>
+                    <div className='poster__loader-box'>
+                        <Loader type='spinner'/>
+                    </div>
+                </>
             )
 
         return (
@@ -65,7 +70,7 @@ class Poster extends Component {
         )
     }
 
-    getBody = () => {
+    getFullBody = () => {
         const {loading, loaded, movie, id} = this.props
 
         if(loading || !loaded)
@@ -114,7 +119,7 @@ class Poster extends Component {
         if(this.props.isMini)
             return this.getMiniBody()
         else
-            return this.getBody()
+            return this.getFullBody()
     }
 }
 

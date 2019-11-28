@@ -45,11 +45,17 @@ class ListPoster extends Component {
 
     getLoadingBody = () =>
         <div className='poster-box'>
-            <div className='list-poster__imgs-box poster__loader-box'>
-                <Loader type = 'spinner'/>
+            <div className='list-poster__imgs-box'>
+                <MoviePoster isMini />
             </div>
             <div className='list-poster__info'>
                 <span className='list-poster__title'>...</span>
+                <span className='list-poster__author-box'>
+                    author:
+                    <span className='list-poster__author-name'>
+                        ...
+                    </span>
+                </span>
             </div>
         </div>
 
