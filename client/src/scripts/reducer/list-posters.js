@@ -41,7 +41,14 @@ export default (postersState = defaultState, action) => {
                     loading: false,
                     loaded: true,
                     error: '',
-                    entity: payload
+                    entity: {
+                        ...payload,
+                        user: undefined,
+                        author: {
+                            id: payload.user.id,
+                            name: payload.user.displayName
+                        }
+                    }
                 }
             }
         }

@@ -25,7 +25,7 @@ class Explorer extends Component {
         error: PropTypes.string,
         /*
          * if Explorer renders a lists of specific author,
-         * isOwner will tell if logged user is an author
+         * isOwner will tell if the logged user is an author
          * of these lists
          */
         isOwner: PropTypes.bool
@@ -81,8 +81,7 @@ class Explorer extends Component {
 
     getBody = () => {
         const {
-            Item, entities, filters,
-            isOwner, type,
+            Item, entities, filters, isOwner,
             loading, loaded, error
         } = this.props
 
@@ -92,10 +91,14 @@ class Explorer extends Component {
         if(loading || !loaded)
             return <Loader type='squares' />
 
-        if(!entities.length && filters.authorName)
+        if(!entities.length && filters && filters.authorName)
             return (
                 <span className='explorer__list-msg'>
-                    {filters.authorName} doesn{'\''}t have any lists yet
+                    {isOwner ?
+                        'You don\'t ' :
+                        `${filters.authorName} doesn't `
+                    }
+                    have any lists yet
                 </span>
             )
 

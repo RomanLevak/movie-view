@@ -19,7 +19,7 @@ export default (userState = defaultState, action) => {
 
     switch(type) {
         case SINGIN + START:
-            if(userState.isSingedIn)
+            if(userState.entity)
                 return {
                     ...userState,
                     error: 'you are already singed in'
@@ -78,7 +78,7 @@ export default (userState = defaultState, action) => {
             }
 
         case SINGOUT + START:
-            if(!userState.isSingedIn)
+            if(!userState.entity)
                 return {
                     ...userState,
                     error: 'you are already singedIn out'

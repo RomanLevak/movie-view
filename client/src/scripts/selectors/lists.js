@@ -4,12 +4,7 @@ const getLists = state => state.lists
 
 const selectLists = createSelector(
     getLists,
-    lists => ({
-        entities: lists.entities,
-        loading: lists.loading,
-        loaded: lists.loaded,
-        error: lists.error
-    })
+    lists => ({...lists})
 )
 
 export default selectLists

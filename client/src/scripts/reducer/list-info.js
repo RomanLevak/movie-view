@@ -38,7 +38,10 @@ export default (listInfo = defaultState, action) => {
                 error: '',
                 entity: {
                     ...payload,
-                    author: payload.user
+                    author: {
+                        id: payload.user.id,
+                        name: payload.user.displayName
+                    }
                 }
             }
 

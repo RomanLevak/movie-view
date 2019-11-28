@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import selectUser from '../selectors/user'
 import {singOut, checkIfSingedIn} from '../AC/index'
 import Search from './Search'
 
@@ -26,15 +27,15 @@ class Header extends Component {
     }
 
     getUserArea() {
-        if(this.props.user) {
+        if(this.props.user.name) { // user is signed in
             const {user} = this.props
-            const {displayName} = user
+            const {name} = user
 
             return (
                 <div className='header__buttons'>
                     <div className='header__user'>
-                        <Link to={`/lists/author/${displayName}`}>
-                            {displayName}
+                        <Link to={`/lists/author/${name}`}>
+                            {name}
                         </Link>
                     </div>
                     <button
@@ -94,9 +95,6 @@ class Header extends Component {
 }
 
 export default connect(
-    state => ({
-        isSingedIn: state.user.isSingedIn,
-        user: state.user.entity
-    }),
+    state => ({user: selectUser(state)}),
     {singOut, checkIfSingedIn}
 )(Header)

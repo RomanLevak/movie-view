@@ -62,9 +62,7 @@ class ListPoster extends Component {
         else if(loading || !loaded)
             return this.getLoadingBody()
 
-        const {title} = list
-
-        const authorName = list.user.displayName
+        const {title, author} = list
 
         return (
             <div className='poster-box'>
@@ -92,10 +90,10 @@ class ListPoster extends Component {
                     <span className='list-poster__author-box'>
                         author:
                         <Link
-                            to={`/lists/author/${authorName}`}
+                            to={`/lists/author/${author.name}`}
                             className='list-poster__author-name'
                         >
-                            {authorName}
+                            {author.name}
                         </Link>
                     </span>
                 </div>
