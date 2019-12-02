@@ -16,7 +16,8 @@ async function fillDB() {
 
         for(let list of lists) {
             const l = new List(list)
-            await l.setUserByEmail(list.userEmail)
+            const u = await User.findOne({email: list.userEmail})
+            l.user = u._id
             await l.save()
         }
 

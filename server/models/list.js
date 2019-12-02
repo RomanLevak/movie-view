@@ -1,5 +1,4 @@
 const mongoose = require('../libs/mongoose')
-const User = require('../models/user')
 const {Schema} = mongoose
 
 const listSchema = new Schema({
@@ -17,21 +16,21 @@ const listSchema = new Schema({
     }
 }, {timestamps: true})
 
-listSchema.methods.setUserByEmail = async function(email) {
-    const user = await User.findOne({email})
+listSchema.methods.selectToSend = async function(populateUser = true) {
+    const result = {}
 
-    this.user = user._id
-}
-
-listSchema.methods.selectToSend = async function() {
-    await this.populate('user').execPopulate()
+    if(populateUser) {
+        await this.populate('user').execPopulate()
+        result.user = await this.user.selectToSend()
+    } else
+        result.user = this.user
 
     return {
+        ...result,
         id: this._id,
         movies: this.movies,
         title: this.title,
-        createdAt: this.createdAt,
-        user: this.user && this.user.selectToSend()
+        createdAt: this.createdAt
     }
 }
 

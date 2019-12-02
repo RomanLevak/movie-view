@@ -2,6 +2,7 @@ const mongoose = require('../libs/mongoose')
 const {Schema} = mongoose
 const crypto = require('crypto')
 const config = require('config')
+const List = require('./list')
 
 const userSchema = new Schema({
     email: {
@@ -69,13 +70,29 @@ userSchema.methods.checkPassword = async function(plainPassword) {
     return passwordHash === this.passwordHash
 }
 
-userSchema.methods.selectToSend = function(options = {}) {
-    const {withEmail} = options
+userSchema.methods.selectToSend = async function(options = {}) {
+    const {withEmail, withLists} = options
+    let result, lists, listsToSend
+    result = lists = listsToSend = {}
+
+    if(withLists) {
+        lists = await List.find({user: this._id})
+
+        listsToSend = await Promise.all(
+            // select without populating user
+            lists.map(async list => await list.selectToSend(false))
+        )
+
+        result.lists = listsToSend
+    }
+
+    if(withEmail)
+        result.email = this.email
 
     return {
+        ...result,
         id: this._id,
         displayName: this.displayName,
-        email: withEmail ? this.email : undefined
     }
 }
 

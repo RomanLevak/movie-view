@@ -12,12 +12,15 @@ const login = (req, res, next) =>
                 return next(err)
 
             if(user)
-                req.login(user, err => {
+                req.login(user, ah(async err => {
                     if(err)
                         return next(err)
 
-                    res.json(user.selectToSend({withEmail: true}))
-                })
+                    res.json(await user.selectToSend({
+                        withEmail: true,
+                        withLists: true
+                    }))
+                }))
             else
                 return next(new HTTPError(401, message))
         }
@@ -78,14 +81,17 @@ const checkAuth =  (req, res, next) => {
     next(new HTTPError(401))
 }
 
-const getSelf = (req, res, next) => {
+const getSelf = ah(async (req, res, next) => {
     const {user} = req
 
     if(req.user)
-        return res.json(user.selectToSend({withEmail: true}))
+        return res.json(await user.selectToSend({
+            withEmail: true,
+            withLists: true
+        }))
 
     res.json(null)
-}
+})
 
 module.exports = {
     login,
