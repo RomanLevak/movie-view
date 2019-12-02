@@ -56,9 +56,7 @@ class MovieInfo extends Component {
                     <tr>
                         <td>Counries</td>
                         <td>
-                        {
-                            production_countries.map(country => country.name)
-                        }
+                            {production_countries.map(country => country.name)}
                         </td>
                     </tr>
                     <tr>
@@ -66,13 +64,12 @@ class MovieInfo extends Component {
                         <td> {
                             genres.map((genre, i, arr) =>
                                 <Fragment key = {genre.id}>
-                                    <Link
+                                    <Link className='movie__info-link'
                                         to = {`/movies/genres/${genre.name}`}
-                                        className='movie__info-link'
                                     >
                                         {genre.name}
                                     </Link>
-                                    {
+                                    {   // after last element will be no ','
                                         i !== arr.length - 1 ?
                                             <span>, </span> :
                                             null

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {createList, resetCreateList} from '../AC/index'
+import {createList, resetCreateList} from '../../AC/index'
 
 class CreateBtn extends Component {
     static propTypes = {
@@ -40,6 +40,13 @@ class CreateBtn extends Component {
         return null
     }
 
+    onBlur = () => {
+        setTimeout(
+            () => this.setState({isInputOpen: false}),
+            0
+        )
+    }
+
     handleChange = e =>
         this.setState({
             value: e.target.value
@@ -75,6 +82,7 @@ class CreateBtn extends Component {
                 </button>
                 { isInputOpen ?
                     <form className='create__input-box'
+                        onBlur={this.onBlur}
                         onSubmit={this.handleSubmit}
                     >
                         <input className='create__input'
@@ -82,7 +90,13 @@ class CreateBtn extends Component {
                             onChange={this.handleChange}
                             ref={this.setInputRef}
                         />
-                        <button className='create__input-btn'>
+                        <button className='create__input-btn'
+                            /*
+                             * prevent from onBlur event which would
+                             * hide a Form and redirection wouldn't happen
+                             */
+                            onMouseDown = {e => e.preventDefault()}
+                        >
                             {'✓'}
                         </button>
                     </form>
@@ -96,8 +110,8 @@ class CreateBtn extends Component {
 
 export default connect(
     state => ({
-            listCreate: state.listCreate
-        }), {
+        listCreate: state.listCreate
+    }), {
         createList,
         resetCreateList
     }

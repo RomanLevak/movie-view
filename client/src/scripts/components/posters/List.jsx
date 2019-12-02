@@ -2,10 +2,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import makeSelectListPoster from '../selectors/list-poster'
-import {loadListPoster} from '../AC/index'
-import Loader from './Loader'
-import MoviePoster from './MoviePoster'
+import makeSelectListPoster from '../../selectors/list-poster'
+import {loadListPoster} from '../../AC/index'
+import {default as MoviePoster} from './Movie'
 
 class ListPoster extends Component {
 
@@ -95,9 +94,8 @@ class ListPoster extends Component {
                     </Link>
                     <span className='list-poster__author-box'>
                         author:
-                        <Link
+                        <Link className='list-poster__author-name'
                             to={`/lists/author/${author.name}`}
-                            className='list-poster__author-name'
                         >
                             {author.name}
                         </Link>

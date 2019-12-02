@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import selectUser from '../selectors/user'
 import {singOut, checkIfSingedIn} from '../AC/index'
-import CreateBtn from './createBtn'
+import CreateBtn from './list-btns/createBtn'
 import Search from './Search'
 
 class Header extends Component {
@@ -28,9 +28,8 @@ class Header extends Component {
     }
 
     getUserArea() {
-        if(this.props.user.name) { // user is signed in
-            const {user} = this.props
-            const {name} = user
+        if(this.props.user) { // user is signed in
+            const {name} = this.props.user
 
             return (
                 <div className='header__buttons'>
@@ -44,8 +43,7 @@ class Header extends Component {
                         className='header__singout'
                         onClick={this.handleSingOutClick}
                     >
-                        <img
-                            className='header__singout-img'
+                        <img className='header__singout-img'
                             src='/styles/images/logout.svg'
                         />
                     </button>
@@ -55,21 +53,21 @@ class Header extends Component {
 
         return (
             <div className='header__buttons'>
-                <Link
+                <Link className='btn-border header__btn btn-login'
                     to={{
                         pathname: '/sing-in',
                         state: {from: this.props.location}
                     }}
-                    className='btn-border header__btn btn-login'>
+                >
                     sing in
                 </Link>
-                <Link
+                <Link className='btn-border header__btn btn-singup'
                     to={{
                         pathname: '/sing-up',
                         state: {from: this.props.location}
                     }}
-                    className='btn-border header__btn btn-singup'>
-                        sing up
+                >
+                    sing up
                 </Link>
             </div>
         )
@@ -80,8 +78,7 @@ class Header extends Component {
             <header className='header'>
                 <div className='home-icon-box'>
                     <Link to='/'>
-                        <img
-                            className='home-icon'
+                        <img className='home-icon'
                             src='/styles/images/robot.svg'
                         />
                     </Link>
@@ -97,6 +94,6 @@ class Header extends Component {
 }
 
 export default connect(
-    state => ({user: selectUser(state)}),
+    state => ({user: selectUser(state).entity}),
     {singOut, checkIfSingedIn}
 )(Header)

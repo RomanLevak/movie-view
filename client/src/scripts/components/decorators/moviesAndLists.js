@@ -2,8 +2,9 @@ import {connect} from 'react-redux'
 import selectMovies from '../../selectors/movies'
 import selectLists from '../../selectors/lists'
 import {loadMovies, loadLists} from '../../AC/index'
-import ListPoster from '../ListPoster'
-import MoviePoster from '../MoviePoster'
+import {default as ListPoster} from '../posters/List'
+import {default as MoviePoster} from '../posters/Movie'
+
 
 function mapStateToProps(state, ownProps) {
     const {type} = ownProps

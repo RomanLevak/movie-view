@@ -10,7 +10,9 @@ function NotFound() {
             <p className='not-found__text not-found__text-box'>
                 Sorry, the page could not be found
             </p>
-            <Link to='/' className='not-found__link'>
+            <Link className='not-found__link'
+                to='/'
+            >
                 {'>> go to Homepage'}
             </Link>
         </div>

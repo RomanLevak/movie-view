@@ -75,9 +75,8 @@ class HomeList extends Component {
         return (
             <div className='home-list-box'>
                 <h2 className='home-list__title'>
-                    <Link
+                    <Link className='home-list__link'
                         to={`/${type}`}
-                        className='home-list__link'
                     >
                         {title}
                     </Link>

@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import Header from './Header'
-import Search from './Search'
 import HomeList from './HomeList'
 import Movies from './routes/Movies'
 import Form from './Form'

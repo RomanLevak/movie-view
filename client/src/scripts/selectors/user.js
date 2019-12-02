@@ -7,14 +7,17 @@ const selectUser = createSelector(
     user => {
         if(user.entity)
             return {
-                name: user.entity.displayName,
-                email: user.entity.email,
-                id: user.entity.id,
+                entity: {
+                    name: user.entity.displayName,
+                    email: user.entity.email,
+                    id: user.entity.id,
+                },
                 loading: user.loading,
                 error: user.error
             }
 
         return {
+            entity: null,
             loading: user.loading,
             error: user.error
         }

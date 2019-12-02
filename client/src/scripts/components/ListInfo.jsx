@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
 import {loadListInfo, updateList} from '../AC/index'
 import Loader from './Loader'
-import MoviePoster from './MoviePoster'
+import {default as MoviePoster} from './posters/Movie'
 
 class ListInfo extends Component {
 
@@ -81,10 +81,7 @@ class ListInfo extends Component {
 
         movieIds.map(movieId =>
             movies.push(
-                <div
-                    className='list__item'
-                    key={movieId}
-                >
+                <div className='list__item' key={movieId}>
                     <MoviePoster id = {movieId} />
                 </div>
             )
@@ -117,8 +114,7 @@ class ListInfo extends Component {
                 <div className='list__title-box'>
                     <h2 className='list__title'>
                         { isEditTitle ?
-                            <input
-                                className='list__title-input'
+                            <input className='list__title-input'
                                 ref={this.setTitleInputRef}
                                 value={this.state.value}
                                 onChange={this.handleTitleChange}
@@ -129,7 +125,7 @@ class ListInfo extends Component {
                     </h2>
                     { editable ?
                         <span
-                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '')}
+                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '') }
                             onClick={this.handleEditBtnClick}
                         >
                             {isEditTitle ? '✓' : '🖉'}
@@ -141,9 +137,8 @@ class ListInfo extends Component {
                 <div className='list__data'>
                     <span className='list__author'>
                         author:
-                        <Link
+                        <Link className='list__author-name'
                             to={`/lists/author/${author.name}`}
-                            className='list__author-name'
                         >
                             {author.name}
                         </Link>

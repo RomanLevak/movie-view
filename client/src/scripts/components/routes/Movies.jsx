@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Route, Redirect, Switch} from 'react-router-dom'
-import {genres} from '../../constants'
+import {mapToArr} from '../../helpers'
+import {genres as genresObj} from '../../constants'
 import MovieInfo from '../MovieInfo'
 import Results from '../Results'
 import Explorer from '../Explorer'
+
+const genres = mapToArr(genresObj)
 
 class Movies extends Component {
 
@@ -57,26 +60,25 @@ class Movies extends Component {
     }
 
     getExplorerWithGenre = ({match}) => {
-        const {genre, page} = match.params
         const {url} = match
+        const {page} = match.params
+        const genreUrl = match.params.genre
 
-        if(!genres.map(genre => genre.name).includes(genre))
+        const genreId = genres.find(genre => genre.name == genreUrl).id
+        if(!genreId)
             return <Redirect to={'/not-found'} />
 
         if(!page)
             return <Redirect to = {`${url}/1`} />
 
-        // finding genre id by genre name
-        const genreID = genres.find(g => g.name === genre).id
-
         return (
             <Explorer
                 type = 'movies'
                 filters = {{
-                    genreID,
+                    genreId,
                     page: parseInt(page)
                 }}
-                key = {genreID + page}
+                key = {genreId + page}
             />
         )
     }

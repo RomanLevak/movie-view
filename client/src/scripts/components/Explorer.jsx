@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {NavLink} from 'react-router-dom'
+import {mapToArr} from '../helpers'
 import connectToMoviesAndLists from './decorators/moviesAndLists'
-import {genres} from '../constants'
+import {genres as genresObj} from '../constants'
 import ReactPaginate from 'react-paginate'
 import Loader from './Loader'
+
+const genres = mapToArr(genresObj)
 
 class Explorer extends Component {
 
@@ -46,8 +49,7 @@ class Explorer extends Component {
     getGenresList = () =>
         genres.map(genre =>
             <li className = 'sidebar-list__item' key = {genre.id}>
-                <NavLink
-                    activeClassName = 'sidebar-list__item-active'
+                <NavLink activeClassName = 'sidebar-list__item-active'
                     to = {`/movies/genres/${genre.name}`}>
                     {genre.name}
                 </NavLink>

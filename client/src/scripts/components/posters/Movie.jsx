@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import makeSelectMoviePoster from '../selectors/movie-poster'
-import {loadMoviePoster} from '../AC/index'
-import Loader from './Loader'
+import makeSelectMoviePoster from '../../selectors/movie-poster'
+import {loadMoviePoster} from '../../AC/index'
+import Loader from './../Loader'
 
 class Poster extends Component {
 
@@ -52,9 +52,8 @@ class Poster extends Component {
             return (
                 <>
                     <div className='list-poster__img-box'>
-                        <img
+                        <img className='movie-img blank-img'
                             src='/styles/images/blank-3x2.png'
-                            className='movie-img blank-img'
                         />
                     </div>
                     <div className='poster__loader-box'>
@@ -76,9 +75,8 @@ class Poster extends Component {
         if(loading || !loaded)
             return (
                 <div className='poster-box movie-poster'>
-                    <img
+                    <img className='movie-img blank-img'
                         src={this.getPosterPath()}
-                        className='movie-img blank-img'
                     />
                     <div className='poster__loader-box'>
                         <Loader type='spinner'/>
@@ -96,8 +94,7 @@ class Poster extends Component {
         return (
             <div className='poster-box movie-poster'>
                 <Link to={`/movies/${id}`}>
-                    <img
-                        className='movie-img'
+                    <img className='movie-img'
                         src={this.getPosterPath()}
                     />
                 </Link>

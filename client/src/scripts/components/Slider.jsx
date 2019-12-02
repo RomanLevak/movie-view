@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {default as RawSlider} from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 
+// arrow for slider
 function Arrow(props) {
     const {style, onClick, next} = props
 
