@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {createList, loadLists} from '../../AC/index'
+import {toast} from 'react-toastify'
 
 class CreateBtn extends Component {
     static propTypes = {
@@ -32,6 +33,10 @@ class CreateBtn extends Component {
 
         // if list has been created
         if(listCreateState.entity.id && isWaitingResponse) {
+            const {title} = listCreateState.entity
+
+            toast(`created '${title}' list !`)
+
             props.loadLists()
 
             return {

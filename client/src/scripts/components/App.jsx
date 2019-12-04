@@ -4,7 +4,7 @@ import {
     Route,
     Switch
 } from 'react-router-dom'
-
+import ToastContainer from './ToastContainer'
 import Header from './Header'
 import HomeList from './HomeList'
 import Movies from './routes/Movies'
@@ -50,6 +50,7 @@ class App extends Component {
                         </Switch>
                     </main>
                     <div className='green-bg'></div>
+                    <ToastContainer />
                 </>
             </Router>
         )

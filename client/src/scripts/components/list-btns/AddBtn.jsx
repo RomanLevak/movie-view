@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import selectUser from '../../selectors/user'
 import {addMovieToList} from '../../AC/index'
+import {toast} from 'react-toastify'
 
 class AddBtn extends Component {
     static propTypes = {
@@ -42,11 +43,16 @@ class AddBtn extends Component {
         const {isWaitingResponse} = state
 
         // if a movie has been added to list
-        if(editedList.entity.id && isWaitingResponse)
+        if(editedList.entity.id && isWaitingResponse) {
+            const {title} = editedList.entity
+
+            toast(`movie was added to '${title}' !`)
+
             return {
                 isWaitingResponse: false,
                 isMenuOpen: false,
             }
+        }
 
         return null
     }
