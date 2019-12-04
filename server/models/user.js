@@ -31,9 +31,7 @@ const userSchema = new Schema({
     salt: {
         required: true,
         type: String
-    },
-
-    lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
+    }
 }, {timestamps: true})
 
 userSchema.methods.generatePassword = function(salt, plainPassword) {
@@ -78,9 +76,9 @@ userSchema.methods.selectToSend = async function(options = {}) {
     if(withLists) {
         lists = await List.find({user: this._id})
 
-        listsToSend = await Promise.all(
-            // select without populating user
-            lists.map(async list => await list.selectToSend(false))
+        listsToSend = await List.selectToSendArr(
+            lists,
+            {populateUser: false}
         )
 
         result.lists = listsToSend

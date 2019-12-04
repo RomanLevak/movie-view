@@ -16,7 +16,8 @@ const listSchema = new Schema({
     }
 }, {timestamps: true})
 
-listSchema.methods.selectToSend = async function(populateUser = true) {
+listSchema.methods.selectToSend = async function(options = {}) {
+    const {populateUser} = options
     const result = {}
 
     if(populateUser) {
@@ -32,6 +33,14 @@ listSchema.methods.selectToSend = async function(populateUser = true) {
         title: this.title,
         createdAt: this.createdAt
     }
+}
+
+listSchema.statics.selectToSendArr = async function(lists, options = {}) {
+    const listsToSend = await Promise.all(lists.map(
+        async el => await el.selectToSend(options)
+    ))
+
+    return listsToSend
 }
 
 listSchema.statics.getLatestLists = async function(page = 1) {

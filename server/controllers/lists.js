@@ -7,8 +7,9 @@ const getLatest = ah(async (req, res, next) => {
 
     const lists = await List.getLatestLists(page || 1)
 
-    const listsToSend = await Promise.all(
-        lists.map(async list => await list.selectToSend())
+    const listsToSend = await List.selectToSendArr(
+        lists,
+        {populateUser: true}
     )
 
     const totalPages = await List.getTotalPages()
@@ -33,9 +34,10 @@ const getListsByUserId = ah(async (req, res, next) => {
     const userId = req.params.userId
     const lists = await List.find({user: userId})
 
-    const listsToSend = await Promise.all(lists.map(
-        async el => await el.selectToSend()
-    ))
+    const listsToSend = await List.selectToSendArr(
+        lists,
+        {populateUser: true}
+    )
 
     res.json(listsToSend)
 })
