@@ -26,7 +26,9 @@ const getById = ah(async (req, res, next) => {
         if(!list)
             return next(new HTTPError(404, 'Such list does not exist'))
 
-        return res.json(await list.selectToSend())
+        return res.json(await list.selectToSend({
+            populateUser: true
+        }))
     }
 })
 

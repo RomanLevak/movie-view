@@ -11,6 +11,7 @@ const selectUser = createSelector(
                     name: user.entity.displayName,
                     email: user.entity.email,
                     id: user.entity.id,
+                    lists: user.entity.lists
                 },
                 loading: user.loading,
                 error: user.error

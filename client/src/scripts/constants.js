@@ -12,6 +12,7 @@ export const LOAD_LIST_INFO = 'LOAD_LIST_INFO'
 export const LOAD_LIST_POSTER = 'LOAD_LIST_POSTER'
 export const CREATE_LIST = 'CREATE_LIST'
 export const UPDATE_LIST = 'UPDATE_LIST'
+export const ADD_MOVIE_TO_LIST = 'ADD_MOVIE_TO_LIST'
 
 export const SINGIN = 'SINGIN'
 export const SINGOUT = 'SINGOUT'

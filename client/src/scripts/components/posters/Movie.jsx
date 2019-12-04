@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import makeSelectMoviePoster from '../../selectors/movie-poster'
+import selectUser from '../../selectors/user'
 import {loadMoviePoster} from '../../AC/index'
 import Loader from './../Loader'
+import AddBtn from '../list-btns/AddBtn'
 
 class Poster extends Component {
 
@@ -19,6 +21,7 @@ class Poster extends Component {
         loaded: PropTypes.bool.isRequired,
         movie: PropTypes.object,
         error: PropTypes.string,
+        user: PropTypes.object,
         loadMoviePoster: PropTypes.func
     }
 
@@ -70,7 +73,7 @@ class Poster extends Component {
     }
 
     getFullBody = () => {
-        const {loading, loaded, movie, id} = this.props
+        const {loading, loaded, movie, id, user} = this.props
 
         if(loading || !loaded)
             return (
@@ -107,6 +110,16 @@ class Poster extends Component {
                     <span className='movie-poster__year'>
                         {year}
                     </span>
+                    { user && user.name ? // user is signed in
+                        <div className='movie-poster__add-btn'>
+                            <AddBtn
+                                lists = {user.lists}
+                                movieId={this.props.id}
+                            />
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             </div>
         )
@@ -123,8 +136,10 @@ class Poster extends Component {
 const makeMapStateToProps = () => {
     const selectMoviePoster = makeSelectMoviePoster()
 
-    return (state, props) =>
-        selectMoviePoster(state, props)
+    return (state, props) => ({
+        ...selectMoviePoster(state, props),
+        user: selectUser(state).entity
+    })
 }
 
 export default connect(

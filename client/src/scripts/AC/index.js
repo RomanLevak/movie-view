@@ -9,6 +9,7 @@ import {
     LOAD_LIST_POSTER,
     CREATE_LIST,
     UPDATE_LIST,
+    ADD_MOVIE_TO_LIST,
     RESET,
     SINGIN,
     SINGOUT,
@@ -132,6 +133,16 @@ export function updateList(id, body) {
             url: `/server/lists/${id}`,
             method: 'PUT',
             body
+        }
+    }
+}
+
+export function addMovieToList(listId, movieId) {
+    return {
+        type: ADD_MOVIE_TO_LIST,
+        callAPI: {
+            url: `/server/lists/${listId}/${movieId}`,
+            method: 'PUT'
         }
     }
 }

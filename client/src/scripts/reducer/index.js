@@ -5,7 +5,7 @@ import moviePosters from './movie-posters'
 import search from './search'
 import lists from './lists'
 import listInfo from './list-info'
-import listCreate from './list-create'
+import listCUD from './list-CUD'
 import listPosters from './list-posters'
 import user from './user'
 
@@ -16,7 +16,7 @@ export default combineReducers({
     search,
     lists,
     listInfo,
-    listCreate,
+    listCUD,
     listPosters,
     user
 })

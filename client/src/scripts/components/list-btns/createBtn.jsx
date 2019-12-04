@@ -110,7 +110,7 @@ class CreateBtn extends Component {
 
 export default connect(
     state => ({
-        listCreate: state.listCreate
+        listCreate: state.listCUD.create
     }), {
         createList,
         resetCreateList
