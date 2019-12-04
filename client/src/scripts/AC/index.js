@@ -10,7 +10,6 @@ import {
     CREATE_LIST,
     UPDATE_LIST,
     ADD_MOVIE_TO_LIST,
-    RESET,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -117,12 +116,6 @@ export function createList(title) {
             method: 'POST',
             body: {title}
         }
-    }
-}
-
-export function resetCreateList() {
-    return {
-        type: CREATE_LIST + RESET,
     }
 }
 

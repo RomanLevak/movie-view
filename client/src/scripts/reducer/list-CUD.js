@@ -1,11 +1,11 @@
 // create, update, delete lists reducer
 import {
     CREATE_LIST,
+    UPDATE_LIST,
     ADD_MOVIE_TO_LIST,
     START,
     SUCCESS,
-    FAIL,
-    RESET
+    FAIL
 } from '../constants'
 
 const defaultState = {
@@ -13,34 +13,40 @@ const defaultState = {
         loading: false,
         loaded: false,
         error: '',
-        entity: null
+        entity: {}
+    },
+    update: {
+        loading: false,
+        loaded: false,
+        error: '',
+        entity: {}
     },
     addMovie: {
         loading: false,
         loaded: false,
         error: '',
-        entity: null
+        entity: {}
     }
 }
 
-export default (state = defaultState, action) => {
+export default (CUDState = defaultState, action) => {
     const {type, payload} = action
 
     switch(type) {
         case CREATE_LIST + START:
             return {
-                ...state,
+                ...CUDState,
                 create: {
                     loaded: false,
                     loading: true,
                     error: '',
-                    entity: null
+                    entity: {}
                 }
             }
 
         case CREATE_LIST + SUCCESS:
             return {
-                ...state,
+                ...CUDState,
                 create: {
                     loaded: true,
                     loading: false,
@@ -51,40 +57,29 @@ export default (state = defaultState, action) => {
 
         case CREATE_LIST + FAIL:
             return {
-                ...state,
+                ...CUDState,
                 create: {
                     loaded: false,
                     loading: false,
-                    entity: null,
+                    entity: {},
                     error: payload
-                }
-            }
-
-        case CREATE_LIST + RESET:
-            return {
-                ...state,
-                create: {
-                    loaded: false,
-                    loading: false,
-                    entity: null,
-                    error: ''
                 }
             }
 
         case ADD_MOVIE_TO_LIST + START:
             return {
-                ...state,
+                ...CUDState,
                 addMovie: {
                     loaded: false,
                     loading: true,
                     error: '',
-                    entity: null
+                    entity: {}
                 }
             }
 
         case ADD_MOVIE_TO_LIST + SUCCESS:
             return {
-                ...state,
+                ...CUDState,
                 addMovie: {
                     loaded: true,
                     loading: false,
@@ -95,15 +90,47 @@ export default (state = defaultState, action) => {
 
         case ADD_MOVIE_TO_LIST + FAIL:
             return {
-                ...state,
+                ...CUDState,
                 addMovie: {
                     loaded: false,
                     loading: false,
-                    entity: null,
+                    entity: {},
+                    error: payload
+                }
+            }
+        case UPDATE_LIST + START:
+            return {
+                ...CUDState,
+                update: {
+                    loaded: false,
+                    loading: true,
+                    error: '',
+                    entity: {}
+                }
+            }
+
+        case UPDATE_LIST + SUCCESS:
+            return {
+                ...CUDState,
+                update: {
+                    loaded: false,
+                    loading: true,
+                    error: '',
+                    entity: payload
+                }
+            }
+
+        case UPDATE_LIST + FAIL:
+            return {
+                ...CUDState,
+                update: {
+                    loaded: false,
+                    loading: false,
+                    entity: {},
                     error: payload
                 }
             }
     }
 
-    return state
+    return CUDState
 }

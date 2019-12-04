@@ -12,7 +12,7 @@ const makeSelectMoviePoster = () =>
                     loading: false,
                     loaded: false,
                     error: '',
-                    movie: null
+                    movie: {}
                 }
 
             return {

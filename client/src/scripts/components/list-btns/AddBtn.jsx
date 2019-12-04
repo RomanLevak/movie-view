@@ -19,6 +19,7 @@ class AddBtn extends Component {
 
     state = {
         isMenuOpen: false,
+        // true if request to add movie was sent
         isWaitingResponse: false
     }
 
@@ -40,7 +41,8 @@ class AddBtn extends Component {
         const {editedList} = props
         const {isWaitingResponse} = state
 
-        if(editedList.entity && isWaitingResponse)
+        // if a movie has been added to list
+        if(editedList.entity.id && isWaitingResponse)
             return {
                 isWaitingResponse: false,
                 isMenuOpen: false,

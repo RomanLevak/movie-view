@@ -18,7 +18,7 @@ const selectUser = createSelector(
             }
 
         return {
-            entity: null,
+            entity: {},
             loading: user.loading,
             error: user.error
         }

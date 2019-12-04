@@ -110,7 +110,7 @@ class Poster extends Component {
                     <span className='movie-poster__year'>
                         {year}
                     </span>
-                    { user && user.name ? // user is signed in
+                    { user.id ? // user is signed in
                         <div className='movie-poster__add-btn'>
                             <AddBtn
                                 lists = {user.lists}

@@ -10,7 +10,7 @@ import {
 
 const defaultState = {
     loading: false,
-    entity: null,
+    entity: {},
     error: ''
 }
 
@@ -19,61 +19,40 @@ export default (userState = defaultState, action) => {
 
     switch(type) {
         case SINGIN + START:
-            if(userState.entity)
-                return {
-                    ...userState,
-                    error: 'you are already singed in'
-                }
+        // falls through
+        case SINGUP + START:
+        // falls through
+        case CHECKAUTH + START:
             return {
                 ...userState,
                 loading: true,
-                entity: null,
+                entity: {},
                 error: ''
             }
 
         case SINGIN + SUCCESS:
-            return {
-                ...userState,
-                loading: false,
-                entity: payload,
-                error: ''
-            }
-
-        case SINGIN + FAIL:
-            return {
-                ...userState,
-                loading: false,
-                entity: null,
-                error: payload
-            }
-
-        case SINGUP + START:
-            if(userState.entity)
-                return {
-                    ...userState,
-                    error: 'you are already isSingedIn in'
-                }
-            return {
-                ...userState,
-                loading: true,
-                entity: null,
-                error: ''
-            }
-
+        // falls through
         case SINGUP + SUCCESS:
+        // falls through
+        case CHECKAUTH + SUCCESS: {
+            // if signed out, payload is null
+            const user = payload || {}
             return {
                 ...userState,
                 loading: false,
-                entity: payload,
+                entity: user,
                 error: ''
             }
-
+        }
+        case SINGIN + FAIL:
+        // falls through
         case SINGUP + FAIL:
+        // falls through
+        case CHECKAUTH + FAIL:
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: false,
-                entity: null,
+                entity: {},
                 error: payload
             }
 
@@ -81,7 +60,7 @@ export default (userState = defaultState, action) => {
             if(!userState.entity)
                 return {
                     ...userState,
-                    error: 'you are already singedIn out'
+                    error: 'you are not singed in'
                 }
             return {
                 ...userState,
@@ -93,8 +72,7 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: false,
-                entity: null,
+                entity: {},
                 error: ''
             }
 
@@ -102,34 +80,7 @@ export default (userState = defaultState, action) => {
             return {
                 ...userState,
                 loading: false,
-                isSingedIn: true,
                 error: ''
-            }
-
-        case CHECKAUTH + START:
-            return {
-                ...userState,
-                loading: true,
-                error: ''
-            }
-
-        case CHECKAUTH + SUCCESS: {
-            const user = payload
-
-            return {
-                ...userState,
-                loading: false,
-                entity: user,
-                error: ''
-            }
-        }
-
-        case CHECKAUTH + FAIL:
-            return {
-                ...userState,
-                loading: false,
-                entity: null,
-                error: payload
             }
     }
 

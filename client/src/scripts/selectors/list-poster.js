@@ -12,7 +12,7 @@ const makeSelectListPoster = () =>
                     loading: false,
                     loaded: false,
                     error: '',
-                    list: null
+                    list: {}
                 }
 
             return {

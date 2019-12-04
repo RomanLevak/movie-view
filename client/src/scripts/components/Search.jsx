@@ -59,7 +59,9 @@ class Search extends Component {
     }
 
     getResults = () => {
-        if(!this.state.isResultsOpen) return null
+        if(!this.state.isResultsOpen)
+            return null
+
         const {movies} = this.props
 
         return movies.slice(0, 6).map(movie =>

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
+import selectUser from '../selectors/user'
 import {singIn, singUp} from '../AC/index'
 
 class Form extends Component {
@@ -12,9 +13,11 @@ class Form extends Component {
         // from connect
         singIn: PropTypes.func.isRequired,
         singUp: PropTypes.func.isRequired,
-        isSingedIn: PropTypes.bool.isRequired,
-        loading: PropTypes.bool.isRequired,
-        error: PropTypes.string
+        user: PropTypes.shape({
+            entity: PropTypes.object,
+            loading: PropTypes.bool,
+            error: PropTypes.string
+        }).isRequired
     }
 
     state = {
@@ -48,14 +51,16 @@ class Form extends Component {
     }
 
     getStatusArea = () => {
-        if(this.props.error)
+        const {loading, error} = this.props.user
+
+        if(error)
             return (
                 <span className='error-msg'>
-                    {this.props.error}
+                    {error}
                 </span>
             )
 
-        if(this.props.loading)
+        if(loading)
             return 'loading...'
 
         return null
@@ -122,7 +127,8 @@ class Form extends Component {
     }
 
     render() {
-        if(this.props.isSingedIn) {
+        // if user is signed in
+        if(this.props.user.entity.id) {
             try {
                 const {from} = this.props.location.state
                 return <Redirect to={from} />
@@ -162,10 +168,7 @@ class Form extends Component {
 }
 
 export default connect(
-    state => ({
-        isSingedIn: Boolean(state.user.entity),
-        loading: state.user.loading,
-        error: state.user.error
-    }),
+
+    state => ({user: selectUser(state)}),
     {singIn, singUp}
 )(Form)

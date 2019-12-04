@@ -37,7 +37,10 @@ export default (listInfo = defaultState, action) => {
                 loading: false,
                 error: '',
                 entity: {
-                    ...payload,
+                    id: payload.id,
+                    title: payload.title,
+                    movies: payload.movies,
+                    createdAt: payload.createdAt,
                     author: {
                         id: payload.user.id,
                         name: payload.user.displayName

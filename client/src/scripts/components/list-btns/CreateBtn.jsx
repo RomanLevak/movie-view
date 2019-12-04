@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {createList, resetCreateList} from '../../AC/index'
+import {createList, loadLists} from '../../AC/index'
 
 class CreateBtn extends Component {
     static propTypes = {
         // from connect
-        listCreate: PropTypes.object.isRequired,
-        createList: PropTypes.func.isRequired
+        listCreateState: PropTypes.object.isRequired,
+        createList: PropTypes.func.isRequired,
+        loadLists: PropTypes.func
     }
 
     state = {
@@ -18,8 +19,7 @@ class CreateBtn extends Component {
         isWaitingResponse: false
     }
 
-    setInputRef = el =>
-        this.input = el
+    setInputRef = node => this.input = node
 
     componentDidUpdate() {
         if(this.state.isInputOpen)
@@ -27,15 +27,19 @@ class CreateBtn extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        const {listCreate} = props
+        const {listCreateState} = props
         const {isWaitingResponse} = state
 
-        if(listCreate.entity && isWaitingResponse)
+        // if list has been created
+        if(listCreateState.entity.id && isWaitingResponse) {
+            props.loadLists()
+
             return {
                 isWaitingResponse: false,
                 isInputOpen: false,
                 isListCreated: true
             }
+        }
 
         return null
     }
@@ -110,9 +114,9 @@ class CreateBtn extends Component {
 
 export default connect(
     state => ({
-        listCreate: state.listCUD.create
+        listCreateState: state.listCUD.create
     }), {
         createList,
-        resetCreateList
+        loadLists
     }
 )(CreateBtn)

@@ -40,8 +40,7 @@ class ListInfo extends Component {
         return updatedState
     }
 
-    setTitleInputRef = el =>
-        this.titleInput = el
+    setTitleInputRef = node => this.titleInput = node
 
     componentDidMount() {
         const {loadListInfo, loading, loaded, id} = this.props
@@ -163,8 +162,9 @@ export default connect(
         const {listInfo, user} = state
         let isOwner = false
 
-        if(listInfo.loaded && user.entity)
+        if(listInfo.entity.id && user.entity.id) {
             isOwner = listInfo.entity.author.id == user.entity.id
+        }
 
         return {
             list: listInfo.entity,

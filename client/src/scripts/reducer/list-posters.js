@@ -11,7 +11,7 @@ const defaultState = {
      *     loading: false,
      *     loaded: true,
      *     error: '',
-     *     entity: null
+     *     entity: {}
      */
 }
 
@@ -27,7 +27,7 @@ export default (postersState = defaultState, action) => {
                         loading: true,
                         loaded: false,
                         error: '',
-                        entity: null
+                        entity: {}
                     }
                 }
             else
@@ -60,7 +60,7 @@ export default (postersState = defaultState, action) => {
                     loading: false,
                     loaded: false,
                     error: 'error occured',
-                    entity: null
+                    entity: {}
                 }
             }
         }

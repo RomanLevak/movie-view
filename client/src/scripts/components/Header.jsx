@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import selectUser from '../selectors/user'
 import {singOut, checkIfSingedIn} from '../AC/index'
-import CreateBtn from './list-btns/createBtn'
+import CreateBtn from './list-btns/CreateBtn'
 import Search from './Search'
 
 class Header extends Component {
@@ -28,7 +28,9 @@ class Header extends Component {
     }
 
     getUserArea() {
-        if(this.props.user) { // user is signed in
+        const {name} = this.props.user
+
+        if(name) { // user is signed in
             const {name} = this.props.user
 
             return (

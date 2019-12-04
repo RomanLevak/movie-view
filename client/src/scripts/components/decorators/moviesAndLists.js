@@ -5,7 +5,6 @@ import {loadMovies, loadLists} from '../../AC/index'
 import {default as ListPoster} from '../posters/List'
 import {default as MoviePoster} from '../posters/Movie'
 
-
 function mapStateToProps(state, ownProps) {
     const {type} = ownProps
 
@@ -30,7 +29,7 @@ function mapStateToProps(state, ownProps) {
 
         if(
             authorName &&
-            state.user.entity
+            state.user.entity.id
         ) {
             const loggedUserName = state.user.entity.displayName
 
