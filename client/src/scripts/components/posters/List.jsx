@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import makeSelectListPoster from '../../selectors/list-poster'
-import {loadListPoster} from '../../AC/index'
+import {loadList} from '../../AC/index'
 import {default as MoviePoster} from './Movie'
 
 class ListPoster extends Component {
@@ -15,15 +15,15 @@ class ListPoster extends Component {
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,
-        loadListPoster: PropTypes.func.isRequired
+        loadList: PropTypes.func.isRequired
     }
 
     componentDidMount() {
         const {id} = this.props
-        const {loaded, loading, loadListPoster} = this.props
+        const {loaded, loading, loadList} = this.props
 
         if(!loading || !loaded)
-            loadListPoster(id)
+            loadList(id)
     }
 
     getMiniPosters = () => {
@@ -115,5 +115,5 @@ const makeMapStateToProps = () => {
 
 export default connect(
     makeMapStateToProps,
-    {loadListPoster}
+    {loadList}
 )(ListPoster)

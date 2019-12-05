@@ -7,9 +7,8 @@ export const SEARCH_MOVIE = 'SEARCH_MOVIE'
 
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 
+export const LOAD_LIST = 'LOAD_LIST'
 export const LOAD_LISTS = 'LOAD_LISTS'
-export const LOAD_LIST_INFO = 'LOAD_LIST_INFO'
-export const LOAD_LIST_POSTER = 'LOAD_LIST_POSTER'
 export const CREATE_LIST = 'CREATE_LIST'
 export const UPDATE_LIST = 'UPDATE_LIST'
 export const ADD_MOVIE_TO_LIST = 'ADD_MOVIE_TO_LIST'

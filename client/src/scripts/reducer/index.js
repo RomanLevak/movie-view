@@ -4,7 +4,6 @@ import movieInfo from './movie-info'
 import moviePosters from './movie-posters'
 import search from './search'
 import lists from './lists'
-import listInfo from './list-info'
 import listCUD from './list-CUD'
 import listPosters from './list-posters'
 import user from './user'
@@ -15,7 +14,6 @@ export default combineReducers({
     moviePosters,
     search,
     lists,
-    listInfo,
     listCUD,
     listPosters,
     user

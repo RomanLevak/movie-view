@@ -4,7 +4,8 @@ import {Redirect, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
 import {isSignedIn} from '../selectors/user'
-import {loadListInfo, updateList} from '../AC/index'
+import {selectListPoster} from '../selectors/list-poster'
+import {loadList, updateList} from '../AC/index'
 import Loader from './Loader'
 import {default as MoviePoster} from './posters/Movie'
 
@@ -20,7 +21,7 @@ class ListInfo extends Component {
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,
         isOwner: PropTypes.bool.isRequired,
-        loadListInfo: PropTypes.func.isRequired,
+        loadList: PropTypes.func.isRequired,
         updateList: PropTypes.func.isRequired
     }
 
@@ -45,10 +46,10 @@ class ListInfo extends Component {
     setTitleInputRef = node => this.titleInput = node
 
     componentDidMount() {
-        const {loadListInfo, loading, loaded, id} = this.props
+        const {loadList, loading, loaded, id} = this.props
 
-        if(!loaded || !loading)
-            loadListInfo(id)
+        if(!loading || !loaded)
+            loadList(id)
     }
 
     componentDidUpdate = () => {
@@ -172,22 +173,13 @@ class ListInfo extends Component {
 }
 
 export default connect(
-    state => {
-        const {listInfo, user} = state
-        let isOwner = false
-
-        if(listInfo.entity.id && user.entity.id) {
-            isOwner = listInfo.entity.author.id == user.entity.id
-        }
+    (state, ownProps) => {
+        const list = selectListPoster(state, ownProps)
 
         return {
-            isSignedIn: isSignedIn(state),
-            list: listInfo.entity,
-            loading: listInfo.loading,
-            loaded: listInfo.loaded,
-            error: listInfo.error,
-            isOwner
+            ...list,
+            isSignedIn: isSignedIn(state)
         }
     },
-    {loadListInfo, updateList}
+    {loadList, updateList}
 )(ListInfo)

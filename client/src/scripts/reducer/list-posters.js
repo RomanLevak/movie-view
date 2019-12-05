@@ -1,5 +1,5 @@
 import {
-    LOAD_LIST_POSTER,
+    LOAD_LIST,
     START,
     SUCCESS,
     FAIL
@@ -19,22 +19,18 @@ export default (postersState = defaultState, action) => {
     const {type, id, payload} = action
 
     switch(type) {
-        case LOAD_LIST_POSTER + START: {
-            if(!postersState[id])
-                return {
-                    ...postersState,
-                    [id]: {
-                        loading: true,
-                        loaded: false,
-                        error: '',
-                        entity: {}
-                    }
+        case LOAD_LIST + START:
+            return {
+                ...postersState,
+                [id]: {
+                    loading: true,
+                    loaded: false,
+                    error: '',
+                    entity: {}
                 }
-            else
-                return postersState
-        }
+            }
 
-        case LOAD_LIST_POSTER + SUCCESS: {
+        case LOAD_LIST + SUCCESS:
             return {
                 ...postersState,
                 [id]: {
@@ -51,19 +47,17 @@ export default (postersState = defaultState, action) => {
                     }
                 }
             }
-        }
 
-        case LOAD_LIST_POSTER + FAIL: {
+        case LOAD_LIST + FAIL:
             return {
                 ...postersState,
                 [id]: {
                     loading: false,
                     loaded: false,
-                    error: 'error occured',
+                    error: payload,
                     entity: {}
                 }
             }
-        }
     }
 
     return postersState

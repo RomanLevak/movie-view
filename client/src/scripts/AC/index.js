@@ -4,9 +4,8 @@ import {
     LOAD_MOVIE_INFO,
     LOAD_MOVIE_POSTER,
     SEARCH_MOVIE,
+    LOAD_LIST,
     LOAD_LISTS,
-    LOAD_LIST_INFO,
-    LOAD_LIST_POSTER,
     CREATE_LIST,
     UPDATE_LIST,
     ADD_MOVIE_TO_LIST,
@@ -89,19 +88,9 @@ export function loadLists(filters = {}) {
     }
 }
 
-export function loadListInfo(id) {
+export function loadList(id) {
     return {
-        type: LOAD_LIST_INFO,
-        id,
-        callAPI: {
-            url: `/server/lists/${id}`
-        }
-    }
-}
-
-export function loadListPoster(id) {
-    return {
-        type: LOAD_LIST_POSTER,
+        type: LOAD_LIST,
         id,
         callAPI: {
             url: `/server/lists/${id}`
