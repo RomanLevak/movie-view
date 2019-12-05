@@ -3,11 +3,18 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {removeMovieFromList} from '../../AC/index'
 import {toast} from 'react-toastify'
+import popUp from '../decorators/popUp'
 
 class RemoveBtn extends Component {
     static propTypes = {
         movie: PropTypes.object.isRequired,
         listId: PropTypes.string.isRequired,
+        // from popUp decorator
+        setPopUpRef: PropTypes.func.isRequired,
+        setToggleBtnRef: PropTypes.func.isRequired,
+        togglePopUp: PropTypes.func.isRequired,
+        closePopUp: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
         // from connect
         removeMovieFromList: PropTypes.func.isRequired,
         // state of list which is being updated
@@ -15,23 +22,8 @@ class RemoveBtn extends Component {
     }
 
     state = {
-        isPromptOpen: false,
         // true if request to remove movie was sent
         isWaitingResponse: false
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener(
-            'mousedown',
-            this.handleClickOutside
-        )
-    }
-
-    componentDidMount() {
-        document.addEventListener(
-            'mousedown',
-            this.handleClickOutside
-        )
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -44,36 +36,19 @@ class RemoveBtn extends Component {
 
             toast(`'${title}' was removed from list !`)
 
+            props.closePopUp()
+
             return {
                 isWaitingResponse: false,
-                isPromptOpen: false,
             }
         }
 
         return null
     }
 
-    setPromptRef = node => this.promptRef = node
-
-    setBtnRef = node => this.btnRef = node
-
-    togglePrompt = () =>
-        this.setState({
-            isPromptOpen: !this.state.isPromptOpen
-        })
-
     handleSubmit = e => {
         e.preventDefault()
-        this.togglePrompt()
-    }
-
-    handleClickOutside = e => {
-        if(
-            this.promptRef &&
-            !this.promptRef.contains(e.target) &&
-            e.target !== this.btnRef
-        )
-            this.setState({isPromptOpen: false})
+        this.props.closePopUp()
     }
 
     removeMovieFromList = () => {
@@ -85,16 +60,17 @@ class RemoveBtn extends Component {
 
     getPrompt = () =>
         <form className='remove-prompt'
-            ref={this.setPromptRef}
-            onSubmit={this.handleSubmit}
+            ref={this.props.setPopUpRef}
+            onSubmit={e => e.preventDefault()}
         >
             <span className='remove__text'>Are you sure ?</span>
             <div className="remove__btns-box">
                 {/* 'no' goes first for handling 'enter' key */}
                 <button
                     className='remove-prompt__btn remove-prompt__btn-no'
+                    onClick={this.handleSubmit}
                 >
-                no
+                    no
                 </button>
                 <button
                     className='remove-prompt__btn remove-prompt__btn-yes'
@@ -106,17 +82,17 @@ class RemoveBtn extends Component {
         </form>
 
     render() {
-        const {isPromptOpen} = this.state
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
 
         return (
             <div className='remove-box'>
                 <button className='remove-btn'
-                    ref={this.setBtnRef}
-                    onClick={this.togglePrompt}
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
                 >
                     {'✖'}
                 </button>
-                { isPromptOpen ?
+                { isOpen ?
                     this.getPrompt() :
                     null
                 }
@@ -130,4 +106,4 @@ export default connect(
         editedList: state.listCUD.removeMovie
     }),
     {removeMovieFromList}
-)(RemoveBtn)
+)(popUp(RemoveBtn))

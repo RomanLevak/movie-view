@@ -3,9 +3,16 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {createList, loadLists} from '../../AC/index'
 import {toast} from 'react-toastify'
+import popUp from '../decorators/popUp'
 
 class CreateBtn extends Component {
     static propTypes = {
+        // from popUp decorator
+        setPopUpRef: PropTypes.func.isRequired,
+        setToggleBtnRef: PropTypes.func.isRequired,
+        togglePopUp: PropTypes.func.isRequired,
+        closePopUp: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
         // from connect
         listCreateState: PropTypes.object.isRequired,
         createList: PropTypes.func.isRequired,
@@ -14,8 +21,6 @@ class CreateBtn extends Component {
 
     state = {
         value: '',
-        isInputOpen: false,
-        isListCreated: false,
         // true if request to create list was sent
         isWaitingResponse: false
     }
@@ -23,7 +28,7 @@ class CreateBtn extends Component {
     setInputRef = node => this.input = node
 
     componentDidUpdate() {
-        if(this.state.isInputOpen)
+        if(this.input)
             this.input.focus()
     }
 
@@ -34,36 +39,24 @@ class CreateBtn extends Component {
         // if list has been created
         if(listCreateState.entity.id && isWaitingResponse) {
             const {title} = listCreateState.entity
+            const {loadLists, closePopUp} = props
 
             toast(`created '${title}' list !`)
 
-            props.loadLists()
+            loadLists()
+            closePopUp()
 
             return {
-                isWaitingResponse: false,
-                isInputOpen: false,
-                isListCreated: true
+                isWaitingResponse: false
             }
         }
 
         return null
     }
 
-    onBlur = () => {
-        setTimeout(
-            () => this.setState({isInputOpen: false}),
-            0
-        )
-    }
-
     handleChange = e =>
         this.setState({
             value: e.target.value
-        })
-
-    toggleInput = () =>
-        this.setState({
-            isInputOpen: !this.state.isInputOpen
         })
 
     handleSubmit = e => {
@@ -79,36 +72,39 @@ class CreateBtn extends Component {
         createList(title)
     }
 
+    getForm = () => {
+        const {setPopUpRef} = this.props
+
+        return (
+            <form className='create__input-box'
+                ref={setPopUpRef}
+                onSubmit={this.handleSubmit}
+            >
+                <input className='create__input'
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    ref={this.setInputRef}
+                />
+                <button className='create__input-btn'>
+                    {'✓'}
+                </button>
+            </form>
+        )
+    }
+
     render() {
-        const {isInputOpen} = this.state
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
 
         return (
             <div className='create-box'>
                 <button className='header__btn-create create'
-                    onClick={this.toggleInput}
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
                 >
                     + list
                 </button>
-                { isInputOpen ?
-                    <form className='create__input-box'
-                        onBlur={this.onBlur}
-                        onSubmit={this.handleSubmit}
-                    >
-                        <input className='create__input'
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                            ref={this.setInputRef}
-                        />
-                        <button className='create__input-btn'
-                            /*
-                             * prevent from onBlur event which would
-                             * hide a Form and redirection wouldn't happen
-                             */
-                            onMouseDown={e => e.preventDefault()}
-                        >
-                            {'✓'}
-                        </button>
-                    </form>
+                { isOpen ?
+                    this.getForm()
                     :
                     null
                 }
@@ -124,4 +120,4 @@ export default connect(
         createList,
         loadLists
     }
-)(CreateBtn)
+)(popUp(CreateBtn))

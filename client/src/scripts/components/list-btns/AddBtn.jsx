@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import selectUser from '../../selectors/user'
 import {addMovieToList} from '../../AC/index'
 import {toast} from 'react-toastify'
+import popUp from '../decorators/popUp'
 
 class AddBtn extends Component {
     static propTypes = {
@@ -11,6 +12,12 @@ class AddBtn extends Component {
             PropTypes.string,
             PropTypes.number,
         ]).isRequired,
+        // from popUp decorator
+        setPopUpRef: PropTypes.func.isRequired,
+        setToggleBtnRef: PropTypes.func.isRequired,
+        togglePopUp: PropTypes.func.isRequired,
+        closePopUp: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
         // from connect
         lists: PropTypes.array.isRequired,
         addMovieToList: PropTypes.func.isRequired,
@@ -19,23 +26,8 @@ class AddBtn extends Component {
     }
 
     state = {
-        isMenuOpen: false,
         // true if request to add movie was sent
         isWaitingResponse: false
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener(
-            'mousedown',
-            this.handleClickOutside
-        )
-    }
-
-    componentDidMount() {
-        document.addEventListener(
-            'mousedown',
-            this.handleClickOutside
-        )
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -48,26 +40,14 @@ class AddBtn extends Component {
 
             toast(`movie was added to '${title}' !`)
 
+            props.closePopUp()
+
             return {
-                isWaitingResponse: false,
-                isMenuOpen: false,
+                isWaitingResponse: false
             }
         }
 
         return null
-    }
-
-    setMenuRef = node => this.menuRef = node
-
-    setBtnRef = node => this.btnRef = node
-
-    handleClickOutside = e => {
-        if(
-            this.menuRef &&
-            !this.menuRef.contains(e.target) &&
-            e.target !== this.btnRef
-        )
-            this.setState({isMenuOpen: false})
     }
 
     addMovieToList = e => {
@@ -75,16 +55,12 @@ class AddBtn extends Component {
         const {listId} = e.target.dataset
 
         this.setState({isWaitingResponse: true})
+
         addMovieToList(listId, movieId)
     }
 
-    toggleMenu = () =>
-        this.setState({
-            isMenuOpen: !this.state.isMenuOpen
-        })
-
     getMenu = () => {
-        const {lists} = this.props
+        const {lists, setPopUpRef} = this.props
         let dataHeader = ''
         let menuItems = []
 
@@ -106,7 +82,7 @@ class AddBtn extends Component {
         return (
             <ul className='add-menu-box add-menu'
                 data-header={dataHeader}
-                ref={this.setMenuRef}
+                ref={setPopUpRef}
             >
                 {menuItems}
             </ul>
@@ -114,17 +90,17 @@ class AddBtn extends Component {
     }
 
     render() {
-        const {isMenuOpen} = this.state
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
 
         return (
             <div className='add-box'>
                 <button className='add-btn'
-                    ref={this.setBtnRef}
-                    onClick={this.toggleMenu}
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
                 >
                     +
                 </button>
-                { isMenuOpen ?
+                { isOpen ?
                     this.getMenu() :
                     null
                 }
@@ -139,4 +115,4 @@ export default connect(
         editedList: state.listCUD.addMovie
     }),
     {addMovieToList}
-)(AddBtn)
+)(popUp(AddBtn))
