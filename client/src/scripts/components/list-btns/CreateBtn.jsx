@@ -104,7 +104,7 @@ class CreateBtn extends Component {
                              * prevent from onBlur event which would
                              * hide a Form and redirection wouldn't happen
                              */
-                            onMouseDown = {e => e.preventDefault()}
+                            onMouseDown={e => e.preventDefault()}
                         >
                             {'✓'}
                         </button>

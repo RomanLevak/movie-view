@@ -32,24 +32,24 @@ class Results extends Component {
             return <Loader type='squares' />
 
         if(error)
-            return <span className = 'error-msg'>{error}</span>
+            return <span className='error-msg'>{error}</span>
         // renders only first 18 elements
         return movies.slice(0, 18).map(movie =>
-            <li className = 'results-list__item'
-                key = {movie.id}
+            <li className='results-list__item'
+                key={movie.id}
             >
-                <MoviePoster id = {movie.id} />
+                <MoviePoster id={movie.id} />
             </li>
         )
     }
 
     render() {
         return (
-            <div className = 'results-box'>
+            <div className='results-box'>
                 <div className='results'>
-                    <h2 className = 'results__title'>
+                    <h2 className='results__title'>
                         Searh results for:
-                        <span className = 'results__query'>
+                        <span className='results__query'>
                             {' ' + this.props.query}
                         </span>
                     </h2>

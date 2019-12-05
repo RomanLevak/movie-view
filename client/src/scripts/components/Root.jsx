@@ -5,7 +5,7 @@ import App from './App'
 
 function Root() {
     return (
-        <Provider store = {store}>
+        <Provider store={store}>
             <App />
         </Provider>
     )

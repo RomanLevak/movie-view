@@ -86,7 +86,7 @@ class Header extends Component {
                     </Link>
                 </div>
                 <h1 className='header__title'>
-                    <Link to = '/'> movieview</Link>
+                    <Link to='/'> movieview</Link>
                 </h1>
                 <Search />
                 {this.getUserArea()}

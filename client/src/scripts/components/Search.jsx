@@ -65,15 +65,15 @@ class Search extends Component {
         const {movies} = this.props
 
         return movies.slice(0, 6).map(movie =>
-            <Link className = 'search__item'
-                to = {`/movies/${movie.id}`}
-                key = {movie.id}
+            <Link className='search__item'
+                to={`/movies/${movie.id}`}
+                key={movie.id}
                 /*
                  * prevent from onBlur event which would
                  * hide a Link and redirection wouldn't happen
                  */
-                onMouseDown = {e => e.preventDefault()}
-                onClick = {() => this.onBlur()}
+                onMouseDown={e => e.preventDefault()}
+                onClick={() => this.onBlur()}
             >
                 {movie.title}
                 <span>{movie.year}</span>
@@ -87,18 +87,18 @@ class Search extends Component {
         return (
             <div className='search-box'>
                 <div className='search__input-box'
-                    onBlur = {this.onBlur}
-                    onFocus = {this.onFocus}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
                 >
                     <input className='search__input'
-                        onChange = {this.onChange}
-                        onKeyPress = {this.onKeyPress}
-                        value = {this.state.value}
+                        onChange={this.onChange}
+                        onKeyPress={this.onKeyPress}
+                        value={this.state.value}
                         placeholder='Find movies'
                     />
                     <Link className='search__btn btn-search flex-center'
-                        to = {`/movies/search/${value}`}
-                        onClick = {this.onBlur}
+                        to={`/movies/search/${value}`}
+                        onClick={this.onBlur}
                     >
                         <span className='icon-search'></span>
                     </Link>

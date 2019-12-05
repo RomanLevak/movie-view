@@ -15,14 +15,14 @@ class Lists extends Component {
 
         return (
             <Switch>
-                <Route path = {`${url}/author/:authorName`}
-                    render = {this.getExplorerForLists}
+                <Route path={`${url}/author/:authorName`}
+                    render={this.getExplorerForLists}
                 />
-                <Route path = {`${url}/:id`}
-                    render = {this.getListInfo}
+                <Route path={`${url}/:id`}
+                    render={this.getListInfo}
                 />
-                <Route path = {`${url}`}
-                    render = {this.getExplorerForLists}
+                <Route path={`${url}`}
+                    render={this.getExplorerForLists}
                 />
             </Switch>
         )
@@ -35,8 +35,8 @@ class Lists extends Component {
             return (
                 <Explorer
                     type='lists'
-                    filters = {{authorName}}
-                    key = {authorName}
+                    filters={{authorName}}
+                    key={authorName}
                 />
             )
 
@@ -46,7 +46,7 @@ class Lists extends Component {
     getListInfo = ({match}) => {
         const {id} = match.params
 
-        return <ListInfo id = {id} />
+        return <ListInfo id={id} />
     }
 }
 

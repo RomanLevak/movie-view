@@ -82,6 +82,25 @@
             "space-in-parens": "warn",
             "spaced-comment": ["warn", "always"],
             "switch-colon-spacing": ["warn", {"after": true, "before": false}],
+            // JSX
+            "react/jsx-closing-bracket-location": "warn",
+            // NOT prop={ value } BUT prop={value}
+            "react/jsx-curly-spacing": ["warn", {"when": "never"}],
+            // NOT prop = { value } BUT prop={value}
+            "react/jsx-equals-spacing": ["warn", "never"],
+            "react/jsx-key": "warn",
+            "react/jsx-no-useless-fragment": "warn",
+            "react/jsx-props-no-multi-spaces": "warn",
+            "react/jsx-tag-spacing": ["warn", {
+                // NOT < / or / > BUT </ or />
+                "closingSlash": "never",
+                // NOT <Test/> BUT <Test />
+                "beforeSelfClosing": "always",
+                // NOT < Test /> BUT <Test />
+                "afterOpening": "never",
+                // NOT <Test > BUT <Test>
+                "beforeClosing": "never"
+              }],
         //   Stylistic Issues <<
         "guard-for-in": "warn",
         "no-caller": "error",

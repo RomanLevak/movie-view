@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-equals-spacing */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {NavLink} from 'react-router-dom'
@@ -48,9 +49,10 @@ class Explorer extends Component {
 
     getGenresList = () =>
         genres.map(genre =>
-            <li className = 'sidebar-list__item' key = {genre.id}>
-                <NavLink activeClassName = 'sidebar-list__item-active'
-                    to = {`/movies/genres/${genre.name}`}>
+            <li className='sidebar-list__item' key={genre.id}>
+                <NavLink activeClassName='sidebar-list__item-active'
+                    to={`/movies/genres/${genre.name}`}
+                >
                     {genre.name}
                 </NavLink>
             </li>
@@ -64,19 +66,19 @@ class Explorer extends Component {
 
         return (
             <ReactPaginate
-                pageCount              = {this.props.totalPages}
-                pageRangeDisplayed     = {7}
-                marginPagesDisplayed   = {2}
-                onPageChange           = {this.onPageChange}
-                initialPage            = {this.props.filters.page - 1}
+                pageCount              ={this.props.totalPages}
+                pageRangeDisplayed     ={7}
+                marginPagesDisplayed   ={2}
+                onPageChange           ={this.onPageChange}
+                initialPage            ={this.props.filters.page - 1}
                 disableInitialCallback
-                previousLabel          = '<'
-                nextLabel              = '>'
-                containerClassName     = 'pagination-list'
-                activeClassName        = 'pagination__item-active'
-                pageClassName          = 'pagination__item flex-center'
-                previousClassName      = 'pagination__item flex-center'
-                nextClassName          = 'pagination__item flex-center'
+                previousLabel          ='<'
+                nextLabel              ='>'
+                containerClassName     ='pagination-list'
+                activeClassName        ='pagination__item-active'
+                pageClassName          ='pagination__item flex-center'
+                previousClassName      ='pagination__item flex-center'
+                nextClassName          ='pagination__item flex-center'
             />
         )
     }
@@ -88,7 +90,7 @@ class Explorer extends Component {
         } = this.props
 
         if(error)
-            return <span className = 'error-msg'>{error}</span>
+            return <span className='error-msg'>{error}</span>
 
         if(loading || !loaded)
             return <Loader type='squares' />
@@ -105,8 +107,8 @@ class Explorer extends Component {
             )
 
         return entities.slice(0, 12).map(entity =>
-            <li className = 'explorer__item' key = {entity.id}>
-                <Item id = {entity.id} />
+            <li className='explorer__item' key={entity.id}>
+                <Item id={entity.id} />
             </li>
         )
     }
@@ -119,18 +121,17 @@ class Explorer extends Component {
                 </ul>
                 <div className='explorer__sidebar sidebar'>
                     <h6 className='sidebar__item'>
-                        <NavLink
-                            to = '/movies/popular/1'
-                            exact
-                            className='sidebar__item'
+                        <NavLink className='sidebar__item'
                             activeClassName='sidebar__item-active'
+                            to='/movies/popular/1'
+                            exact
                         >
                             Popular now
                         </NavLink>
-                        <NavLink to = '/lists/'
-                            exact
-                            className='sidebar__item'
+                        <NavLink className='sidebar__item'
                             activeClassName='sidebar__item-active'
+                            to='/lists/'
+                            exact
                         >
                             Latest lists
                         </NavLink>

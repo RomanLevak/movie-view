@@ -33,8 +33,8 @@ class ListPoster extends Component {
             imgs.push(
                 <MoviePoster
                     isMini
-                    key = {movieId}
-                    id = {movieId}
+                    key={movieId}
+                    id={movieId}
                 />
             )
         )

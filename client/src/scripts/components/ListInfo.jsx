@@ -81,7 +81,7 @@ class ListInfo extends Component {
         movieIds.map(movieId =>
             movies.push(
                 <div className='list__item' key={movieId}>
-                    <MoviePoster id = {movieId} />
+                    <MoviePoster id={movieId} />
                 </div>
             )
         )
@@ -96,7 +96,7 @@ class ListInfo extends Component {
         if(error)
             return error === 'Not Found' ?
                 <Redirect to='/not-found' /> :
-                <span className = 'error-msg'>{error}</span>
+                <span className='error-msg'>{error}</span>
 
         if(loading || !loaded)
             return (
@@ -124,7 +124,7 @@ class ListInfo extends Component {
                     </h2>
                     { editable ?
                         <span
-                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '') }
+                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '')}
                             onClick={this.handleEditBtnClick}
                         >
                             {isEditTitle ? '✓' : '🖉'}

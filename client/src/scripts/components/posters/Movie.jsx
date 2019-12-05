@@ -60,7 +60,7 @@ class Poster extends Component {
                         />
                     </div>
                     <div className='poster__loader-box'>
-                        <Loader type='spinner'/>
+                        <Loader type='spinner' />
                     </div>
                 </>
             )
@@ -82,7 +82,7 @@ class Poster extends Component {
                         src={this.getPosterPath()}
                     />
                     <div className='poster__loader-box'>
-                        <Loader type='spinner'/>
+                        <Loader type='spinner' />
                     </div>
                     <div className='poster__text-box'>
                         <span className='movie-poster__title'>
@@ -113,7 +113,7 @@ class Poster extends Component {
                     { user.id ? // user is signed in
                         <div className='movie-poster__add-btn'>
                             <AddBtn
-                                lists = {user.lists}
+                                lists={user.lists}
                                 movieId={this.props.id}
                             />
                         </div>

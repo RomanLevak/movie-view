@@ -63,9 +63,9 @@ class MovieInfo extends Component {
                         <td>Genres</td>
                         <td> {
                             genres.map((genre, i, arr) =>
-                                <Fragment key = {genre.id}>
+                                <Fragment key={genre.id}>
                                     <Link className='movie__info-link'
-                                        to = {`/movies/genres/${genre.name}`}
+                                        to={`/movies/genres/${genre.name}`}
                                     >
                                         {genre.name}
                                     </Link>
@@ -102,7 +102,7 @@ class MovieInfo extends Component {
         if(error)
             return error === 'Not Found' ?
                 <Redirect to='/not-found' /> :
-                <span className = 'error-msg'>{error}</span>
+                <span className='error-msg'>{error}</span>
 
         if(loading || !loaded)
             return (
@@ -115,7 +115,7 @@ class MovieInfo extends Component {
         return (
             <div className='movie-box'>
                 <div className='movie__img flex-center'>
-                    <img src = {`/tmdbimg/${poster_path}`} />
+                    <img src={`/tmdbimg/${poster_path}`} />
                 </div>
                 <div className='movie__info-box'>
                     {this.getInfoTable()}

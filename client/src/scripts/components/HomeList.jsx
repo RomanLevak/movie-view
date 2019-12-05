@@ -40,15 +40,16 @@ class HomeList extends Component {
         entities.slice(0, itemsCount).map(entity =>
             items.push(
                 <li className='home-list__item' key={entity.id}>
-                    <Item id = {entity.id} />
+                    <Item id={entity.id} />
                 </li>
             )
         )
 
         return (
-            <ul className = {
+            <ul className={
                 'home-list' + (withSlider ? '__slider' : '')
-            }>
+            }
+            >
                 {
                     withSlider ?
                         <Slider>
@@ -65,7 +66,7 @@ class HomeList extends Component {
         const {loading, loaded, error} = this.props
 
         if(error)
-            return <span className = 'error-msg'>{error}</span>
+            return <span className='error-msg'>{error}</span>
 
         if(loading || !loaded)
             return <Loader sype='squares' />

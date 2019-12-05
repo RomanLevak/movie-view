@@ -119,7 +119,7 @@ class Form extends Component {
                     <input className='form__button'
                         type='submit'
                         value={type}
-                        onClick = {this.handleSubmit}
+                        onClick={this.handleSubmit}
                     />
                 </div>
             </>
@@ -142,19 +142,17 @@ class Form extends Component {
                 onSubmit={this.handleSubmit}
             >
                 <div className='form__tabs form__tabs-box'>
-                    <NavLink
-                        to = '/sing-in'
-                        type='button'
-                        className='form__tabs-btn'
+                    <NavLink className='form__tabs-btn'
                         activeClassName='form__tabs-btn-active'
+                        type='button'
+                        to='/sing-in'
                     >
                         sing in
                     </NavLink>
-                    <NavLink
-                        to = '/sing-up'
-                        type='button'
-                        className='form__tabs-btn'
+                    <NavLink className='form__tabs-btn'
                         activeClassName='form__tabs-btn-active'
+                        type='button'
+                        to='/sing-up'
                     >
                         sing up
                     </NavLink>

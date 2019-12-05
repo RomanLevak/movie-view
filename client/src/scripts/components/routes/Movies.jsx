@@ -20,13 +20,13 @@ class Movies extends Component {
 
         return (
             <Switch>
-                <Route path = {`${url}/popular/:page`} render = {this.getDefaultExplorer} />
-                <Route path = {`${url}/popular`} render = {this.getDefaultExplorer} />
-                <Route path = {`${url}/genres/:genre/:page`} render = {this.getExplorerWithGenre} />
-                <Route path = {`${url}/genres/:genre`} render = {this.getExplorerWithGenre} />
-                <Route path = {`${url}/search/:query`} render = {this.getResults} />
-                <Route path = {`${url}/:id`} render = {this.getMovie} />
-                <Route path = {url} render = {this.getDefaultExplorer} />
+                <Route path={`${url}/popular/:page`} render={this.getDefaultExplorer} />
+                <Route path={`${url}/popular`} render={this.getDefaultExplorer} />
+                <Route path={`${url}/genres/:genre/:page`} render={this.getExplorerWithGenre} />
+                <Route path={`${url}/genres/:genre`} render={this.getExplorerWithGenre} />
+                <Route path={`${url}/search/:query`} render={this.getResults} />
+                <Route path={`${url}/:id`} render={this.getMovie} />
+                <Route path={url} render={this.getDefaultExplorer} />
             </Switch>
         )
     }
@@ -34,7 +34,7 @@ class Movies extends Component {
     getResults = ({match}) => {
         const {query} = match.params
 
-        return <Results query = {query} key = {query} />
+        return <Results query={query} key={query} />
     }
 
     getDefaultExplorer = ({match}) => {
@@ -43,18 +43,18 @@ class Movies extends Component {
 
         if(!page) {
             if(url.includes('popular'))
-                return <Redirect to = {`${url}/1`}/>
+                return <Redirect to={`${url}/1`} />
             else
-                return <Redirect to = {`${url}/popular/1`}/>
+                return <Redirect to={`${url}/popular/1`} />
         }
 
         return (
             <Explorer
-                type = 'movies'
-                filters = {{
+                type='movies'
+                filters={{
                     page: parseInt(page)
                 }}
-                key = {'popular' + page}
+                key={'popular' + page}
             />
         )
     }
@@ -69,16 +69,16 @@ class Movies extends Component {
             return <Redirect to={'/not-found'} />
 
         if(!page)
-            return <Redirect to = {`${url}/1`} />
+            return <Redirect to={`${url}/1`} />
 
         return (
             <Explorer
-                type = 'movies'
-                filters = {{
+                type='movies'
+                filters={{
                     genreId,
                     page: parseInt(page)
                 }}
-                key = {genreId + page}
+                key={genreId + page}
             />
         )
     }
@@ -86,7 +86,7 @@ class Movies extends Component {
     getMovie = ({match}) => {
         const {id} = match.params
 
-        return <MovieInfo id = {match.params.id} key = {id}/>
+        return <MovieInfo id={match.params.id} key={id} />
     }
 }
 

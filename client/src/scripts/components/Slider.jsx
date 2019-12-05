@@ -9,7 +9,7 @@ function Arrow(props) {
 
     return (
         <div
-            className = {
+            className={
                 next ?
                     'home-list__next-arrow' :
                     'home-list__prev-arrow'
@@ -17,7 +17,7 @@ function Arrow(props) {
             style={{...style, display: 'block'}}
             onClick={onClick}
         >
-            <img src='/styles/images/arrow.svg'/>
+            <img src='/styles/images/arrow.svg' />
         </div>
     )
 }
