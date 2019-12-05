@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Redirect, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
+import {isSignedIn} from '../selectors/user'
 import {loadListInfo, updateList} from '../AC/index'
 import Loader from './Loader'
 import {default as MoviePoster} from './posters/Movie'
@@ -13,6 +14,7 @@ class ListInfo extends Component {
         match: PropTypes.object,
         id: PropTypes.string.isRequired,
         // from connect
+        isSignedIn: PropTypes.bool.isRequired,
         list: PropTypes.object,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
@@ -75,13 +77,25 @@ class ListInfo extends Component {
         this.setState({value: e.target.value})
 
     getMoviePosters = () => {
+        const {isOwner, isSignedIn} = this.props
         const movieIds = this.props.list.movies
+        const listId = this.props.list.id
         const movies = []
+        let withButton = ''
+
+        if(isOwner)
+            withButton = 'remove'
+        else if(isSignedIn)
+            withButton = 'add'
 
         movieIds.map(movieId =>
             movies.push(
                 <div className='list__item' key={movieId}>
-                    <MoviePoster id={movieId} />
+                    <MoviePoster
+                        id={movieId}
+                        listId={listId}
+                        withButton={withButton}
+                    />
                 </div>
             )
         )
@@ -167,6 +181,7 @@ export default connect(
         }
 
         return {
+            isSignedIn: isSignedIn(state),
             list: listInfo.entity,
             loading: listInfo.loading,
             loaded: listInfo.loaded,

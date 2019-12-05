@@ -7,6 +7,7 @@ import selectUser from '../../selectors/user'
 import {loadMoviePoster} from '../../AC/index'
 import Loader from './../Loader'
 import AddBtn from '../list-btns/AddBtn'
+import RemoveBtn from '../list-btns/RemoveBtn'
 
 class Poster extends Component {
 
@@ -16,6 +17,13 @@ class Poster extends Component {
             PropTypes.number,
             PropTypes.string,
         ]),
+        /*
+         * append 'add to' or 'remove from' list button
+         * empty string will add a 'addBtn' if user signed in
+         */
+        withButton: PropTypes.oneOf(['add', 'remove', '']),
+        // listId is needed for 'remove' btn
+        listId: PropTypes.string,
         // from connect
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
@@ -48,6 +56,32 @@ class Poster extends Component {
         return '/styles/images/not-found.svg'
     }
 
+    getButton = () => {
+        const {withButton, user} = this.props
+
+        if(withButton == 'remove')
+            return (
+                <div className='movie-poster__btn'>
+                    <RemoveBtn
+                        movie={this.props.movie}
+                        listId={this.props.listId}
+                    />
+                </div>
+            )
+
+        if(withButton == 'add' || user.id)
+            return (
+                <div className='movie-poster__btn'>
+                    <AddBtn
+                        lists={user.lists}
+                        movieId={this.props.id}
+                    />
+                </div>
+            )
+
+        return null
+    }
+
     getMiniBody = () => {
         const {loading, loaded} = this.props
 
@@ -73,7 +107,7 @@ class Poster extends Component {
     }
 
     getFullBody = () => {
-        const {loading, loaded, movie, id, user} = this.props
+        const {loading, loaded, movie, id} = this.props
 
         if(loading || !loaded)
             return (
@@ -110,16 +144,7 @@ class Poster extends Component {
                     <span className='movie-poster__year'>
                         {year}
                     </span>
-                    { user.id ? // user is signed in
-                        <div className='movie-poster__add-btn'>
-                            <AddBtn
-                                lists={user.lists}
-                                movieId={this.props.id}
-                            />
-                        </div>
-                        :
-                        null
-                    }
+                    {this.getButton()}
                 </div>
             </div>
         )

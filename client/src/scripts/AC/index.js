@@ -10,6 +10,7 @@ import {
     CREATE_LIST,
     UPDATE_LIST,
     ADD_MOVIE_TO_LIST,
+    REMOVE_MOVIE_FROM_LIST,
     SINGIN,
     SINGOUT,
     SINGUP,
@@ -136,6 +137,16 @@ export function addMovieToList(listId, movieId) {
         callAPI: {
             url: `/server/lists/${listId}/${movieId}`,
             method: 'PUT'
+        }
+    }
+}
+
+export function removeMovieFromList(listId, movieId) {
+    return {
+        type: REMOVE_MOVIE_FROM_LIST,
+        callAPI: {
+            url: `/server/lists/${listId}/${movieId}`,
+            method: 'DELETE'
         }
     }
 }

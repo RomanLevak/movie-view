@@ -1,0 +1,41 @@
+.remove
+    &-btn
+        color: $red3
+    &__text
+        color: $white2
+        font-size: 18px
+    &-prompt
+        position: absolute
+        bottom: 100%
+        left: 100%
+        z-index: 1
+        display: flex
+        flex-direction: column
+        width: 150px
+        height: 80px
+        padding: 4px
+        background: $black-transparent
+        &__btn
+            width: 46px
+            border-width: 2px
+            border-style: solid
+            text-transform: uppercase
+            color: $white2
+            font-size: 17px
+            &-no
+                border-color: $red3
+                &:hover
+                    background: $red3-transparent
+            &-yes
+                order: -1
+                border-color: $seagreen3
+                &:hover
+                    background: $seagreen3-transparent
+    &__btns-box
+        margin: 0 auto
+        margin-top: auto
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 80%
+        height: 40px

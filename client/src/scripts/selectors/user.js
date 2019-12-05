@@ -25,4 +25,9 @@ const selectUser = createSelector(
     }
 )
 
+export const isSignedIn = createSelector(
+    getUser,
+    user => Boolean(user.entity.id)
+)
+
 export default selectUser
