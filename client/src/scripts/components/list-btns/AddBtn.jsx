@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import selectUser from '../../selectors/user'
-import {addMovieToList} from '../../AC/index'
+import {addMovieToList, loadList} from '../../AC/index'
 import {toast} from 'react-toastify'
 import popUp from '../decorators/popUp'
 
@@ -27,7 +27,9 @@ class AddBtn extends Component {
 
     state = {
         // true if request to add movie was sent
-        isWaitingResponse: false
+        isWaitingResponse: false,
+        // id of list which is being updated
+        listId: null
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -37,10 +39,12 @@ class AddBtn extends Component {
         // if a movie has been added to list
         if(editedList.entity.id && isWaitingResponse) {
             const {title} = editedList.entity
+            const {loadList, closePopUp} = props
 
             toast(`movie was added to '${title}' !`)
 
-            props.closePopUp()
+            loadList(state.listId)
+            closePopUp()
 
             return {
                 isWaitingResponse: false
@@ -54,7 +58,10 @@ class AddBtn extends Component {
         const {addMovieToList, movieId} = this.props
         const {listId} = e.target.dataset
 
-        this.setState({isWaitingResponse: true})
+        this.setState({
+            isWaitingResponse: true,
+            listId
+        })
 
         addMovieToList(listId, movieId)
     }
@@ -113,6 +120,8 @@ export default connect(
     state => ({
         lists: selectUser(state).entity.lists,
         editedList: state.listCUD.addMovie
-    }),
-    {addMovieToList}
+    }), {
+        addMovieToList,
+        loadList
+    }
 )(popUp(AddBtn))

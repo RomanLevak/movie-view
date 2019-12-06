@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {removeMovieFromList} from '../../AC/index'
+import {removeMovieFromList, loadList} from '../../AC/index'
 import {toast} from 'react-toastify'
 import popUp from '../decorators/popUp'
 
@@ -17,6 +17,7 @@ class RemoveBtn extends Component {
         isOpen: PropTypes.bool.isRequired,
         // from connect
         removeMovieFromList: PropTypes.func.isRequired,
+        loadList: PropTypes.func.isRequired,
         // state of list which is being updated
         editedList: PropTypes.object.isRequired
     }
@@ -32,11 +33,13 @@ class RemoveBtn extends Component {
 
         // if a movie has been removed from list
         if(editedList.entity.id && isWaitingResponse) {
+            const {closePopUp, loadList, listId} = props
             const {title} = props.movie
 
             toast(`'${title}' was removed from list !`)
 
-            props.closePopUp()
+            loadList(listId)
+            closePopUp()
 
             return {
                 isWaitingResponse: false,
@@ -104,6 +107,8 @@ class RemoveBtn extends Component {
 export default connect(
     state => ({
         editedList: state.listCUD.removeMovie
-    }),
-    {removeMovieFromList}
+    }), {
+        removeMovieFromList,
+        loadList
+    }
 )(popUp(RemoveBtn))
