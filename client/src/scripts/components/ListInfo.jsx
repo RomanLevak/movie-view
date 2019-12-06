@@ -125,7 +125,7 @@ class ListInfo extends Component {
 
         return (
             <div className='list list-box'>
-                <div className='list__title-box'>
+                <div className='list__header'>
                     <h2 className='list__title'>
                         { isEditTitle ?
                             <input className='list__title-input'
@@ -147,22 +147,22 @@ class ListInfo extends Component {
                         :
                         null
                     }
-                </div>
-                <div className='list__data'>
-                    <span className='list__author'>
+                    <div className='list__data'>
+                        <span className='list__author'>
                         author:
-                        <Link className='list__author-name'
-                            to={`/lists/author/${author.name}`}
-                        >
-                            {author.name}
-                        </Link>
-                    </span>
-                    <span className='list__created'>
-                        created at:
-                        <span className='list__created-time'>
-                            {parseDate(list.createdAt)}
+                            <Link className='list__author-name'
+                                to={`/lists/author/${author.name}`}
+                            >
+                                {author.name}
+                            </Link>
                         </span>
-                    </span>
+                        <span className='list__created'>
+                        created at:
+                            <span className='list__created-time'>
+                                {parseDate(list.createdAt)}
+                            </span>
+                        </span>
+                    </div>
                 </div>
                 <div className='list__movies-box'>
                     {this.getMoviePosters()}

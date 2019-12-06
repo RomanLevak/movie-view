@@ -29,9 +29,9 @@ export function loadMovies(filters) {
 
     const {page} = filters
 
-    if(filters.genreID)
+    if(filters.genreId)
         url = `/tmdbapi/discover/movie?api_key=${API_KEY}` +
-                `&page=${page}&with_genres=${filters.genreID}`
+                `&page=${page}&with_genres=${filters.genreId}`
 
     else
         url = `/tmdbapi/movie/popular?api_key=${API_KEY}` +

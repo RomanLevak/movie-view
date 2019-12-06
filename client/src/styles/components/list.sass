@@ -7,13 +7,13 @@
 		height: 100%
 		max-width: 940px
 		padding: 12px
+		padding-top: 3px
 		text-align: left
+	&__header
+		display: flex
 	&__title
-		&-box
-			display: flex
-			align-items: center
 		&-input
-			max-height: 28px
+			max-height: 26px
 			font: inherit
 			color: inherit
 			padding: 0
@@ -27,7 +27,17 @@
 			margin-left: 4px
 			color: $grey1
 			cursor: pointer
+	&__item
+		position: relative
+		margin-top: 8px
+		padding: 0 3px
+		display: flex
+		transition: all 200ms
+		width: calc(50% - 21px)
+		&:hover
+			background: $seagreen3-transparent
 	&__data
+		font-size: 15px
 		max-width: 200px
 		margin-left: auto
 		text-align-last: left
@@ -46,5 +56,19 @@
 	&__movies-box
 		display: flex
 		flex-wrap: wrap
+		max-width: 870px
 	&__item
-		max-width: 16.66666666%
+		width: calc(100%/6)
+
+@media(max-width: 768px)
+	.list
+		&__item
+			margin-top: 6px
+			margin-left: 14px
+			width: 100%
+			&-name
+				font-size: 16px
+			&-poster
+				width: 100px
+				height: 100px
+				min-width: 100px
