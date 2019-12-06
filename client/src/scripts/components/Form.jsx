@@ -166,7 +166,6 @@ class Form extends Component {
 }
 
 export default connect(
-
     state => ({user: selectUser(state)}),
     {singIn, singUp}
 )(Form)

@@ -42,6 +42,11 @@ function popUp(RawComponent) {
                 isOpen: false
             })
 
+        openPopUp = () =>
+            this.setState({
+                isOpen: true
+            })
+
         render() {
             return (
                 <RawComponent
@@ -50,6 +55,7 @@ function popUp(RawComponent) {
                     setToggleBtnRef={this.setToggleBtnRef}
                     togglePopUp={this.togglePopUp}
                     closePopUp={this.closePopUp}
+                    openPopUp={this.openPopUp}
                     isOpen={this.state.isOpen}
                 />
             )

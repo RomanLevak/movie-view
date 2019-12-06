@@ -4,7 +4,7 @@ const getLists = state => state.lists
 
 const selectLists = createSelector(
     getLists,
-    lists => ({...lists})
+    lists => lists
 )
 
 export default selectLists

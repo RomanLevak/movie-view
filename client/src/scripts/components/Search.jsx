@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {mapToArr} from '../helpers'
 import {searchMovie} from '../AC'
+import popUp from './decorators/popUp'
 
 class Search extends Component {
 
@@ -12,28 +13,31 @@ class Search extends Component {
     }
 
     static propTypes = {
+        // from popUp decorator
+        setPopUpRef: PropTypes.func.isRequired,
+        setToggleBtnRef: PropTypes.func.isRequired,
+        closePopUp: PropTypes.func.isRequired,
+        openPopUp: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
         // from connect
         movies: PropTypes.array.isRequired,
         searchMovie: PropTypes.func.isRequired
     }
 
     state = {
-        value: '',
-        isResultsOpen: false
+        value: ''
     }
 
     onChange = e => {
         const {value} = e.target
-        const {searchMovie} = this.props
+        const {searchMovie, openPopUp, closePopUp} = this.props
 
-        this.setState({
-            value,
-            isResultsOpen: true
-        })
+        this.setState({value})
 
         if(!value)
-            return this.onBlur()
+            return closePopUp()
 
+        openPopUp()
         searchMovie(value, true)
     }
 
@@ -44,50 +48,32 @@ class Search extends Component {
 
         if(e.key == 'Enter') {
             history.push(`/movies/search/${value}`)
-            this.setState({isResultsOpen: false})
+            this.props.closePopUp()
         }
     }
 
-    onBlur = () => {
-        // hide results
-        this.setState({isResultsOpen: false})
-    }
+    onFocus = () =>
+        this.props.openPopUp()
 
-    onFocus = () => {
-        // show results
-        this.setState({isResultsOpen: true})
-    }
-
-    getResults = () => {
-        if(!this.state.isResultsOpen)
-            return null
-
-        const {movies} = this.props
-
-        return movies.slice(0, 6).map(movie =>
+    getResults = () =>
+        this.props.movies.slice(0, 8).map(movie =>
             <Link className='search__item'
                 to={`/movies/${movie.id}`}
                 key={movie.id}
-                /*
-                 * prevent from onBlur event which would
-                 * hide a Link and redirection wouldn't happen
-                 */
-                onMouseDown={e => e.preventDefault()}
-                onClick={() => this.onBlur()}
+                onClick={this.props.closePopUp}
             >
                 {movie.title}
                 <span>{movie.year}</span>
             </Link>
         )
-    }
 
     render() {
+        const {setToggleBtnRef, isOpen} = this.props
         const {value} = this.state
 
         return (
             <div className='search-box'>
                 <div className='search__input-box'
-                    onBlur={this.onBlur}
                     onFocus={this.onFocus}
                 >
                     <input className='search__input'
@@ -98,12 +84,16 @@ class Search extends Component {
                     />
                     <Link className='search__btn btn-search flex-center'
                         to={`/movies/search/${value}`}
-                        onClick={this.onBlur}
                     >
                         <span className='icon-search'></span>
                     </Link>
-                    <div className='search__results-box'>
-                        {this.getResults()}
+                    <div className='search__results-box'
+                        ref={setToggleBtnRef}
+                    >
+                        { isOpen ?
+                            this.getResults() :
+                            null
+                        }
                     </div>
                 </div>
             </div>
@@ -116,4 +106,4 @@ export default connect(
         movies: mapToArr(state.search.tempResults),
     }),
     {searchMovie},
-)(Search)
+)(popUp(Search))

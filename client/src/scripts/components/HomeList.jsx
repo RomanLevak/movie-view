@@ -50,13 +50,12 @@ class HomeList extends Component {
                 'home-list' + (withSlider ? '__slider' : '')
             }
             >
-                {
-                    withSlider ?
-                        <Slider>
-                            {items}
-                        </Slider>
-                        :
-                        items
+                { withSlider ?
+                    <Slider>
+                        {items}
+                    </Slider>
+                    :
+                    items
                 }
             </ul>
         )

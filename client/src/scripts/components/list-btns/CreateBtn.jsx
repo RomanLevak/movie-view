@@ -47,7 +47,8 @@ class CreateBtn extends Component {
             closePopUp()
 
             return {
-                isWaitingResponse: false
+                isWaitingResponse: false,
+                value: ''
             }
         }
 
