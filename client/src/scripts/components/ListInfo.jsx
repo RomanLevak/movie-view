@@ -8,6 +8,7 @@ import {selectListPoster} from '../selectors/list-poster'
 import {loadList, updateList} from '../AC/index'
 import Loader from './Loader'
 import {default as MoviePoster} from './posters/Movie'
+import EditableTitle from './list-CUD/EditableTitle'
 
 class ListInfo extends Component {
 
@@ -27,23 +28,8 @@ class ListInfo extends Component {
 
     state = {
         editable: this.props.isOwner,
-        isEditTitle: false,
         value: ''
     }
-
-    static getDerivedStateFromProps(props, state) {
-        let updatedState = {}
-
-        if(state.isEditTitle)
-            return null
-
-        updatedState.editable = props.isOwner
-        updatedState.value = props.list.title
-
-        return updatedState
-    }
-
-    setTitleInputRef = node => this.titleInput = node
 
     componentDidMount() {
         const {loadList, loading, loaded, id} = this.props
@@ -51,31 +37,6 @@ class ListInfo extends Component {
         if(!loading || !loaded)
             loadList(id)
     }
-
-    componentDidUpdate = () => {
-        if(this.titleInput)
-            this.titleInput.focus()
-    }
-
-    handleEditBtnClick = () => {
-        this.setState({isEditTitle: !this.state.isEditTitle})
-
-        // if title wasn't changed
-        if(this.state.value == this.props.list.title)
-            return
-
-        const {value} = this.state
-        const {updateList} = this.props
-        const {id} = this.props.list
-
-        updateList(id, [{
-            propName: 'title',
-            value
-        }])
-    }
-
-    handleTitleChange = e =>
-        this.setState({value: e.target.value})
 
     getMoviePosters = () => {
         const {isOwner, isSignedIn} = this.props
@@ -106,7 +67,7 @@ class ListInfo extends Component {
 
     render() {
         const {loading, loaded, error} = this.props
-        const {editable, isEditTitle} = this.state
+        const {editable} = this.state
 
         if(error)
             return error === 'Not Found' ?
@@ -126,26 +87,12 @@ class ListInfo extends Component {
         return (
             <div className='list list-box'>
                 <div className='list__header'>
-                    <h2 className='list__title'>
-                        { isEditTitle ?
-                            <input className='list__title-input'
-                                ref={this.setTitleInputRef}
-                                value={this.state.value}
-                                onChange={this.handleTitleChange}
-                            />
-                            :
-                            title
-                        }
-                    </h2>
                     { editable ?
-                        <span
-                            className={'list__title-edit' + (isEditTitle ? ' seagreen' : '')}
-                            onClick={this.handleEditBtnClick}
-                        >
-                            {isEditTitle ? '✓' : '🖉'}
-                        </span>
+                        <EditableTitle list={this.props.list} />
                         :
-                        null
+                        <h2 className='list__title'>
+                            {title}
+                        </h2>
                     }
                     <div className='list__data'>
                         <span className='list__author'>

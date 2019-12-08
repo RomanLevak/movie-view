@@ -6,8 +6,8 @@ import makeSelectMoviePoster from '../../selectors/movie-poster'
 import selectUser from '../../selectors/user'
 import {loadMoviePoster} from '../../AC/index'
 import Loader from './../Loader'
-import AddBtn from '../list-btns/AddBtn'
-import RemoveBtn from '../list-btns/RemoveBtn'
+import AddBtn from '../list-CUD/AddBtn'
+import RemoveBtn from '../list-CUD/RemoveBtn'
 
 class Poster extends Component {
 

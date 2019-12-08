@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import selectUser from '../selectors/user'
 import {singOut, checkIfSingedIn} from '../AC/index'
-import CreateBtn from './list-btns/CreateBtn'
+import CreateBtn from './list-CUD/CreateBtn'
 import Search from './Search'
 
 class Header extends Component {
