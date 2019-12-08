@@ -8,6 +8,7 @@ import {
     LOAD_LISTS,
     CREATE_LIST,
     UPDATE_LIST,
+    DELETE_LIST,
     ADD_MOVIE_TO_LIST,
     REMOVE_MOVIE_FROM_LIST,
     SINGIN,
@@ -116,6 +117,16 @@ export function updateList(id, body) {
             url: `/server/lists/${id}`,
             method: 'PUT',
             body
+        }
+    }
+}
+
+export function deleteList(id) {
+    return {
+        type: DELETE_LIST,
+        callAPI: {
+            url: `/server/lists/${id}`,
+            method: 'DELETE'
         }
     }
 }

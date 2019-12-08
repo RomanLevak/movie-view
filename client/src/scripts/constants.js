@@ -11,6 +11,7 @@ export const LOAD_LIST = 'LOAD_LIST'
 export const LOAD_LISTS = 'LOAD_LISTS'
 export const CREATE_LIST = 'CREATE_LIST'
 export const UPDATE_LIST = 'UPDATE_LIST'
+export const DELETE_LIST = 'DELETE_LIST'
 export const ADD_MOVIE_TO_LIST = 'ADD_MOVIE_TO_LIST'
 export const REMOVE_MOVIE_FROM_LIST = 'REMOVE_MOVIE_FROM_LIST'
 

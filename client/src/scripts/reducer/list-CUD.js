@@ -2,6 +2,7 @@
 import {
     CREATE_LIST,
     UPDATE_LIST,
+    DELETE_LIST,
     ADD_MOVIE_TO_LIST,
     REMOVE_MOVIE_FROM_LIST,
     START,
@@ -17,6 +18,12 @@ const defaultState = {
         entity: {}
     },
     update: {
+        loading: false,
+        loaded: false,
+        error: '',
+        entity: {}
+    },
+    delete: {
         loading: false,
         loaded: false,
         error: '',
@@ -165,6 +172,39 @@ export default (CUDState = defaultState, action) => {
             return {
                 ...CUDState,
                 update: {
+                    loaded: false,
+                    loading: false,
+                    entity: {},
+                    error: payload
+                }
+            }
+
+        case DELETE_LIST + START:
+            return {
+                ...CUDState,
+                delete: {
+                    loaded: false,
+                    loading: true,
+                    error: '',
+                    entity: {}
+                }
+            }
+
+        case DELETE_LIST + SUCCESS:
+            return {
+                ...CUDState,
+                delete: {
+                    loaded: false,
+                    loading: true,
+                    error: '',
+                    entity: payload
+                }
+            }
+
+        case DELETE_LIST + FAIL:
+            return {
+                ...CUDState,
+                delete: {
                     loaded: false,
                     loading: false,
                     entity: {},

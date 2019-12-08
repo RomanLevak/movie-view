@@ -5,10 +5,11 @@ import {connect} from 'react-redux'
 import {parseDate} from '../helpers'
 import {isSignedIn} from '../selectors/user'
 import {selectListPoster} from '../selectors/list-poster'
-import {loadList, updateList} from '../AC/index'
+import {loadList} from '../AC/index'
 import Loader from './Loader'
 import {default as MoviePoster} from './posters/Movie'
 import EditableTitle from './list-CUD/EditableTitle'
+import DeleteListBtn from './list-CUD/DeleteListBtn'
 
 class ListInfo extends Component {
 
@@ -22,13 +23,7 @@ class ListInfo extends Component {
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,
         isOwner: PropTypes.bool.isRequired,
-        loadList: PropTypes.func.isRequired,
-        updateList: PropTypes.func.isRequired
-    }
-
-    state = {
-        editable: this.props.isOwner,
-        value: ''
+        loadList: PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -66,8 +61,7 @@ class ListInfo extends Component {
     }
 
     render() {
-        const {loading, loaded, error} = this.props
-        const {editable} = this.state
+        const {loading, loaded, error, isOwner} = this.props
 
         if(error)
             return error === 'Not Found' ?
@@ -87,7 +81,7 @@ class ListInfo extends Component {
         return (
             <div className='list list-box'>
                 <div className='list__header'>
-                    { editable ?
+                    { isOwner ?
                         <EditableTitle list={this.props.list} />
                         :
                         <h2 className='list__title'>
@@ -114,6 +108,12 @@ class ListInfo extends Component {
                 <div className='list__movies-box'>
                     {this.getMoviePosters()}
                 </div>
+                { isOwner ?
+                    <div className='list__delete-box'>
+                        <DeleteListBtn list={list} />
+                    </div> :
+                    null
+                }
             </div>
         )
     }
@@ -128,5 +128,5 @@ export default connect(
             isSignedIn: isSignedIn(state)
         }
     },
-    {loadList, updateList}
+    {loadList}
 )(ListInfo)
