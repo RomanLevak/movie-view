@@ -2,8 +2,10 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import selectUser from '../selectors/user'
 import {loadMovieInfo} from '../AC/index'
 import Loader from './Loader'
+import AddBtn from './list-CUD/AddBtn'
 
 class MovieInfo extends Component {
 
@@ -14,7 +16,8 @@ class MovieInfo extends Component {
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         error: PropTypes.string,
-        loadMovieInfo: PropTypes.func.isRequired
+        loadMovieInfo: PropTypes.func.isRequired,
+        user: PropTypes.object.isRequired
     }
 
     componentDidMount() {
@@ -110,7 +113,9 @@ class MovieInfo extends Component {
                     <Loader type='squares' />
                 </div>
             )
-        const {overview, poster_path} = this.props.movie
+
+        const {user} = this.props
+        const {poster_path, id, overview} = this.props.movie
 
         return (
             <div className='movie-box'>
@@ -119,6 +124,14 @@ class MovieInfo extends Component {
                 </div>
                 <div className='movie__info-box'>
                     {this.getInfoTable()}
+                    { user.id ?
+                        <div className='movie__info-add-box'>
+                            <AddBtn movieId={id}
+                                lists={user.lists}
+                            />
+                        </div> :
+                        null
+                    }
                 </div>
                 <p className='movie__info-overview'>
                     {overview}
@@ -133,7 +146,8 @@ export default connect(
         movie: state.movieInfo.entity,
         loading: state.movieInfo.loading,
         loaded: state.movieInfo.loaded,
-        error: state.movieInfo.error
+        error: state.movieInfo.error,
+        user: selectUser(state).entity
     }),
     {loadMovieInfo}
 )(MovieInfo)
