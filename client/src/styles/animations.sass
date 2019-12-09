@@ -1,0 +1,56 @@
+.slide_and_scale-left
+	&-appear
+		left: 100%
+		transform: scale(0.7)
+		&-active
+			transform: none
+			left: 0
+		&-done
+			transform: none
+			left: 0
+	&-enter
+		left: 100%
+		transform: scale(0.7)
+		&-active
+			transform: none
+			left: 0
+		&-done
+			transform: none
+			left: 0
+	&-exit
+		transform: none
+		left: 0
+		&-active
+			transform: scale(0.7)
+			left: 100%
+		&-done
+			transform: scale(0.7)
+			left: 100%
+.slide_and_scale-right
+	&-appear
+		right: 100%
+		transform: scale(0.7)
+		&-active
+			transform: none
+			right: 0
+		&-done
+			transform: none
+			right: 0
+	&-enter
+		right: 100%
+		transform: scale(0.7)
+		&-active
+			transform: none
+			right: 0
+		&-done
+			transform: none
+			right: 0
+	&-exit
+		right: 0
+		transform: none
+		&-active
+			transform: scale(0.7)
+			right: 100%
+		&-done
+			transform: scale(0.7)
+			right: 100%

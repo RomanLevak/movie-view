@@ -1,6 +1,6 @@
 .form
 	&-box
-		max-width: 330px
+		width: 270px
 		min-height: 350px
 		max-height: 500px
 		margin-top: 80px
@@ -22,21 +22,24 @@
 			color: $seagreen1
 			&-active
 				border-bottom: 2px solid $green4
-	&__field
-		margin-top: 11px
+	&__fieldset
+		margin-top: 6px
 		&-box
-			max-width: 81%
-			margin: 0 auto
-			margin-top: 8px
+			padding: 0 3px
+			padding-top: 8px
+			width: 100%
+			height: 100%
 			text-align: left
+			overflow: hidden
+	&__field
+		margin-top: 12px
 	label
 		color: $seagreen4
 		text-transform: capitalize
 	&__text-input
-		margin-top: 4px
 		height: 29px
 		padding: 4px
-		box-sizing: border-box
+		margin-top: 6px
 		width: 100%
 		border: none
 		background-color: $seagreen1-transparent
@@ -50,16 +53,13 @@
 		color: $green3
 	&__buttons-wrap
 		position: absolute
+		bottom: 30px
 		left: 50%
-		transform: translate(-50%)
-		bottom: 0
-		text-align: center
+		transform: translateX(-50%)
+		width: 100px
 	&__button
-		display: inline
 		width: 100%
 		height: 31px
-		margin-bottom: 10px
-		border: none
 		background: $seagreen1-transparent
 		font-size: 20px
 		font-weight: bold
@@ -69,3 +69,16 @@
 		color: $seagreen3
 		&:hover
 			border: 2px solid $green4
+
+// for animations
+.form
+	&__fieldset-wrap
+		position: relative
+		margin: 0 auto
+		width: 230px
+		height: calc(100% - 33px)
+		overflow: hidden
+	&__fieldset-box
+		position: absolute
+		top: 0
+		transition: all 150ms
