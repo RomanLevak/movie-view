@@ -51,22 +51,6 @@ class Form extends Component {
         }
     }
 
-    getStatusArea = () => {
-        const {loading, error} = this.props.user
-
-        if(error)
-            return (
-                <span className='error-msg'>
-                    {error}
-                </span>
-            )
-
-        if(loading)
-            return 'loading...'
-
-        return null
-    }
-
     render() {
         // if user is signed in
         if(this.props.user.entity.id) {
@@ -103,112 +87,100 @@ class Form extends Component {
                         sing up
                     </NavLink>
                 </div>
-                <TransitionGroup className='form__fieldset-wrap'
-                    appear={false} exit enter
-                >
-                    { type == 'sing in' ?
-                        <CSSTransition classNames='slide_and_scale-right'
-                            key={type}
-                            in appear timeout={150}
-                        >
-                            {this.getSingInFieldset()}
-                        </CSSTransition>
-                        :
-                        <CSSTransition classNames='slide_and_scale-left'
-                            key={type}
-                            in appear timeout={150}
-                        >
-                            {this.getSingUpFieldset()}
-                        </CSSTransition>
-                    }
-                </TransitionGroup>
+                {this.getFieldset()}
             </form>
         )
     }
 
-    getSingUpFieldset = () =>
-        <fieldset className='form__fieldset-box'>
-            <div className='form__field'>
-                <label htmlFor='email'>Email</label>
-                <input
-                    className='form__field form__text-input'
-                    id='email'
-                    type='email'
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                />
-            </div>
-            <div className='form__field'>
-                <label htmlFor='userName'>
-                    username
-                </label>
-                <input className='form__text-input'
-                    id='username'
-                    type='text'
-                    value={this.state.username}
-                    onChange={this.handleInputChange}
-                />
-            </div>
-            <div className='form__field'>
-                <label htmlFor='userPassword'>
-                    password
-                </label>
-                <input className='form__text-input'
-                    type='password'
-                    id='password'
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                />
-            </div>
-            <div className='form__status form__status-box'>
-                {this.getStatusArea()}
-            </div>
-            <div className='form__buttons-wrap'>
-                <input className='form__button'
-                    type='submit'
-                    value='sing up'
-                    onClick={this.handleSubmit}
-                />
-            </div>
-        </fieldset>
+    getFieldset = () => {
+        const {url} = this.props.match
+        const type = url.includes('sing-in') ?
+            'sing in' :
+            'sing up'
 
-getSingInFieldset = () =>
-    <fieldset className='form__fieldset-box'>
-        <div className='form__field'>
-            <label htmlFor='email'>Email</label>
-            <input
-                className='form__field form__text-input'
-                id='email'
-                type='email'
-                value={this.state.email}
-                onChange={this.handleInputChange}
-            />
-        </div>
-        <div className='form__field'>
-            <label htmlFor='userPassword'>
-                password
-            </label>
-            <input className='form__text-input'
-                type='password'
-                id='password'
-                value={this.state.password}
-                onChange={this.handleInputChange}
-            />
-        </div>
-        <div className='form__status form__status-box'>
-            {this.getStatusArea()}
-        </div>
-        <div className='form__buttons-wrap'>
-            <input className='form__button'
-                type='submit'
-                value='sing in'
-                onClick={this.handleSubmit}
-            />
-        </div>
-    </fieldset>
+        return (
+            <TransitionGroup className='form__fieldset-wrap'
+                appear={false} exit enter
+            >
+                <CSSTransition key={type}
+                    classNames={`slide_and_scale-${
+                        type == 'sing up' ? 'left' : 'right'
+                    }`}
+                    in appear timeout={150}
+                >
+                    <fieldset className='form__fieldset-box'>
+                        <div className='form__field'>
+                            <label htmlFor='email'>Email</label>
+                            <input
+                                className='form__field form__text-input'
+                                id='email'
+                                type='email'
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
+                        { type == 'sing up' &&
+                    <div className='form__field'>
+                        <label htmlFor='userName'>
+                            username
+                        </label>
+                        <input className='form__text-input'
+                            id='username'
+                            type='text'
+                            value={this.state.username}
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+                        }
+                        <div className='form__field'>
+                            <label htmlFor='userPassword'>
+                                password
+                            </label>
+                            <input className='form__text-input'
+                                type='password'
+                                id='password'
+                                value={this.state.password}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
+                        <div className='form__status form__status-box'>
+                            {this.getStatusArea()}
+                        </div>
+                        <div className='form__buttons-wrap'>
+                            <input className='form__button'
+                                type='submit'
+                                value={type}
+                                onClick={this.handleSubmit}
+                            />
+                        </div>
+                    </fieldset>
+                </CSSTransition>
+            </TransitionGroup>
+        )
+    }
+
+    getStatusArea = () => {
+        const {loading, error} = this.props.user
+
+        if(error)
+            return (
+                <span className='error-msg'>
+                    {error}
+                </span>
+            )
+
+        if(loading)
+            return 'loading...'
+
+        return null
+    }
 }
 
 export default connect(
-    state => ({user: selectUser(state)}),
-    {singIn, singUp}
+    state => ({
+        user: selectUser(state)
+    }), {
+        singIn,
+        singUp
+    }
 )(Form)

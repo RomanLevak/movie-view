@@ -54,33 +54,6 @@ class DeleteListBtn extends Component {
         deleteList(id)
     }
 
-    getPrompt = () =>
-        <div className='delete__prompt-box'
-            onClick={this.props.closePopUp}
-        >
-            <div className='delete__prompt'>
-                <span className='delete-prompt__text'>
-                    Are you sure want to delete{' \''}
-                    <span className='delete-prompt__title'>
-                        {`${this.props.list.title}`}
-                    </span>
-                    {'\' '}?
-                </span>
-                <div className='delete-prompt__buttons-box'>
-                    <button className='delete-prompt__btn delete-prompt__btn-no'
-                        onClick={this.props.closePopUp}
-                    >
-                        no
-                    </button>
-                    <button className='delete-prompt__btn delete-prompt__btn-yes'
-                        onClick={this.deleteList}
-                    >
-                        yes
-                    </button>
-                </div>
-            </div>
-        </div>
-
     render() {
         const {setToggleBtnRef, openPopUp, isOpen} = this.props
 
@@ -92,13 +65,37 @@ class DeleteListBtn extends Component {
                 >
                     <img src='/styles/images/delete.svg' />
                 </button>
-                { isOpen ?
-                    this.getPrompt() :
-                    null
-                }
+                {isOpen && this.getPrompt()}
             </>
         )
     }
+
+    getPrompt = () =>
+        <div className='delete__prompt-box'
+            onClick={this.props.closePopUp}
+        >
+            <div className='delete__prompt'>
+                <span className='delete-prompt__text'>
+                Are you sure want to delete{' \''}
+                    <span className='delete-prompt__title'>
+                        {`${this.props.list.title}`}
+                    </span>
+                    {'\' '}?
+                </span>
+                <div className='delete-prompt__buttons-box'>
+                    <button className='delete-prompt__btn delete-prompt__btn-no'
+                        onClick={this.props.closePopUp}
+                    >
+                    no
+                    </button>
+                    <button className='delete-prompt__btn delete-prompt__btn-yes'
+                        onClick={this.deleteList}
+                    >
+                    yes
+                    </button>
+                </div>
+            </div>
+        </div>
 }
 
 export default connect(

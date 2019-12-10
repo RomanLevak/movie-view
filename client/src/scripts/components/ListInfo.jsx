@@ -33,33 +33,6 @@ class ListInfo extends Component {
             loadList(id)
     }
 
-    getMoviePosters = () => {
-        const {isOwner, isSignedIn} = this.props
-        const movieIds = this.props.list.movies
-        const listId = this.props.list.id
-        const movies = []
-        let withButton = ''
-
-        if(isOwner)
-            withButton = 'remove'
-        else if(isSignedIn)
-            withButton = 'add'
-
-        movieIds.map(movieId =>
-            movies.push(
-                <div className='list__item' key={movieId}>
-                    <MoviePoster
-                        id={movieId}
-                        listId={listId}
-                        withButton={withButton}
-                    />
-                </div>
-            )
-        )
-
-        return movies
-    }
-
     render() {
         const {loading, loaded, error, isOwner} = this.props
 
@@ -108,12 +81,33 @@ class ListInfo extends Component {
                 <div className='list__movies-box'>
                     {this.getMoviePosters()}
                 </div>
-                { isOwner ?
+                { isOwner &&
                     <div className='list__delete-box'>
                         <DeleteListBtn list={list} />
-                    </div> :
-                    null
+                    </div>
                 }
+            </div>
+        )
+    }
+
+    getMoviePosters = () => {
+        const {isOwner, isSignedIn} = this.props
+        const movieIds = this.props.list.movies
+        const listId = this.props.list.id
+        let withButton = ''
+
+        if(isOwner)
+            withButton = 'remove'
+        else if(isSignedIn)
+            withButton = 'add'
+
+        return movieIds.map(movieId =>
+            <div className='list__item' key={movieId}>
+                <MoviePoster
+                    id={movieId}
+                    listId={listId}
+                    withButton={withButton}
+                />
             </div>
         )
     }

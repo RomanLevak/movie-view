@@ -25,24 +25,6 @@ class Results extends Component {
             searchMovie(query)
     }
 
-    getBody = () => {
-        const {movies, loading, error} = this.props
-
-        if(loading)
-            return <Loader type='squares' />
-
-        if(error)
-            return <span className='error-msg'>{error}</span>
-        // renders only first 18 elements
-        return movies.slice(0, 18).map(movie =>
-            <li className='results-list__item'
-                key={movie.id}
-            >
-                <MoviePoster id={movie.id} />
-            </li>
-        )
-    }
-
     render() {
         return (
             <div className='results-box'>
@@ -58,6 +40,24 @@ class Results extends Component {
                     </ul>
                 </div>
             </div>
+        )
+    }
+
+    getBody = () => {
+        const {movies, loading, error} = this.props
+
+        if(loading)
+            return <Loader type='squares' />
+
+        if(error)
+            return <span className='error-msg'>{error}</span>
+        // renders only first 18 elements
+        return movies.slice(0, 18).map(movie =>
+            <li className='results-list__item'
+                key={movie.id}
+            >
+                <MoviePoster id={movie.id} />
+            </li>
         )
     }
 }

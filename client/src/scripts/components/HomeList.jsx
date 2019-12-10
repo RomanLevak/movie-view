@@ -27,6 +27,31 @@ class HomeList extends Component {
             loadEntities()
     }
 
+    render() {
+        const {loading, loaded, error} = this.props
+
+        if(error)
+            return <span className='error-msg'>{error}</span>
+
+        if(loading || !loaded)
+            return <Loader type='squares' />
+
+        const {title, type} = this.props
+
+        return (
+            <div className='home-list-box'>
+                <h2 className='home-list__title'>
+                    <Link className='home-list__link'
+                        to={`/${type}`}
+                    >
+                        {title}
+                    </Link>
+                </h2>
+                {this.getBody()}
+            </div>
+        )
+    }
+
     getBody = () => {
         const {Item, withSlider, entities} = this.props
         const items = []
@@ -47,42 +72,14 @@ class HomeList extends Component {
 
         return (
             <ul className={
-                'home-list' + (withSlider ? '__slider' : '')
+                `home-list${withSlider ? '__slider' : ''}`
             }
             >
                 { withSlider ?
-                    <Slider>
-                        {items}
-                    </Slider>
-                    :
+                    <Slider>{items}</Slider> :
                     items
                 }
             </ul>
-        )
-    }
-
-    render() {
-        const {loading, loaded, error} = this.props
-
-        if(error)
-            return <span className='error-msg'>{error}</span>
-
-        if(loading || !loaded)
-            return <Loader sype='squares' />
-
-        const {title, type} = this.props
-
-        return (
-            <div className='home-list-box'>
-                <h2 className='home-list__title'>
-                    <Link className='home-list__link'
-                        to={`/${type}`}
-                    >
-                        {title}
-                    </Link>
-                </h2>
-                {this.getBody()}
-            </div>
         )
     }
 }

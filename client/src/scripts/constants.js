@@ -18,7 +18,7 @@ export const REMOVE_MOVIE_FROM_LIST = 'REMOVE_MOVIE_FROM_LIST'
 export const SINGIN = 'SINGIN'
 export const SINGOUT = 'SINGOUT'
 export const SINGUP = 'SINGUP'
-export const CHECKAUTH = 'CHECKAUTH'
+export const GET_CURRENT_USER = 'GET_CURRENT_USER'
 
 export const START = '_START'
 export const SUCCESS = '_SUCCESS'

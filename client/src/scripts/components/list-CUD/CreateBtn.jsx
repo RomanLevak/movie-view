@@ -1,7 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {createList, loadLists} from '../../AC/index'
+import {
+    createList,
+    loadLists,
+    getCurrentUser
+} from '../../AC/index'
 import {toast} from 'react-toastify'
 import popUp from '../decorators/popUp'
 
@@ -16,7 +20,8 @@ class CreateBtn extends Component {
         // from connect
         listCreateState: PropTypes.object.isRequired,
         createList: PropTypes.func.isRequired,
-        loadLists: PropTypes.func
+        loadLists: PropTypes.func.isRequired,
+        getCurrentUser: PropTypes.func.isRequired
     }
 
     state = {
@@ -39,12 +44,14 @@ class CreateBtn extends Component {
         // if list has been created
         if(listCreateState.entity.id && isWaitingResponse) {
             const {title} = listCreateState.entity
-            const {loadLists, closePopUp} = props
+            const {loadLists, getCurrentUser, closePopUp} = props
 
             toast(`created '${title}' list !`)
 
             loadLists()
             closePopUp()
+            // update the lists of current user
+            getCurrentUser()
 
             return {
                 isWaitingResponse: false,
@@ -73,6 +80,22 @@ class CreateBtn extends Component {
         createList(title)
     }
 
+    render() {
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
+
+        return (
+            <div className='create-box'>
+                <button className='header__btn-create create'
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
+                >
+                    + list
+                </button>
+                {isOpen && this.getForm()}
+            </div>
+        )
+    }
+
     getForm = () => {
         const {setPopUpRef} = this.props
 
@@ -92,26 +115,6 @@ class CreateBtn extends Component {
             </form>
         )
     }
-
-    render() {
-        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
-
-        return (
-            <div className='create-box'>
-                <button className='header__btn-create create'
-                    ref={setToggleBtnRef}
-                    onClick={togglePopUp}
-                >
-                    + list
-                </button>
-                { isOpen ?
-                    this.getForm()
-                    :
-                    null
-                }
-            </div>
-        )
-    }
 }
 
 export default connect(
@@ -119,6 +122,7 @@ export default connect(
         listCreateState: state.listCUD.create
     }), {
         createList,
-        loadLists
+        loadLists,
+        getCurrentUser
     }
 )(popUp(CreateBtn))

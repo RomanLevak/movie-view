@@ -21,7 +21,8 @@ class AddBtn extends Component {
         // from connect
         lists: PropTypes.array.isRequired,
         addMovieToList: PropTypes.func.isRequired,
-        // state of list which is being updated
+        loadList: PropTypes.func.isRequired,
+        // state of list which is being updateds
         editedList: PropTypes.object.isRequired
     }
 
@@ -66,6 +67,22 @@ class AddBtn extends Component {
         addMovieToList(listId, movieId)
     }
 
+    render() {
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
+
+        return (
+            <div className='add-box'>
+                <button className='add-btn'
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
+                >
+                    +
+                </button>
+                {isOpen && this.getMenu()}
+            </div>
+        )
+    }
+
     getMenu = () => {
         const {lists, setPopUpRef} = this.props
         let dataHeader = ''
@@ -73,6 +90,7 @@ class AddBtn extends Component {
 
         if(lists.length) {
             dataHeader = 'add to list:'
+
             lists.map(list => menuItems.push(
                 <li className='add-menu__item'
                     key={list.id}
@@ -93,25 +111,6 @@ class AddBtn extends Component {
             >
                 {menuItems}
             </ul>
-        )
-    }
-
-    render() {
-        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
-
-        return (
-            <div className='add-box'>
-                <button className='add-btn'
-                    ref={setToggleBtnRef}
-                    onClick={togglePopUp}
-                >
-                    +
-                </button>
-                { isOpen ?
-                    this.getMenu() :
-                    null
-                }
-            </div>
         )
     }
 }

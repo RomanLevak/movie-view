@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 // create, update, delete lists reducer
 import {
     CREATE_LIST,
@@ -10,208 +11,110 @@ import {
     FAIL
 } from '../constants'
 
-const defaultState = {
-    create: {
-        loading: false,
-        loaded: false,
-        error: '',
-        entity: {}
-    },
-    update: {
-        loading: false,
-        loaded: false,
-        error: '',
-        entity: {}
-    },
-    delete: {
-        loading: false,
-        loaded: false,
-        error: '',
-        entity: {}
-    },
-    addMovie: {
-        loading: false,
-        loaded: false,
-        error: '',
-        entity: {}
-    },
-    removeMovie: {
-        loading: false,
-        loaded: false,
-        error: '',
-        entity: {}
-    }
+const defaultItemState = {
+    loading: false,
+    loaded: false,
+    error: '',
+    entity: {}
 }
 
-export default (CUDState = defaultState, action) => {
-    const {type, payload} = action
+const defaultState = {
+    create: {...defaultItemState},
+    update: {...defaultItemState},
+    delete: {...defaultItemState},
+    addMovie: {...defaultItemState},
+    removeMovie: {...defaultItemState}
+}
+
+const listCUDreducer = (CUDState = defaultState, action) => {
+    const {type} = action
 
     switch(type) {
         case CREATE_LIST + START:
-            return {
-                ...CUDState,
-                create: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: {}
-                }
-            }
-
         case CREATE_LIST + SUCCESS:
-            return {
-                ...CUDState,
-                create: {
-                    loaded: true,
-                    loading: false,
-                    error: '',
-                    entity: payload
-                }
-            }
-
         case CREATE_LIST + FAIL:
-            return {
-                ...CUDState,
-                create: {
-                    loaded: false,
-                    loading: false,
-                    entity: {},
-                    error: payload
-                }
-            }
-
-        case ADD_MOVIE_TO_LIST + START:
-            return {
-                ...CUDState,
-                addMovie: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: {}
-                }
-            }
-
-        case ADD_MOVIE_TO_LIST + SUCCESS:
-            return {
-                ...CUDState,
-                addMovie: {
-                    loaded: true,
-                    loading: false,
-                    error: '',
-                    entity: payload
-                }
-            }
-
-        case ADD_MOVIE_TO_LIST + FAIL:
-            return {
-                ...CUDState,
-                addMovie: {
-                    loaded: false,
-                    loading: false,
-                    entity: {},
-                    error: payload
-                }
-            }
-
-        case REMOVE_MOVIE_FROM_LIST + START:
-            return {
-                ...CUDState,
-                removeMovie: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: {}
-                }
-            }
-
-        case REMOVE_MOVIE_FROM_LIST + SUCCESS:
-            return {
-                ...CUDState,
-                removeMovie: {
-                    loaded: true,
-                    loading: false,
-                    error: '',
-                    entity: payload
-                }
-            }
-
-        case REMOVE_MOVIE_FROM_LIST + FAIL:
-            return {
-                ...CUDState,
-                removeMovie: {
-                    loaded: false,
-                    loading: false,
-                    entity: {},
-                    error: payload
-                }
-            }
 
         case UPDATE_LIST + START:
-            return {
-                ...CUDState,
-                update: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: {}
-                }
-            }
-
         case UPDATE_LIST + SUCCESS:
-            return {
-                ...CUDState,
-                update: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: payload
-                }
-            }
-
         case UPDATE_LIST + FAIL:
-            return {
-                ...CUDState,
-                update: {
-                    loaded: false,
-                    loading: false,
-                    entity: {},
-                    error: payload
-                }
-            }
 
         case DELETE_LIST + START:
-            return {
-                ...CUDState,
-                delete: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: {}
-                }
-            }
-
         case DELETE_LIST + SUCCESS:
-            return {
-                ...CUDState,
-                delete: {
-                    loaded: false,
-                    loading: true,
-                    error: '',
-                    entity: payload
-                }
-            }
-
         case DELETE_LIST + FAIL:
-            return {
-                ...CUDState,
-                delete: {
-                    loaded: false,
-                    loading: false,
-                    entity: {},
-                    error: payload
-                }
-            }
+
+        case ADD_MOVIE_TO_LIST + START:
+        case ADD_MOVIE_TO_LIST + SUCCESS:
+        case ADD_MOVIE_TO_LIST + FAIL:
+
+        case REMOVE_MOVIE_FROM_LIST + START:
+        case REMOVE_MOVIE_FROM_LIST + SUCCESS:
+        case REMOVE_MOVIE_FROM_LIST + FAIL:
+
+            return makeListCUDState(CUDState, action)
     }
 
     return CUDState
+}
+
+export default listCUDreducer
+
+/*
+ * creates and returns a new reducer state
+ * that corresponds to the given action
+ */
+const makeListCUDState = (CUDState, action) => {
+    const {type, payload} = action
+    const key = getItemKeyByType(type)
+
+    // UPDATE_LIST_START => START
+    const loadingType = type.split('_').pop()
+
+    const getNewItemState = {
+        START: () => ({...loadingStartState}),
+        SUCCESS: getLoadingSuccessState,
+        FAIL: getLoadingFailState
+    }[loadingType]
+
+    return {
+        ...CUDState,
+        [key]: getNewItemState(payload)
+    }
+}
+
+const loadingStartState = {
+    loaded: false,
+    loading: true,
+    error: '',
+    entity: {}
+}
+
+const getLoadingSuccessState = payload => ({
+    loaded: true,
+    loading: false,
+    error: '',
+    entity: payload
+})
+
+const getLoadingFailState = payload => ({
+    loaded: false,
+    loading: false,
+    entity: {},
+    error: payload
+})
+
+/*
+ * returns the key for item of CUDstate
+ * object depending of the action type
+ */
+const getItemKeyByType = type => {
+    // 'CLEATE_LIST_SUCCESS' => 'CREATE_LIST'
+    const rawType = type.split('_').slice(0, -1).join('_')
+
+    return {
+        CREATE_LIST: 'create',
+        UPDATE_LIST: 'update',
+        DELETE_LIST: 'delete',
+        ADD_MOVIE_TO_LIST: 'addMovie',
+        REMOVE_MOVIE_FROM_LIST: 'removeMovie'
+    }[rawType]
 }

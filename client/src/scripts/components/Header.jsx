@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import selectUser from '../selectors/user'
-import {singOut, checkIfSingedIn} from '../AC/index'
+import {singOut, getCurrentUser} from '../AC/index'
 import CreateBtn from './list-CUD/CreateBtn'
 import Search from './Search'
 
@@ -14,17 +14,36 @@ class Header extends Component {
         // from connect
         user: PropTypes.object,
         singOut: PropTypes.func.isRequired,
-        checkIfSingedIn: PropTypes.func.isRequired,
+        getCurrentUser: PropTypes.func.isRequired,
     }
 
     componentDidMount() {
-        const {checkIfSingedIn} = this.props
-        checkIfSingedIn()
+        const {getCurrentUser} = this.props
+        getCurrentUser()
     }
 
     handleSingOutClick = () => {
         const {singOut} = this.props
         singOut()
+    }
+
+    render() {
+        return (
+            <header className='header'>
+                <div className='home-icon-box'>
+                    <Link to='/'>
+                        <img className='home-icon'
+                            src='/styles/images/robot.svg'
+                        />
+                    </Link>
+                </div>
+                <h1 className='header__title'>
+                    <Link to='/'> movieview</Link>
+                </h1>
+                <Search />
+                {this.getUserArea()}
+            </header>
+        )
     }
 
     getUserArea() {
@@ -74,28 +93,13 @@ class Header extends Component {
             </div>
         )
     }
-
-    render() {
-        return (
-            <header className='header'>
-                <div className='home-icon-box'>
-                    <Link to='/'>
-                        <img className='home-icon'
-                            src='/styles/images/robot.svg'
-                        />
-                    </Link>
-                </div>
-                <h1 className='header__title'>
-                    <Link to='/'> movieview</Link>
-                </h1>
-                <Search />
-                {this.getUserArea()}
-            </header>
-        )
-    }
 }
 
 export default connect(
-    state => ({user: selectUser(state).entity}),
-    {singOut, checkIfSingedIn}
+    state => ({
+        user: selectUser(state).entity
+    }), {
+        singOut,
+        getCurrentUser
+    }
 )(Header)

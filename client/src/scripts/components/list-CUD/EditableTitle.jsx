@@ -84,20 +84,6 @@ class EditableTitle extends Component {
             </button>
         </>
 
-    getEditableBody = () =>
-        <>
-            <h2 className='list__title'>
-                <input className='list__title-input'
-                    ref={this.setTitleInputRef}
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                />
-            </h2>
-            <button className='list__title-edit seagreen'>
-                {'✓'}
-            </button>
-        </>
-
     render() {
         const {isInputOpen} = this.state
 
@@ -112,6 +98,20 @@ class EditableTitle extends Component {
             </form>
         )
     }
+
+    getEditableBody = () =>
+        <>
+            <h2 className='list__title'>
+                <input className='list__title-input'
+                    ref={this.setTitleInputRef}
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                />
+            </h2>
+            <button className='list__title-edit seagreen'>
+                {'✓'}
+            </button>
+        </>
 }
 
 export default connect(

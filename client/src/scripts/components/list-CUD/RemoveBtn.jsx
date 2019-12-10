@@ -61,6 +61,22 @@ class RemoveBtn extends Component {
         removeMovieFromList(listId, movie.id)
     }
 
+    render() {
+        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
+
+        return (
+            <div className='remove-box'>
+                <button className='remove-btn'
+                    ref={setToggleBtnRef}
+                    onClick={togglePopUp}
+                >
+                    {'✖'}
+                </button>
+                {isOpen && this.getPrompt()}
+            </div>
+        )
+    }
+
     getPrompt = () =>
         <form className='remove-prompt'
             ref={this.props.setPopUpRef}
@@ -73,35 +89,16 @@ class RemoveBtn extends Component {
                     className='remove-prompt__btn remove-prompt__btn-no'
                     onClick={this.handleSubmit}
                 >
-                    no
+                no
                 </button>
                 <button
                     className='remove-prompt__btn remove-prompt__btn-yes'
                     onClick={this.removeMovieFromList}
                 >
-                    yes
+                yes
                 </button>
             </div>
         </form>
-
-    render() {
-        const {setToggleBtnRef, togglePopUp, isOpen} = this.props
-
-        return (
-            <div className='remove-box'>
-                <button className='remove-btn'
-                    ref={setToggleBtnRef}
-                    onClick={togglePopUp}
-                >
-                    {'✖'}
-                </button>
-                { isOpen ?
-                    this.getPrompt() :
-                    null
-                }
-            </div>
-        )
-    }
 }
 
 export default connect(

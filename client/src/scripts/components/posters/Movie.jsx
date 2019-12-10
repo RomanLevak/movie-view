@@ -41,69 +41,11 @@ class Poster extends Component {
             id && loadMoviePoster(id)
     }
 
-    getPosterPath = () => {
-        const {loading, loaded, error, movie} = this.props
-
-        if(error)
-            return '/styles/images/not-found.svg'
-
-        if(loading || !loaded)
-            return '/styles/images/blank-3x2.png'
-
-        if(movie && movie.poster_path)
-            return `/tmdbimg/${movie.poster_path}`
-
-        return '/styles/images/not-found.svg'
-    }
-
-    getButton = () => {
-        const {withButton, user} = this.props
-
-        if(withButton == 'remove')
-            return (
-                <div className='movie-poster__btn'>
-                    <RemoveBtn
-                        movie={this.props.movie}
-                        listId={this.props.listId}
-                    />
-                </div>
-            )
-
-        if(withButton == 'add' || user.id)
-            return (
-                <div className='movie-poster__btn'>
-                    <AddBtn
-                        lists={user.lists}
-                        movieId={this.props.id}
-                    />
-                </div>
-            )
-
-        return null
-    }
-
-    getMiniBody = () => {
-        const {loading, loaded} = this.props
-
-        if(loading || !loaded)
-            return (
-                <>
-                    <div className='list-poster__img-box'>
-                        <img className='movie-img blank-img'
-                            src='/styles/images/blank-3x2.png'
-                        />
-                    </div>
-                    <div className='poster__loader-box'>
-                        <Loader type='spinner' />
-                    </div>
-                </>
-            )
-
-        return (
-            <div className='list-poster__img-box'>
-                <img src={this.getPosterPath()} />
-            </div>
-        )
+    render() {
+        if(this.props.isMini)
+            return this.getMiniBody()
+        else
+            return this.getFullBody()
     }
 
     getFullBody = () => {
@@ -150,11 +92,69 @@ class Poster extends Component {
         )
     }
 
-    render() {
-        if(this.props.isMini)
-            return this.getMiniBody()
-        else
-            return this.getFullBody()
+    getMiniBody = () => {
+        const {loading, loaded} = this.props
+
+        if(loading || !loaded)
+            return (
+                <>
+                    <div className='list-poster__img-box'>
+                        <img className='movie-img blank-img'
+                            src='/styles/images/blank-3x2.png'
+                        />
+                    </div>
+                    <div className='poster__loader-box'>
+                        <Loader type='spinner' />
+                    </div>
+                </>
+            )
+
+        return (
+            <div className='list-poster__img-box'>
+                <img src={this.getPosterPath()} />
+            </div>
+        )
+    }
+
+    getButton = () => {
+        const {withButton, user} = this.props
+
+        if(withButton == 'remove')
+            return (
+                <div className='movie-poster__btn'>
+                    <RemoveBtn
+                        movie={this.props.movie}
+                        listId={this.props.listId}
+                    />
+                </div>
+            )
+
+        if(withButton == 'add' || user.id)
+            return (
+                <div className='movie-poster__btn'>
+                    <AddBtn
+                        lists={user.lists}
+                        movieId={this.props.id}
+                    />
+                </div>
+            )
+
+        return null
+    }
+
+    getPosterPath = () => {
+        const {loading, loaded, error, movie} = this.props
+
+        if(error)
+            return '/styles/images/not-found.svg'
+
+        if(loading || !loaded)
+            return '/styles/images/blank-3x2.png'
+
+        if(movie && movie.poster_path)
+            return `/tmdbimg/${movie.poster_path}`
+
+        return '/styles/images/not-found.svg'
     }
 }
 

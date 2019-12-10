@@ -54,25 +54,6 @@ class Explorer extends Component {
             loadEntities(filters)
     }
 
-    onPageChange = ({selected}) => {
-        const {history} = this.context.router
-        const {loadEntities, filters} = this.props
-
-        history.push(`${selected + 1}`)
-        loadEntities(filters)
-    }
-
-    getGenresList = () =>
-        genres.map(genre =>
-            <li className='sidebar-list__item' key={genre.id}>
-                <NavLink activeClassName='sidebar-list__item-active'
-                    to={`/movies/genres/${genre.name}`}
-                >
-                    {genre.name}
-                </NavLink>
-            </li>
-        )
-
     static getDerivedStateFromProps(props, state) {
         const {filters} = props
         const prevPage = state.curPage
@@ -85,6 +66,14 @@ class Explorer extends Component {
             }
 
         return null
+    }
+
+    onPageChange = ({selected}) => {
+        const {history} = this.context.router
+        const {loadEntities, filters} = this.props
+
+        history.push(`${selected + 1}`)
+        loadEntities(filters)
     }
 
     render() {
@@ -200,6 +189,17 @@ class Explorer extends Component {
             />
         )
     }
+
+    getGenresList = () =>
+        genres.map(genre =>
+            <li className='sidebar-list__item' key={genre.id}>
+                <NavLink activeClassName='sidebar-list__item-active'
+                    to={`/movies/genres/${genre.name}`}
+                >
+                    {genre.name}
+                </NavLink>
+            </li>
+        )
 
     /*
      * set proper className for unmounting animation depending of

@@ -2,7 +2,7 @@ import {
     SINGIN,
     SINGOUT,
     SINGUP,
-    CHECKAUTH,
+    GET_CURRENT_USER,
     START,
     SUCCESS,
     FAIL
@@ -22,7 +22,7 @@ export default (userState = defaultState, action) => {
         // falls through
         case SINGUP + START:
         // falls through
-        case CHECKAUTH + START:
+        case GET_CURRENT_USER + START:
             return {
                 ...userState,
                 loading: true,
@@ -34,7 +34,7 @@ export default (userState = defaultState, action) => {
         // falls through
         case SINGUP + SUCCESS:
         // falls through
-        case CHECKAUTH + SUCCESS: {
+        case GET_CURRENT_USER + SUCCESS: {
             // if signed out, payload is null
             const user = payload || {}
             return {
@@ -48,7 +48,7 @@ export default (userState = defaultState, action) => {
         // falls through
         case SINGUP + FAIL:
         // falls through
-        case CHECKAUTH + FAIL:
+        case GET_CURRENT_USER + FAIL:
             return {
                 ...userState,
                 loading: false,

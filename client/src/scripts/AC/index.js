@@ -14,7 +14,7 @@ import {
     SINGIN,
     SINGOUT,
     SINGUP,
-    CHECKAUTH,
+    GET_CURRENT_USER,
 } from '../constants'
 
 export function loadMovies(filters) {
@@ -187,9 +187,9 @@ export function singOut() {
     }
 }
 
-export function checkIfSingedIn() {
+export function getCurrentUser() {
     return {
-        type: CHECKAUTH,
+        type: GET_CURRENT_USER,
         callAPI: {url: '/server/user/me'}
     }
 }

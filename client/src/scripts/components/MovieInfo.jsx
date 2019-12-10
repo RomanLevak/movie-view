@@ -27,78 +27,6 @@ class MovieInfo extends Component {
             loadMovieInfo(id)
     }
 
-    getInfoTable = () => {
-        const {
-            title, vote_average,
-            release_date, adult,
-            original_language, genres,
-            production_countries,
-            tagline, runtime, budget
-        } = this.props.movie
-
-        return (
-            <table className='movie__info'>
-                <caption>{title}</caption>
-                <tbody>
-                    <tr>
-                        <td>Tagline</td>
-                        <td>{tagline}</td>
-                    </tr>
-                    <tr>
-                        <td>Rating</td>
-                        <td>TMDB {vote_average}</td>
-                    </tr>
-                    <tr>
-                        <td>Release date</td>
-                        <td>{release_date}</td>
-                    </tr>
-                    <tr>
-                        <td>Original language</td>
-                        <td>{original_language}</td>
-                    </tr>
-                    <tr>
-                        <td>Counries</td>
-                        <td>
-                            {production_countries.map(country => country.name)}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Genres</td>
-                        <td> {
-                            genres.map((genre, i, arr) =>
-                                <Fragment key={genre.id}>
-                                    <Link className='movie__info-link'
-                                        to={`/movies/genres/${genre.name}`}
-                                    >
-                                        {genre.name}
-                                    </Link>
-                                    {   // after last element will be no ','
-                                        i !== arr.length - 1 ?
-                                            <span>, </span> :
-                                            null
-                                    }
-                                </Fragment>
-                            )
-                        }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Adult</td>
-                        <td>{adult ? 'yes' : 'no'}</td>
-                    </tr>
-                    <tr>
-                        <td>Runtime</td>
-                        <td>{`${runtime}m`}</td>
-                    </tr>
-                    <tr>
-                        <td>Budget</td>
-                        <td>{`${budget} $`}</td>
-                    </tr>
-                </tbody>
-            </table>
-        )
-    }
-
     render() {
         const {loading, loaded, error} = this.props
 
@@ -137,6 +65,74 @@ class MovieInfo extends Component {
                     {overview}
                 </p>
             </div>
+        )
+    }
+
+    getInfoTable = () => {
+        const {
+            title, vote_average,
+            release_date, adult,
+            original_language, genres,
+            production_countries,
+            tagline, runtime, budget
+        } = this.props.movie
+
+        return (
+            <table className='movie__info'>
+                <caption>{title}</caption>
+                <tbody>
+                    <tr>
+                        <td>Tagline</td>
+                        <td>{tagline}</td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td>TMDB {vote_average}</td>
+                    </tr>
+                    <tr>
+                        <td>Release date</td>
+                        <td>{release_date}</td>
+                    </tr>
+                    <tr>
+                        <td>Original language</td>
+                        <td>{original_language}</td>
+                    </tr>
+                    <tr>
+                        <td>Counries</td>
+                        <td>
+                            {production_countries.map(country => country.name)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Genres</td>
+                        <td> { genres.map((genre, i, arr) =>
+                            <Fragment key={genre.id}>
+                                <Link className='movie__info-link'
+                                    to={`/movies/genres/${genre.name}`}
+                                >
+                                    {genre.name}
+                                </Link>
+                                { i !== arr.length - 1 &&
+                                    <span>, </span>
+                                }
+                            </Fragment>
+                        )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Adult</td>
+                        <td>{adult ? 'yes' : 'no'}</td>
+                    </tr>
+                    <tr>
+                        <td>Runtime</td>
+                        <td>{`${runtime}m`}</td>
+                    </tr>
+                    <tr>
+                        <td>Budget</td>
+                        <td>{`${budget} $`}</td>
+                    </tr>
+                </tbody>
+            </table>
         )
     }
 }
