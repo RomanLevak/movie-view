@@ -4,6 +4,7 @@ MovieWiew is an application which allows you to explore movies from TMDb API, an
 ### install and run
 ```
   $ git clone https://github.com/RomanLevak/movie-view.git
+  $ cd movie-view
   $ npm install
   $ npm start
 ```
@@ -18,7 +19,6 @@ and node server at http://localhost:3000/
 
 * email: u2@gmail.com\
     password: 1234
-
 
 ##### start only client server
 ```
