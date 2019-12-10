@@ -78,7 +78,7 @@ class Movies extends Component {
                     genreId,
                     page: parseInt(page)
                 }}
-                key={genreId + page}
+                key={genreId}
             />
         )
     }
