@@ -18,9 +18,14 @@ class Explorer extends Component {
     }
 
     static propTypes = {
-        type: PropTypes.oneOf(['movies', 'lists']).isRequired,
         Item: PropTypes.elementType.isRequired,
-        filters: PropTypes.object,
+        filters: PropTypes.shape({
+            type: PropTypes.oneOf([
+                'popular', 'by_genre', 'lists',
+            ]).isRequired,
+            page: PropTypes.number,
+            authorName: PropTypes.string
+        }).isRequired,
         // from connect
         entities: PropTypes.array,
         totalPages: PropTypes.number,

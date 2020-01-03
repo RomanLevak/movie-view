@@ -8,7 +8,7 @@ import {default as MoviePoster} from '../posters/Movie'
 function mapStateToProps(state, ownProps) {
     const {type} = ownProps.filters
 
-    if(type == 'popular' || type == 'similar')
+    if(['popular', 'similar', 'by_genre'].includes(type))
         return {
             ...selectMovies(state),
             Item: MoviePoster
@@ -53,7 +53,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
     let loadEntities
 
-    if(type == 'popular' || type == 'similar')
+    if(['popular', 'similar', 'by_genre'].includes(type))
         loadEntities = () => dispatch(loadMovies(filters))
 
     if(type == 'lists')

@@ -73,8 +73,8 @@ class Movies extends Component {
 
         return (
             <Explorer
-                type='movies'
                 filters={{
+                    type: 'by_genre',
                     genreId,
                     page: parseInt(page)
                 }}
