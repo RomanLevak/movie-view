@@ -47,26 +47,7 @@ class MovieInfo extends Component {
         const {poster_path, id, overview} = this.props.movie
 
         return (
-            <div className='movie-wrapper'>
-                <div className='movie-box'>
-                    <div className='movie__img flex-center'>
-                        <img src={`/tmdbimg/${poster_path}`} />
-                    </div>
-                    <div className='movie__info-box'>
-                        {this.getInfoTable()}
-                        { user.id ?
-                            <div className='movie__info-add-box'>
-                                <AddBtn movieId={id}
-                                    lists={user.lists}
-                                />
-                            </div> :
-                            null
-                        }
-                    </div>
-                    <p className='movie__info-overview'>
-                        {overview}
-                    </p>
-                </div>
+            <div className='movie-box'>
                 <List
                     type='similar'
                     title='Similar films'
@@ -76,6 +57,23 @@ class MovieInfo extends Component {
                     }}
                     withSlider
                 />
+                <div className='movie__img flex-center'>
+                    <img src={`/tmdbimg/${poster_path}`} />
+                </div>
+                <div className='movie__info-box'>
+                    {this.getInfoTable()}
+                    { user.id ?
+                        <div className='movie__info-add-box'>
+                            <AddBtn movieId={id}
+                                lists={user.lists}
+                            />
+                        </div> :
+                        null
+                    }
+                </div>
+                <p className='movie__info-overview'>
+                    {overview}
+                </p>
             </div>
         )
     }
