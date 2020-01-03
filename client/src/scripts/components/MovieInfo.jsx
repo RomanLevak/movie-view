@@ -62,13 +62,12 @@ class MovieInfo extends Component {
                 </div>
                 <div className='movie__info-box'>
                     {this.getInfoTable()}
-                    { user.id ?
+                    { user.id &&
                         <div className='movie__info-add-box'>
                             <AddBtn movieId={id}
                                 lists={user.lists}
                             />
-                        </div> :
-                        null
+                        </div>
                     }
                 </div>
                 <p className='movie__info-overview'>

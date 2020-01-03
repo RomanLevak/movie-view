@@ -35,3 +35,7 @@ export function parseDate(rawDateString) {
 
     return result.substring(0, 10)
 }
+
+// dev only
+/*eslint-disable */
+console.warn = () => {}

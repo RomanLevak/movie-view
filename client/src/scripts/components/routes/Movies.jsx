@@ -50,8 +50,8 @@ class Movies extends Component {
 
         return (
             <Explorer
-                type='movies'
                 filters={{
+                    type: 'popular',
                     page: parseInt(page)
                 }}
                 key={'popular' + page}

@@ -34,13 +34,15 @@ class Lists extends Component {
         if(authorName)
             return (
                 <Explorer
-                    type='lists'
-                    filters={{authorName}}
                     key={authorName}
+                    filters={{
+                        type: 'lists',
+                        authorName
+                    }}
                 />
             )
 
-        return <Explorer type='lists' />
+        return <Explorer filters={{type: 'lists'}} />
     }
 
     getListInfo = ({match}) => {
