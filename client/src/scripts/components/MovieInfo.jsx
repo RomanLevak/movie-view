@@ -6,6 +6,7 @@ import selectUser from '../selectors/user'
 import {loadMovieInfo} from '../AC/index'
 import Loader from './Loader'
 import AddBtn from './list-CUD/AddBtn'
+import List from './List'
 
 class MovieInfo extends Component {
 
@@ -46,24 +47,35 @@ class MovieInfo extends Component {
         const {poster_path, id, overview} = this.props.movie
 
         return (
-            <div className='movie-box'>
-                <div className='movie__img flex-center'>
-                    <img src={`/tmdbimg/${poster_path}`} />
+            <div className='movie-wrapper'>
+                <div className='movie-box'>
+                    <div className='movie__img flex-center'>
+                        <img src={`/tmdbimg/${poster_path}`} />
+                    </div>
+                    <div className='movie__info-box'>
+                        {this.getInfoTable()}
+                        { user.id ?
+                            <div className='movie__info-add-box'>
+                                <AddBtn movieId={id}
+                                    lists={user.lists}
+                                />
+                            </div> :
+                            null
+                        }
+                    </div>
+                    <p className='movie__info-overview'>
+                        {overview}
+                    </p>
                 </div>
-                <div className='movie__info-box'>
-                    {this.getInfoTable()}
-                    { user.id ?
-                        <div className='movie__info-add-box'>
-                            <AddBtn movieId={id}
-                                lists={user.lists}
-                            />
-                        </div> :
-                        null
-                    }
-                </div>
-                <p className='movie__info-overview'>
-                    {overview}
-                </p>
+                <List
+                    type='similar'
+                    title='Similar films'
+                    filters={{
+                        id: this.props.id,
+                        type: 'similar'
+                    }}
+                    withSlider
+                />
             </div>
         )
     }

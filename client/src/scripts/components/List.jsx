@@ -5,10 +5,14 @@ import connectToMoviesAndLists from './decorators/moviesAndLists'
 import Slider from './Slider'
 import Loader from './Loader'
 
-class HomeList extends Component {
+class List extends Component {
 
     static propTypes = {
-        type: PropTypes.oneOf(['movies', 'lists']),
+        filters: PropTypes.shape({
+            type: PropTypes.oneOf([
+                'popular', 'similar', 'lists'
+            ]).isRequired
+        }).isRequired,
         Item: PropTypes.elementType.isRequired,
         title: PropTypes.string.isRequired,
         withSlider: PropTypes.bool,
@@ -84,4 +88,4 @@ class HomeList extends Component {
     }
 }
 
-export default connectToMoviesAndLists(HomeList)
+export default connectToMoviesAndLists(List)

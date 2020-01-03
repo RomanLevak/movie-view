@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import ToastContainer from './ToastContainer'
 import Header from './Header'
-import HomeList from './HomeList'
+import List from './List'
 import Movies from './routes/Movies'
 import Form from './Form'
 import Lists from './routes/Lists'
@@ -34,13 +34,13 @@ function App() {
                         />
                         <Route path='/'>
                             <>
-                                <HomeList
-                                    type='movies'
+                                <List
+                                    filters={{type: 'popular'}}
                                     withSlider
                                     title='Popular now'
                                 />
-                                <HomeList
-                                    type='lists'
+                                <List
+                                    filters={{type: 'lists'}}
                                     title='Latest lists'
                                 />
                             </>

@@ -18,25 +18,12 @@ import {
 } from '../constants'
 
 export function loadMovies(filters) {
-    let url = ''
-
-    if(!filters)
-        return {
-            type: LOAD_MOVIES,
-            callAPI: {
-                url: `/tmdbapi/movie/popular?api_key=${API_KEY}`
-            }
-        }
-
-    const {page} = filters
-
-    if(filters.genreId)
-        url = `/tmdbapi/discover/movie?api_key=${API_KEY}` +
-                `&page=${page}&with_genres=${filters.genreId}`
-
-    else
-        url = `/tmdbapi/movie/popular?api_key=${API_KEY}` +
-            `&page=${page}`
+    const url = {
+        'popular': `/tmdbapi/movie/popular?api_key=${API_KEY}`,
+        'similar': `/tmdbapi/movie/${filters.id}/similar?api_key=${API_KEY}`,
+        'by_genre': `/tmdbapi/discover/movie?api_key=${API_KEY}` +
+                    `&page=${filters.page}&with_genres=${filters.genreId}`,
+    }[filters.type]
 
     return {
         type: LOAD_MOVIES,
