@@ -23,12 +23,12 @@ class Explorer extends Component {
             type: PropTypes.oneOf([
                 'popular', 'by_genre', 'lists',
             ]).isRequired,
-            page: PropTypes.number,
+            page: PropTypes.number.isRequired,
             authorName: PropTypes.string
         }).isRequired,
         // from connect
-        entities: PropTypes.array,
-        totalPages: PropTypes.number,
+        entities: PropTypes.array.isRequired,
+        totalPages: PropTypes.number.isRequired,
         loading: PropTypes.bool.isRequired,
         loaded: PropTypes.bool.isRequired,
         loadEntities: PropTypes.func.isRequired,
@@ -78,7 +78,11 @@ class Explorer extends Component {
         const {loadEntities, filters} = this.props
 
         history.push(`${selected + 1}`)
-        loadEntities(filters)
+
+        loadEntities({
+            ...filters,
+            page: selected + 1
+        })
     }
 
     render() {

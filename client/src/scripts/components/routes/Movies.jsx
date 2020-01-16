@@ -54,7 +54,7 @@ class Movies extends Component {
                     type: 'popular',
                     page: parseInt(page)
                 }}
-                key={'popular' + page}
+                key='popular'
             />
         )
     }

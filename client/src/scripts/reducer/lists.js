@@ -9,7 +9,7 @@ const defaultState = {
     loading: false,
     loaded: false,
     error: '',
-    entities: [],
+    entities: {},
     totalPages: 0
 }
 
@@ -19,40 +19,27 @@ export default (listsState = defaultState, action) => {
     switch(type) {
         case LOAD_LISTS + START:
             return {
-                ...listsState,
                 loaded: false,
                 loading: true,
                 error: '',
-                entities: [],
+                entities: {},
+                totalPages: 0
             }
 
-        case LOAD_LISTS + SUCCESS: {
-            let lists
-            let totalPages
-
-            if(Array.isArray(payload))
-                lists = payload
-            else {
-                lists = payload.lists
-                totalPages = payload.total_pages
-            }
-
+        case LOAD_LISTS + SUCCESS:
             return {
-                ...listsState,
                 loaded: true,
                 loading: false,
                 error: '',
-                entities: lists,
-                totalPages
+                entities: payload.lists,
+                totalPages: Math.ceil(payload.totalCount/12)
             }
-        }
 
         case LOAD_LISTS + FAIL:
             return {
-                ...listsState,
                 loaded: false,
                 loading: true,
-                entities: [],
+                entities: {},
                 totalPages: 0,
                 error: payload
             }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Redirect, Switch} from 'react-router-dom'
 import Explorer from '../Explorer'
 import ListInfo from '../ListInfo'
 
@@ -15,7 +15,16 @@ class Lists extends Component {
 
         return (
             <Switch>
+                <Route path={`${url}/author/:authorName/:page`}
+                    render={this.getExplorerForLists}
+                />
                 <Route path={`${url}/author/:authorName`}
+                    render={this.getExplorerForLists}
+                />
+                <Route path={`${url}/latest/:page`}
+                    render={this.getExplorerForLists}
+                />
+                <Route path={`${url}/latest`}
                     render={this.getExplorerForLists}
                 />
                 <Route path={`${url}/:id`}
@@ -29,20 +38,25 @@ class Lists extends Component {
     }
 
     getExplorerForLists = ({match}) => {
-        const {authorName} = match.params
+        const {authorName, page} = match.params
+        const {url} = match
 
-        if(authorName)
-            return (
-                <Explorer
-                    key={authorName}
-                    filters={{
-                        type: 'lists',
-                        authorName
-                    }}
-                />
-            )
+        if(!page) {
+            if(url.match(/(latest|author)/))
+                return <Redirect to={`${url}/1`} />
+            else
+                return <Redirect to={`${url}/latest/1`} />
+        }
 
-        return <Explorer filters={{type: 'lists'}} />
+        return (
+            <Explorer key={authorName || 'latest'}
+                filters={{
+                    type: 'lists',
+                    authorName,
+                    page: parseInt(page)
+                }}
+            />
+        )
     }
 
     getListInfo = ({match}) => {

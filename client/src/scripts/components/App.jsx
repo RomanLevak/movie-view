@@ -35,7 +35,10 @@ function App() {
                         <Route path='/'>
                             <>
                                 <List
-                                    filters={{type: 'popular'}}
+                                    filters={{
+                                        type: 'popular',
+                                        page: 1
+                                    }}
                                     withSlider
                                     title='Popular now'
                                 />

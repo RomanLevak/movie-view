@@ -19,7 +19,7 @@ import {
 
 export function loadMovies(filters) {
     const url = {
-        'popular': `/tmdbapi/movie/popular?api_key=${API_KEY}`,
+        'popular': `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${filters.page}`,
         'similar': `/tmdbapi/movie/${filters.id}/similar?api_key=${API_KEY}`,
         'by_genre': `/tmdbapi/discover/movie?api_key=${API_KEY}` +
                     `&page=${filters.page}&with_genres=${filters.genreId}`,
@@ -64,11 +64,12 @@ export function searchMovie(query, temp = false) {
 export function loadLists(filters = {}) {
     const {authorName, page} = filters
     let url = ''
+    const start = (page-1) * 12
 
     if(authorName)
         url = `/server/lists/username/${authorName}`
     else
-        url = `/server/lists/latest${page ? page : ''}`
+        url = `/server/lists/latest?start=${start}&count=12}`
 
     return {
         type: LOAD_LISTS,

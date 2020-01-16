@@ -54,12 +54,17 @@ function mapDispatchToProps(dispatch, ownProps) {
     let loadEntities
 
     if(['popular', 'similar', 'by_genre'].includes(type))
-        loadEntities = () => dispatch(loadMovies(filters))
+        return {
+            loadEntities: filters => dispatch(loadMovies(filters))
+        }
 
     if(type == 'lists')
-        loadEntities = () => dispatch(loadLists(filters))
+        return {
+            loadEntities: filters => dispatch(loadLists(filters))
+        }
 
-    return {loadEntities}
+    else
+        throw new Error('Invalid type')
 }
 
 function connectToMoviesAndLists(Component) {

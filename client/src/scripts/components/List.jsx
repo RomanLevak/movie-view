@@ -11,7 +11,8 @@ class List extends Component {
         filters: PropTypes.shape({
             type: PropTypes.oneOf([
                 'popular', 'similar', 'lists'
-            ]).isRequired
+            ]).isRequired,
+            page: PropTypes.number
         }).isRequired,
         Item: PropTypes.elementType.isRequired,
         title: PropTypes.string.isRequired,
@@ -25,10 +26,10 @@ class List extends Component {
     }
 
     componentDidMount() {
-        const {loading, loaded, loadEntities} = this.props
+        const {loading, loaded, loadEntities, filters} = this.props
 
         if(!loading || !loaded)
-            loadEntities()
+            loadEntities(filters)
     }
 
     render() {
@@ -40,7 +41,8 @@ class List extends Component {
         if(loading || !loaded)
             return <Loader type='squares' />
 
-        const {title, type} = this.props
+        const {title} = this.props
+        const {type} = this.props.filters
 
         return (
             <div className='home-list-box'>

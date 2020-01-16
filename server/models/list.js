@@ -43,21 +43,14 @@ listSchema.statics.selectToSendArr = async function(lists, options = {}) {
     return listsToSend
 }
 
-listSchema.statics.getLatestLists = async function(page = 1) {
+listSchema.statics.getWithOffset = async function(start, count, filter = {}) {
     const lists = await this
-        .find()
+        .find(filter)
         .sort([['createdAt', -1]])
-        .skip((page - 1) * 10)
-        .limit(10)
+        .skip(start)
+        .limit(count)
 
     return lists
-}
-
-listSchema.statics.getTotalPages = async function() {
-    const totalDocs = await this.countDocuments()
-    const totalPages = ~~(totalDocs/10) + 1
-
-    return totalPages
 }
 
 module.exports = mongoose.model('List', listSchema)

@@ -12,7 +12,7 @@ const defaultState = {
     loaded: false,
     error: '',
     entities: {},
-    filters: {popular: true}
+    totalPages: 0
 }
 
 export default (moviesState = defaultState, action) => {
@@ -49,6 +49,7 @@ export default (moviesState = defaultState, action) => {
                 loaded: false,
                 loading: false,
                 entities: {},
+                totalPages: 0,
                 error: payload
             }
     }

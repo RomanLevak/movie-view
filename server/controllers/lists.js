@@ -3,18 +3,20 @@ const HTTPError = require('../libs/http-error')
 const ah = require('../libs/async-handler')
 
 const getLatest = ah(async (req, res, next) => {
-    const {page} = req.params
+    let {start, count} = req.query
+    start = parseInt(start)
+    count = parseInt(count)
 
-    const lists = await List.getLatestLists(page || 1)
+    const lists = await List.getWithOffset(start, count)
 
     const listsToSend = await List.selectToSendArr(
         lists,
         {populateUser: true}
     )
 
-    const totalPages = await List.getTotalPages()
+    const totalCount = await List.countDocuments()
 
-    res.json({lists: listsToSend, totalPages})
+    res.json({lists: listsToSend, totalCount})
 })
 
 const getById = ah(async (req, res, next) => {
@@ -34,14 +36,20 @@ const getById = ah(async (req, res, next) => {
 
 const getListsByUserId = ah(async (req, res, next) => {
     const userId = req.params.userId
-    const lists = await List.find({user: userId})
+    let {start, count} = req.query
+    start = parseInt(start)
+    count = parseInt(count)
+
+    const lists = await List.getWithOffset(start, count, {user: userId})
 
     const listsToSend = await List.selectToSendArr(
         lists,
         {populateUser: true}
     )
 
-    res.json(listsToSend)
+    const totalCount = await List.countDocuments({user: userId})
+
+    res.json({lists: listsToSend, totalCount})
 })
 
 const create = ah(async (req, res, next) => {

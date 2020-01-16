@@ -16,7 +16,6 @@ const appendUserIdByName = require('../middlewares/append-userid-by-name')
 const router = require('express').Router()
 
 router.get('/latest', getLatest)
-router.get('/latest/:page', getLatest)
 
 router.route('/')
     .post(checkAuth, create)
