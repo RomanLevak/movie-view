@@ -10,7 +10,7 @@ class List extends Component {
     static propTypes = {
         filters: PropTypes.shape({
             type: PropTypes.oneOf([
-                'popular', 'similar', 'lists'
+                'popular', 'lists'
             ]).isRequired,
             page: PropTypes.number
         }).isRequired,

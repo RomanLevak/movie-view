@@ -20,7 +20,6 @@ import {
 export function loadMovies(filters) {
     const url = {
         'popular': `/tmdbapi/movie/popular?api_key=${API_KEY}&page=${filters.page}`,
-        'similar': `/tmdbapi/movie/${filters.id}/similar?api_key=${API_KEY}`,
         'by_genre': `/tmdbapi/discover/movie?api_key=${API_KEY}` +
                     `&page=${filters.page}&with_genres=${filters.genreId}`,
     }[filters.type]

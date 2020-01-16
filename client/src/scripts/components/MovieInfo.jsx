@@ -6,7 +6,6 @@ import selectUser from '../selectors/user'
 import {loadMovieInfo} from '../AC/index'
 import Loader from './Loader'
 import AddBtn from './list-CUD/AddBtn'
-import List from './List'
 
 class MovieInfo extends Component {
 
@@ -48,15 +47,6 @@ class MovieInfo extends Component {
 
         return (
             <div className='movie-box'>
-                <List
-                    type='similar'
-                    title='Similar films'
-                    filters={{
-                        id: this.props.id,
-                        type: 'similar'
-                    }}
-                    withSlider
-                />
                 <div className='movie__img flex-center'>
                     <img src={`/tmdbimg/${poster_path}`} />
                 </div>
